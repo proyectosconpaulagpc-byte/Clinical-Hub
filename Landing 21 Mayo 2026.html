@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sustancia Pro ® | Clinical Hub — Guías clínicas a 2 clics</title>
+<meta name="description" content="Guías clínicas internacionales en español, unificadas, actualizadas y con tips de aplicabilidad. Para el médico que necesita la respuesta ahora.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+/* ─── DESIGN TOKENS (del theme Ghost) ─── */
+:root {
+  --bg:        #000000;
+  --bg-card:   #111111;
+  --bg-hover:  #181818;
+  --border:    #252525;
+  --border-hi: #2e2e2e;
+  --sep:       #1c1c1e;
+  --t1:        #f5f5f5;
+  --t2:        #8e8e93;
+  --t3:        #6c6c70;
+  --t4:        #3a3a3c;
+  --lime:      #addc00;
+  --lime-bg:   rgba(173,220,0,.09);
+  --lime-bdr:  rgba(173,220,0,.20);
+  --r-sm:      8px;
+  --r-md:      12px;
+  --r-lg:      16px;
+  --r-pill:    20px;
+  --nav-h:     52px;
+  --max-w:     1100px;
+  --font:      'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:var(--font);font-size:16px;
+  line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
+
+/* ─── NAV ─── */
+.cg-head{background:rgba(0,0,0,.96);border-bottom:0.5px solid var(--sep);
+  position:sticky;top:0;z-index:200;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.cg-head-inner{max-width:var(--max-w);margin:0 auto;padding:0 28px;
+  height:var(--nav-h);display:flex;align-items:center;gap:24px}
+.cg-logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.cg-logo-mark{background:var(--lime);color:#000;font-size:10px;font-weight:700;
+  letter-spacing:.06em;padding:4px 8px;border-radius:4px;text-transform:uppercase;line-height:1}
+.cg-logo-name{font-size:13px;font-weight:600;letter-spacing:-.01em;color:var(--t1)}
+.cg-nav{flex:1}
+.nav{display:flex;list-style:none;gap:20px}
+.nav a{color:var(--t4);font-size:13px;transition:color .15s}
+.nav a:hover{color:var(--t2)}
+.cg-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.cg-btn{display:inline-block;background:var(--lime);color:#000;font-size:12px;
+  font-weight:600;letter-spacing:.01em;padding:7px 18px;border-radius:var(--r-pill);
+  border:none;cursor:pointer;transition:opacity .15s;white-space:nowrap;font-family:inherit}
+.cg-btn:hover{opacity:.85;color:#000}
+.cg-btn-ghost{display:inline-block;background:none;color:var(--t3);font-size:12px;
+  font-weight:500;padding:7px 14px;border-radius:var(--r-pill);border:0.5px solid var(--border);
+  cursor:pointer;transition:all .15s;white-space:nowrap;font-family:inherit}
+.cg-btn-ghost:hover{color:var(--t1);border-color:var(--border-hi)}
+
+/* Mobile nav toggle */
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;
+  color:var(--t3);padding:4px}
+.mobile-nav{display:none;background:rgba(0,0,0,.98);border-top:0.5px solid var(--sep);
+  padding:16px 28px;flex-direction:column;gap:4px}
+.mobile-nav.open{display:flex}
+.mobile-nav a{font-size:14px;color:var(--t2);padding:10px 0;
+  border-bottom:0.5px solid var(--sep);display:block}
+.mobile-nav a:last-child{border-bottom:none}
+
+/* ─── HERO ─── */
+.hero{position:relative;overflow:hidden;padding:72px 28px 64px;
+  border-bottom:0.5px solid var(--sep)}
+.hero-dot-field{position:absolute;inset:0;pointer-events:none;
+  mask-image:radial-gradient(ellipse 70% 80% at 68% 50%, black 25%, transparent 75%)}
+.hero-inner{max-width:var(--max-w);margin:0 auto;
+  display:grid;grid-template-columns:1fr 420px;gap:64px;align-items:center;
+  position:relative;z-index:1}
+
+/* Hero left */
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;
+  background:var(--lime-bg);border:0.5px solid var(--lime-bdr);
+  color:var(--lime);font-size:11px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:5px 12px;border-radius:var(--r-pill);margin-bottom:20px}
+.hero-pulse{width:6px;height:6px;border-radius:50%;background:var(--lime);flex-shrink:0;
+  animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1.hero-title{font-size:clamp(38px,5.5vw,64px);font-weight:700;
+  line-height:1.05;letter-spacing:-.04em;color:var(--t1);margin-bottom:16px}
+h1.hero-title .lime{color:var(--lime)}
+.hero-sub{font-size:16px;font-weight:400;color:var(--t2);line-height:1.72;
+  max-width:460px;margin-bottom:28px}
+.hero-sub strong{color:var(--t1);font-weight:500}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+.btn-lime{display:inline-flex;align-items:center;gap:7px;
+  background:var(--lime);color:#000;font-family:var(--font);
+  font-size:14px;font-weight:600;padding:11px 22px;border-radius:var(--r-pill);
+  border:none;cursor:pointer;transition:opacity .15s;white-space:nowrap}
+.btn-lime:hover{opacity:.87}
+.btn-ghost{display:inline-flex;align-items:center;gap:7px;
+  background:none;color:var(--t2);font-family:var(--font);
+  font-size:14px;font-weight:500;padding:11px 18px;border-radius:var(--r-pill);
+  border:0.5px solid var(--border);cursor:pointer;transition:all .15s}
+.btn-ghost:hover{color:var(--t1);border-color:var(--border-hi)}
+
+/* Proof row */
+.hero-proof{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;border:0.5px solid var(--border);border-radius:var(--r-md);overflow:hidden}
+.proof-item{padding:14px 12px;text-align:center;border-right:0.5px solid var(--border)}
+.proof-item:last-child{border-right:none}
+.proof-n{font-size:22px;font-weight:600;color:var(--lime);line-height:1;letter-spacing:-.03em}
+.proof-l{font-size:10px;font-weight:500;color:var(--t4);margin-top:3px;
+  letter-spacing:.05em;text-transform:uppercase}
+
+/* Hero right — product mockup */
+.hero-mockup{background:var(--bg-card);border:0.5px solid var(--border-hi);
+  border-radius:var(--r-lg);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.mock-bar{background:var(--bg-hover);border-bottom:0.5px solid var(--sep);
+  padding:10px 14px;display:flex;align-items:center;gap:7px}
+.mock-dot{width:9px;height:9px;border-radius:50%}
+.mock-title{flex:1;text-align:center;font-size:10.5px;font-weight:500;
+  color:var(--t4);letter-spacing:.06em}
+.mock-body{padding:16px}
+.mock-guide-name{font-size:13px;font-weight:600;color:var(--t1);
+  letter-spacing:-.02em;margin-bottom:8px}
+.mock-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.mock-tag{font-size:9.5px;font-weight:600;padding:2px 8px;
+  border-radius:var(--r-pill);letter-spacing:.05em;text-transform:uppercase}
+.mock-step{display:flex;gap:10px;padding:10px 12px;border-radius:var(--r-sm);
+  background:var(--bg-hover);border:0.5px solid var(--border);margin-bottom:7px;
+  cursor:pointer;transition:border-color .15s}
+.mock-step:hover{border-color:var(--lime)}
+.mock-step-num{width:20px;height:20px;border-radius:50%;background:var(--lime);
+  color:#000;font-size:10px;font-weight:700;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;margin-top:1px}
+.mock-step-name{font-size:12px;font-weight:600;color:var(--t1);margin-bottom:2px;
+  letter-spacing:-.01em}
+.mock-step-body{font-size:11px;color:var(--t3);line-height:1.5}
+.mock-tip{background:var(--lime-bg);border:0.5px solid var(--lime-bdr);
+  border-radius:var(--r-sm);padding:6px 10px;margin-top:5px;
+  font-size:10.5px;color:var(--lime);font-weight:500}
+.mock-footer{padding:10px 14px;border-top:0.5px solid var(--sep);
+  display:flex;justify-content:space-between;align-items:center}
+.mock-ft{font-size:10px;color:var(--t4);letter-spacing:.04em}
+.mock-ft em{font-style:normal;color:var(--lime)}
+
+/* ─── LOGOS STRIP ─── */
+.logos-strip{border-bottom:0.5px solid var(--sep);padding:16px 28px;
+  overflow:hidden}
+.logos-inner{max-width:var(--max-w);margin:0 auto;
+  display:flex;gap:0;align-items:center}
+.strip-label{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--t4);white-space:nowrap;flex-shrink:0;padding-right:24px;
+  border-right:0.5px solid var(--border);margin-right:24px}
+.logos-row{display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+.soc{font-size:12px;font-weight:600;color:var(--t4);text-transform:uppercase;
+  letter-spacing:.06em;transition:color .15s;cursor:default;white-space:nowrap}
+.soc:hover{color:var(--t2)}
+
+/* ─── SECTION BASE ─── */
+.sec{padding:72px 28px;border-bottom:0.5px solid var(--sep)}
+.sec-inner{max-width:var(--max-w);margin:0 auto}
+.sec-tag{display:inline-flex;align-items:center;gap:7px;
+  color:var(--lime);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:10px}
+.sec-tag::before{content:'';display:block;width:14px;height:1px;background:var(--lime)}
+.sec-h{font-size:clamp(26px,3.5vw,42px);font-weight:700;letter-spacing:-.04em;
+  line-height:1.1;color:var(--t1);margin-bottom:10px}
+.sec-h .lime{color:var(--lime)}
+.sec-p{font-size:15px;color:var(--t2);line-height:1.72;max-width:540px;margin-bottom:48px}
+
+/* ─── PAIN GRID ─── */
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0.5px;background:var(--border);border-radius:var(--r-lg);overflow:hidden}
+.pain-cell{background:var(--bg);padding:28px 24px;transition:background .18s;position:relative}
+.pain-cell:hover{background:var(--bg-card)}
+.pain-cell::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:var(--lime);opacity:0;transition:opacity .18s}
+.pain-cell:hover::after{opacity:1}
+.pain-q{font-size:13.5px;font-weight:500;color:var(--t2);line-height:1.5;
+  margin-bottom:10px;font-style:italic}
+.pain-q::before{content:'"';color:var(--t4);font-size:18px;line-height:1;
+  display:block;margin-bottom:2px}
+.pain-a{font-size:13px;color:var(--t3);line-height:1.62;
+  border-top:0.5px solid var(--sep);padding-top:10px;margin-top:10px}
+.pain-a strong{color:var(--lime);font-weight:500}
+
+/* ─── PRODUCT DEMO ─── */
+.demo-layout{display:grid;grid-template-columns:1fr 500px;gap:60px;align-items:start}
+.demo-features{display:flex;flex-direction:column}
+.demo-feat{display:flex;gap:14px;padding:20px 0;border-bottom:0.5px solid var(--sep)}
+.demo-feat:first-child{padding-top:0}
+.demo-feat:last-child{border-bottom:none}
+.demo-feat-icon{width:36px;height:36px;border-radius:var(--r-sm);flex-shrink:0;
+  background:var(--lime-bg);border:0.5px solid var(--lime-bdr);
+  display:flex;align-items:center;justify-content:center;margin-top:1px}
+.demo-feat-title{font-size:14px;font-weight:600;color:var(--t1);
+  margin-bottom:4px;letter-spacing:-.01em}
+.demo-feat-body{font-size:13px;color:var(--t3);line-height:1.62}
+
+/* Full mockup tabs */
+.full-mock{background:var(--bg-card);border:0.5px solid var(--border-hi);
+  border-radius:var(--r-lg);overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,.5)}
+.full-mock-bar{background:var(--bg-hover);border-bottom:0.5px solid var(--sep);
+  padding:9px 14px;display:flex;align-items:center;gap:6px}
+.fm-dot{width:8px;height:8px;border-radius:50%}
+.fm-tabs{display:flex;gap:4px;margin-left:8px}
+.fm-tab{font-size:10.5px;font-weight:500;color:var(--t4);background:none;
+  border:0.5px solid transparent;padding:4px 10px;border-radius:var(--r-sm);
+  cursor:pointer;transition:all .15s;font-family:inherit}
+.fm-tab:hover{color:var(--t2);border-color:var(--border)}
+.fm-tab.active{color:var(--lime);background:var(--lime-bg);border-color:var(--lime-bdr)}
+.fm-body{padding:16px;min-height:320px}
+.fm-panel{display:none}
+.fm-panel.active{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.fm-guide-hd{margin-bottom:12px}
+.fm-guide-name{font-size:13px;font-weight:600;color:var(--t1);letter-spacing:-.02em;margin-bottom:7px}
+.fm-srcs{display:flex;gap:5px;flex-wrap:wrap}
+.fm-src{font-size:9px;font-weight:600;padding:2px 7px;border-radius:var(--r-pill);
+  text-transform:uppercase;letter-spacing:.06em}
+.fm-row{display:flex;gap:10px;padding:10px 12px;border-radius:var(--r-sm);
+  background:rgba(255,255,255,.02);border:0.5px solid var(--border);margin-bottom:6px;
+  cursor:pointer;transition:border-color .15s}
+.fm-row:hover{border-color:var(--lime-bdr)}
+.fm-row.hl{background:var(--lime-bg);border-color:var(--lime-bdr)}
+.fm-row-num{width:19px;height:19px;border-radius:50%;background:var(--lime);color:#000;
+  font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.fm-row-name{font-size:11.5px;font-weight:600;color:var(--t1);margin-bottom:2px;letter-spacing:-.01em}
+.fm-row-body{font-size:11px;color:var(--t3);line-height:1.5}
+.fm-tip{background:var(--lime-bg);border:0.5px solid var(--lime-bdr);border-radius:5px;
+  padding:5px 9px;font-size:10px;color:var(--lime);font-weight:500;margin-top:4px}
+.fm-drug{display:flex;align-items:center;gap:10px;padding:9px 12px;
+  border-radius:var(--r-sm);border:0.5px solid var(--border);margin-bottom:6px;
+  background:rgba(255,255,255,.02);transition:background .15s;cursor:pointer}
+.fm-drug:hover{background:var(--bg-hover)}
+.fm-drug-name{font-size:12.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em}
+.fm-drug-dose{font-size:11px;font-weight:600;color:var(--lime)}
+.fm-drug-note{font-size:10px;color:var(--t4);margin-top:1px}
+.fm-err{display:flex;gap:8px;padding:9px 11px;border-radius:var(--r-sm);
+  background:rgba(255,50,50,.04);border:0.5px solid rgba(255,50,50,.12);margin-bottom:6px}
+.fm-err-icon{color:#ff6b6b;flex-shrink:0;margin-top:1px}
+.fm-err-text{font-size:11.5px;color:var(--t3);line-height:1.5}
+.fm-err-text strong{color:#ff9494;font-weight:500}
+.fm-footer{padding:9px 14px;border-top:0.5px solid var(--sep);
+  display:flex;justify-content:space-between}
+.fm-ft{font-size:10px;color:var(--t4);letter-spacing:.04em}
+.fm-ft em{font-style:normal;color:var(--lime)}
+
+/* ─── COMPARE ─── */
+.compare-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0.5px;
+  background:var(--border);border-radius:var(--r-lg);overflow:hidden}
+.compare-col{background:var(--bg-card);padding:28px 24px}
+.compare-col.after{background:var(--bg-hover)}
+.compare-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:18px;display:flex;align-items:center;gap:7px}
+.compare-label.red{color:#ff6b6b}
+.compare-label.green{color:var(--lime)}
+.compare-item{display:flex;align-items:flex-start;gap:9px;padding:10px 0;
+  border-bottom:0.5px solid var(--sep);font-size:13px;line-height:1.55}
+.compare-item:last-child{border-bottom:none}
+.ci-icon{width:16px;height:16px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;margin-top:1px}
+.ci-x{background:rgba(255,50,50,.1);border:0.5px solid rgba(255,50,50,.2)}
+.ci-y{background:var(--lime-bg);border:0.5px solid var(--lime-bdr)}
+.compare-item.no{color:var(--t3)}
+.compare-item.yes{color:var(--t2)}
+
+/* ─── STATS BAR ─── */
+.stats-bar{background:var(--lime);padding:20px 28px;border-bottom:0.5px solid var(--lime)}
+.stats-inner{max-width:var(--max-w);margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-it{text-align:center;padding:4px 0;border-right:1px solid rgba(0,0,0,.12)}
+.stat-it:last-child{border-right:none}
+.stat-n{font-size:32px;font-weight:700;color:#000;line-height:1;letter-spacing:-.04em}
+.stat-l{font-size:11px;font-weight:500;color:rgba(0,0,0,.52);margin-top:2px}
+
+/* ─── TESTIMONIALS ─── */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5px;
+  background:var(--border);border-radius:var(--r-lg);overflow:hidden}
+.testi-card{background:var(--bg-card);padding:24px 20px;
+  display:flex;flex-direction:column;gap:14px;transition:background .18s}
+.testi-card:hover{background:var(--bg-hover)}
+.testi-top{display:flex;align-items:center;gap:11px}
+.testi-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;
+  border:0.5px solid var(--border-hi)}
+.testi-name{font-size:13px;font-weight:600;color:var(--t1);letter-spacing:-.01em;line-height:1.2}
+.testi-role{font-size:11px;color:var(--t3);margin-top:2px}
+.testi-tag{display:inline-block;background:var(--lime-bg);color:var(--lime);
+  font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border-radius:var(--r-pill);margin-top:3px}
+.testi-stars{display:flex;gap:1px}
+.testi-star{color:var(--lime);font-size:12px}
+.testi-q{font-size:13px;color:var(--t3);line-height:1.68;font-style:italic;
+  border-left:1.5px solid var(--lime-bdr);padding-left:12px}
+.testi-ft{display:flex;justify-content:space-between;align-items:center;
+  padding-top:12px;border-top:0.5px solid var(--sep)}
+.testi-country{font-size:11px;color:var(--t4)}
+.testi-ok{font-size:10.5px;color:var(--lime);font-weight:500;
+  display:flex;align-items:center;gap:4px}
+
+/* ─── PRICING ─── */
+.price-note{background:var(--bg-card);border:0.5px solid var(--lime-bdr);
+  border-radius:var(--r-md);padding:14px 18px;margin-bottom:36px;
+  font-size:13px;color:var(--t2);line-height:1.6;max-width:600px}
+.price-note strong{color:var(--lime);font-weight:600}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.5px;
+  background:var(--border);border-radius:var(--r-lg);overflow:hidden}
+.plan{background:var(--bg-card);padding:28px 22px;
+  display:flex;flex-direction:column;transition:background .18s}
+.plan:hover{background:var(--bg-hover)}
+.plan.best{background:var(--bg-hover);position:relative}
+.plan.best::before{content:'';position:absolute;top:0;left:0;right:0;height:1.5px;background:var(--lime)}
+.plan-label{font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--lime);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.plan-pop{background:var(--lime);color:#000;font-size:9px;font-weight:700;
+  padding:2px 7px;border-radius:var(--r-pill);letter-spacing:.04em}
+.plan-price{font-size:38px;font-weight:700;color:var(--t1);line-height:1;
+  letter-spacing:-.05em;margin-bottom:2px}
+.plan-price small{font-size:14px;font-weight:400;color:var(--t3);letter-spacing:0}
+.plan-period{font-size:11.5px;color:var(--t4);margin-bottom:4px}
+.plan-save{font-size:11.5px;color:var(--lime);font-weight:500;min-height:16px;margin-bottom:14px}
+.plan-desc{font-size:13px;color:var(--t3);line-height:1.55;margin-bottom:18px}
+.plan-hr{height:0.5px;background:var(--sep);margin-bottom:16px}
+.plan-feats{list-style:none;display:flex;flex-direction:column;gap:8px;flex:1;margin-bottom:22px}
+.plan-feats li{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--t3)}
+.pf-y{width:15px;height:15px;border-radius:50%;flex-shrink:0;
+  background:var(--lime-bg);border:0.5px solid var(--lime-bdr);
+  display:flex;align-items:center;justify-content:center}
+.pf-y svg{stroke:var(--lime)}
+.pf-n{width:15px;height:15px;border-radius:50%;flex-shrink:0;
+  background:none;border:0.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center}
+.pf-n svg{stroke:var(--t4)}
+.plan-btn{font-family:var(--font);font-size:13px;font-weight:600;
+  padding:10px;border-radius:var(--r-pill);border:none;cursor:pointer;
+  text-align:center;display:block;text-decoration:none;transition:opacity .15s}
+.plan-btn.lime{background:var(--lime);color:#000}
+.plan-btn.lime:hover{opacity:.87}
+.plan-btn.ghost{background:none;color:var(--t3);border:0.5px solid var(--border)}
+.plan-btn.ghost:hover{color:var(--t1);border-color:var(--border-hi)}
+
+/* ─── FAQ ─── */
+.faq-layout{display:grid;grid-template-columns:1fr 580px;gap:64px;align-items:start}
+.faq-list{display:flex;flex-direction:column}
+.faq-item{border-bottom:0.5px solid var(--sep)}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;font-family:inherit;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:16px 0;text-align:left;font-size:14px;font-weight:500;
+  color:var(--t2);transition:color .15s}
+.faq-q:hover{color:var(--t1)}
+.faq-plus{width:22px;height:22px;border:0.5px solid var(--border);border-radius:50%;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  color:var(--t4);transition:all .2s}
+.faq-item.open .faq-plus{background:var(--lime-bg);border-color:var(--lime-bdr);
+  color:var(--lime);transform:rotate(45deg)}
+.faq-item.open .faq-q{color:var(--t1)}
+.faq-a{font-size:13.5px;color:var(--t3);line-height:1.7;max-height:0;overflow:hidden;
+  transition:max-height .3s ease,padding-bottom .3s}
+.faq-item.open .faq-a{max-height:180px;padding-bottom:16px}
+
+/* ─── CTA FINAL ─── */
+.cta-final{padding:88px 28px;text-align:center;position:relative;overflow:hidden}
+.cta-dots{position:absolute;inset:0;pointer-events:none;
+  mask-image:radial-gradient(ellipse 50% 60% at 50% 50%, black 10%,transparent 80%)}
+.cta-inner{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.cta-eyebrow{display:inline-flex;align-items:center;gap:7px;
+  background:var(--lime-bg);border:0.5px solid var(--lime-bdr);
+  color:var(--lime);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;padding:5px 12px;border-radius:var(--r-pill);margin-bottom:20px}
+.cta-title{font-size:clamp(32px,5vw,52px);font-weight:700;color:var(--t1);
+  line-height:1.08;letter-spacing:-.04em;margin-bottom:14px}
+.cta-title .lime{color:var(--lime)}
+.cta-sub{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:28px}
+.cta-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cta-note{font-size:11.5px;color:var(--t4);margin-top:14px}
+
+/* ─── FOOTER ─── */
+.cg-foot{border-top:0.5px solid var(--sep);padding:24px 28px}
+.cg-foot-inner{max-width:var(--max-w);margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:28px}
+.f-brand-name{font-size:13.5px;font-weight:600;color:var(--t1);letter-spacing:-.02em;
+  display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.f-brand-mark{background:var(--lime);color:#000;font-size:9px;font-weight:700;
+  padding:3px 7px;border-radius:3px;letter-spacing:.05em;text-transform:uppercase}
+.f-desc{font-size:12px;color:var(--t4);line-height:1.65;max-width:220px}
+.f-col-title{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--t4);margin-bottom:12px}
+.f-links{list-style:none;display:flex;flex-direction:column;gap:7px}
+.f-links a{font-size:12.5px;color:var(--t3);transition:color .15s}
+.f-links a:hover{color:var(--t1)}
+.f-bottom{max-width:var(--max-w);margin:0 auto;padding-top:18px;
+  border-top:0.5px solid var(--sep);
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11.5px;color:var(--t4);flex-wrap:wrap;gap:8px}
+.f-bottom a{color:var(--t4);transition:color .15s}
+.f-bottom a:hover{color:var(--t2)}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.06s}.d2{transition-delay:.12s}.d3{transition-delay:.18s}.d4{transition-delay:.24s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .cg-nav{display:none}
+  .nav-toggle{display:flex;align-items:center;justify-content:center}
+  .hero-inner,.demo-layout,.faq-layout{grid-template-columns:1fr}
+  .hero-mockup,.full-mock{display:none}
+  .pain-grid{grid-template-columns:1fr 1fr}
+  .testi-grid{grid-template-columns:1fr 1fr}
+  .plans-grid{grid-template-columns:1fr}
+  .compare-wrap{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .hero-proof{grid-template-columns:repeat(2,1fr)}
+  .cg-foot-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .hero{padding:52px 20px 48px}
+  .sec{padding:36px 20px}
+  .cg-head-inner{padding:0 20px}
+  h1.hero-title{font-size:34px}
+  .sec-h{font-size:26px}
+  .cg-foot-inner{grid-template-columns:1fr;gap:24px}
+  .logos-strip{padding:14px 20px}
+  .logos-row{gap:16px}
+  .cta-final{padding:56px 20px}
+  .cg-foot{padding:24px 20px}
+  .compare-wrap{grid-template-columns:1fr}
+  .plans-grid{grid-template-columns:1fr}
+  .hero-proof{grid-template-columns:repeat(2,1fr)}
+
+  /* ── FIX PRICING INLINE OVERRIDE ── */
+  #plans-grid-main{
+    grid-template-columns:1fr !important;
+    max-width:100% !important;
+  }
+
+  /* ── LIME BANNER MOBILE ── */
+  .stats-bar{padding:14px 20px}
+  .stats-bar .stats-inner{
+    grid-template-columns:1fr !important;
+    gap:0 !important;
+    text-align:center;
+  }
+  .stats-bar .stats-inner > div{
+    border:none !important;
+    padding:7px 0 !important;
+  }
+  .stats-bar .stats-inner > div:nth-child(2){
+    border-top:1px solid rgba(0,0,0,0.12) !important;
+    border-bottom:1px solid rgba(0,0,0,0.12) !important;
+    font-size:12px !important;
+    padding:8px 4px !important;
+  }
+
+  /* ── PAIN CAROUSEL MOBILE ── */
+  .pain-grid{
+    display:flex !important;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    gap:12px;
+    padding:0 20px 16px;
+    margin:0 -20px;
+    scrollbar-width:none;
+  }
+  .pain-grid::-webkit-scrollbar{display:none}
+  .pain-cell{
+    flex:0 0 80vw;
+    scroll-snap-align:start;
+    border-radius:var(--r-md) !important;
+  }
+
+  /* ── TESTIMONIALS CAROUSEL MOBILE ── */
+  .testi-grid{
+    display:flex !important;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    gap:12px;
+    padding:0 20px 16px;
+    margin:0 -20px;
+    scrollbar-width:none;
+  }
+  .testi-grid::-webkit-scrollbar{display:none}
+  .testi-card{
+    flex:0 0 82vw;
+    scroll-snap-align:start;
+  }
+
+  /* ── PAIN CAROUSEL BACKGROUNDS ── */
+  .pain-grid{background:transparent !important}
+  .pain-cell{
+    background:#000 !important;
+    border:0.5px solid var(--border) !important;
+  }
+  .pain-cell:hover{background:#000 !important}
+  .pain-q{color:var(--t2) !important}
+  .pain-ans{color:var(--t3) !important}
+
+  /* ── TESTIMONIALS CAROUSEL BACKGROUNDS ── */
+  .testi-grid{background:transparent !important}
+  .testi-card{background:#000 !important}
+  .testi-card:hover{background:#000 !important}
+  .testi-q{color:var(--t3) !important}
+
+  /* ── CAROUSEL HINT DOTS ── */
+  .carousel-hint{
+    display:flex;
+    justify-content:center;
+    gap:5px;
+    margin-top:12px;
+  }
+  .carousel-hint span{
+    width:5px;height:5px;border-radius:50%;
+    background:var(--border);display:inline-block;
+  }
+  .carousel-hint span:first-child{background:var(--lime)}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<header class="cg-head">
+  <div class="cg-head-inner">
+    <a class="cg-logo" href="#">
+      <span class="cg-logo-name">Sustancia Pro ® | Clinical Hub</span>
+    </a>
+    <nav class="cg-nav">
+      <ul class="nav">
+        <li><a href="#producto">El producto</a></li>
+        <li><a href="#testimonios">Testimonios</a></li>
+        <li><a href="#precios">Precios</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="cg-actions">
+      <button class="nav-toggle" id="navToggle" aria-label="Menú">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <a class="cg-btn-ghost" href="#">Ingresar</a>
+      <a class="cg-btn" href="#precios">Comenzar</a>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#producto">El producto</a>
+    <a href="#testimonios">Testimonios</a>
+    <a href="#precios">Precios</a>
+    <a href="#faq">FAQ</a>
+    <a href="#precios" style="color:var(--lime);font-weight:600">Comenzar →</a>
+  </div>
+</header>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-dot-field">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="dp" x="0" y="0" width="26" height="26" patternUnits="userSpaceOnUse">
+        <circle cx="3" cy="3" r="1.5" fill="rgba(173,220,0,0.18)"/>
+      </pattern></defs>
+      <rect width="100%" height="100%" fill="url(#dp)"/>
+    </svg>
+  </div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="hero-pulse"></span>
+        Clinical Hub · Por Sustancia Pro ®
+      </div>
+      <h1 class="hero-title">
+        La guía correcta,<br>
+        <span class="lime">a 2 clics</span>
+      </h1>
+      <p class="hero-sub">
+        <strong>Guías clínicas internacionales en español,</strong> unificadas, siempre actualizadas y con tips de aplicabilidad. Para el médico que necesita la respuesta ahora — sin Google, sin pestañas, sin traducir.
+      </p>
+      <div class="hero-actions">
+        <a href="#precios" class="btn-lime">Suscribirme</a>
+        <a href="#producto" class="btn-ghost">Ver el producto</a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-item">
+          <div class="proof-n">11 Guías</div>
+          <div class="proof-l">Inicialmente</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-n">+ 30 Guías</div>
+          <div class="proof-l">El 1 julio</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-n">100%</div>
+          <div class="proof-l">En español</div>
+        </div>
+        <div class="proof-item">
+          <div class="proof-n">2 clics</div>
+          <div class="proof-l">De distancia</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero mockup — animated RSI demo -->
+    <div class="hero-mockup" style="overflow:hidden;padding:0;position:relative">
+
+      <!-- ── BROWSE SCREEN ── -->
+      <div id="hm-browse-screen" style="position:absolute;inset:0;background:#000;z-index:20;display:flex;flex-direction:column;opacity:1;transition:opacity .5s ease">
+
+        <!-- Nav -->
+        <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:10px;height:40px;flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <div style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:.05em;line-height:1">CH</div>
+            <span style="font-size:10px;font-weight:600;color:var(--t2);letter-spacing:.04em">Clinical Hub</span>
+          </div>
+          <div style="flex:1;position:relative">
+            <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:5px 10px 5px 28px">
+              <svg style="position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.2" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f5f5f5" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span style="font-size:10px;color:#3a3a3c;letter-spacing:.02em">Buscar guía…</span>
+            </div>
+          </div>
+          <div style="background:var(--lime);color:#000;font-size:9px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0;letter-spacing:.03em">Mi cuenta</div>
+        </div>
+
+        <!-- Category pills -->
+        <div style="padding:8px 12px;display:flex;gap:5px;border-bottom:0.5px solid #1c1c1e;flex-shrink:0">
+          <span style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase">Todas</span>
+          <span style="color:#6c6c70;font-size:8px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Cardio</span>
+          <span style="color:#6c6c70;font-size:8px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Infecto</span>
+          <span style="color:#6c6c70;font-size:8px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">General</span>
+          <span style="color:#6c6c70;font-size:8px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Endocrino</span>
+        </div>
+
+        <!-- Guide list (overflow hidden, inner scrolls via JS) -->
+        <div style="flex:1;overflow:hidden;position:relative">
+          <div id="hm-guide-list" style="will-change:transform">
+
+            <!-- helper macro: each row -->
+            <!-- 1. Sepsis -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#bf5af2;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">Sepsis</span>
+              <span style="background:rgba(191,90,242,.1);color:#bf5af2;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Infecto</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 2. SCA -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#ff453a;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">SCA — Síndrome Coronario Agudo</span>
+              <span style="background:rgba(255,69,58,.09);color:#ff453a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Cardio</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 3. Asma -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0a84ff;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">Asma</span>
+              <span style="background:rgba(10,132,255,.1);color:#0a84ff;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">General</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 4. EPOC -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0a84ff;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">EPOC</span>
+              <span style="background:rgba(10,132,255,.1);color:#0a84ff;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">General</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 5. NAC -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#bf5af2;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Neumonía adquirida en comunidad</span>
+              <span style="background:rgba(191,90,242,.1);color:#bf5af2;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Infecto</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 6. Shock -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#ff453a;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">¿Y si se me "choquea" el paciente? <span style="color:#3a3a3c">#Nervios</span></span>
+              <span style="background:rgba(255,69,58,.09);color:#ff453a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Shock</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 7. Arritmias -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#ff453a;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Bradiarritmias y taquiarritmias en urgencias</span>
+              <span style="background:rgba(255,69,58,.09);color:#ff453a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Cardio</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 8. Diabetes -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#32d74b;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">Diabetes y descompensaciones</span>
+              <span style="background:rgba(50,215,75,.08);color:#32d74b;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Endocrino</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 9. ACV -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0a84ff;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">ACV — Accidente Cerebrovascular</span>
+              <span style="background:rgba(10,132,255,.1);color:#0a84ff;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Neuro</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 10. RCCP -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#ff9f0a;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">RCCP — Reanimación Cardiopulmonar</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 11. SIR/IOT -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px">
+              <div style="width:5px;height:5px;border-radius:50%;background:var(--lime);flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">SIR / IOT — Intubación de Emergencia</span>
+              <span style="background:rgba(173,220,0,.08);color:var(--lime);font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">General</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+          </div>
+          <!-- fade mask at bottom -->
+          <div style="position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,#000);pointer-events:none"></div>
+        </div>
+      </div>
+
+      <!-- ── SEARCH SCREEN ── -->
+      <div id="hm-search-screen" style="position:absolute;inset:0;background:#000;z-index:10;display:flex;flex-direction:column;opacity:0;transition:opacity .5s ease">
+
+        <!-- Search nav -->
+        <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:10px;height:40px;flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <div style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:.05em;line-height:1">CH</div>
+            <span style="font-size:10px;font-weight:600;color:var(--t2);letter-spacing:.04em">Clinical Hub</span>
+          </div>
+          <div style="flex:1;position:relative">
+            <div style="background:#181818;border:0.5px solid #3a3a3a;border-radius:6px;padding:5px 10px 5px 28px;display:flex;align-items:center;gap:6px;transition:border-color .2s" id="hm-searchbox">
+              <svg style="position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.35" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f5f5f5" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span id="hm-search-text" style="font-size:10px;color:var(--t1);font-family:monospace;letter-spacing:.02em"></span>
+              <span id="hm-cursor" style="display:inline-block;width:1px;height:11px;background:var(--lime);margin-left:1px;animation:blink .8s step-end infinite"></span>
+            </div>
+          </div>
+          <div style="background:var(--lime);color:#000;font-size:9px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0;letter-spacing:.03em">Mi cuenta</div>
+        </div>
+
+        <!-- Category pills -->
+        <div style="padding:10px 12px;display:flex;gap:6px;border-bottom:0.5px solid #1c1c1e;flex-shrink:0">
+          <span style="background:var(--lime);color:#000;font-size:8.5px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase">Todas</span>
+          <span style="background:none;color:#6c6c70;font-size:8.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Cardio</span>
+          <span style="background:none;color:#6c6c70;font-size:8.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Infecto</span>
+          <span style="background:none;color:#6c6c70;font-size:8.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">General</span>
+        </div>
+
+        <!-- Search results (hidden until typed) -->
+        <div id="hm-results" style="flex:1;padding:10px 12px;opacity:0;transition:opacity .35s ease">
+
+          <!-- Result card -->
+          <div style="font-size:8px;font-weight:700;color:#3a3a3c;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">1 resultado</div>
+          <div id="hm-result-card" style="background:#111;border:0.5px solid #252525;border-radius:8px;padding:10px 12px;cursor:pointer;transition:border-color .2s,background .2s">
+            <div style="display:flex;align-items:flex-start;gap:9px">
+              <div style="width:28px;height:28px;border-radius:6px;background:var(--lime-bg);border:0.5px solid var(--lime-bdr);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#addc00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:10.5px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:3px">Secuencia de Intubación Orotraqueal de Emergencia (RSI)</div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px">
+                  <span style="background:rgba(10,132,255,.1);color:#0a84ff;font-size:7.5px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">General</span>
+                  <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7.5px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+                </div>
+                <div style="font-size:9px;color:#6c6c70">SCCM 2023 · DAS 2025 · AHA ACLS 2025</div>
+              </div>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── GUIDE SCREEN ── -->
+      <div id="hm-guide-screen" style="opacity:0;transition:opacity .5s ease">
+
+      <!-- App nav bar -->
+      <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:0;height:40px">
+        <div style="display:flex;align-items:center;gap:6px;margin-right:14px;flex-shrink:0">
+          <div style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:.05em;line-height:1">CH</div>
+          <span style="font-size:10px;font-weight:600;color:var(--t2);letter-spacing:.04em">Clinical Hub</span>
+        </div>
+        <div id="hm-tab-seq" style="font-size:9.5px;font-weight:600;color:var(--lime);padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid var(--lime);letter-spacing:.04em;text-transform:uppercase;cursor:default">Secuencia</div>
+        <div id="hm-tab-pharma" style="font-size:9.5px;font-weight:600;color:#3a3a3c;padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid transparent;letter-spacing:.04em;text-transform:uppercase;cursor:default;transition:all .25s">Farmacología</div>
+        <div id="hm-tab-score" style="font-size:9.5px;font-weight:600;color:#3a3a3c;padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid transparent;letter-spacing:.04em;text-transform:uppercase;cursor:default;transition:all .25s">Scores</div>
+      </div>
+
+      <!-- Dose calculator bar -->
+      <div id="hm-calc" style="background:#111;border-bottom:0.5px solid #252525;padding:8px 14px;display:flex;align-items:center;gap:12px">
+        <div>
+          <div style="font-size:8px;font-weight:700;color:#3a3a3c;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">Calculadora de Dosis</div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <div style="background:#181818;border:0.5px solid #3a3a3a;color:var(--lime);font-size:15px;font-weight:500;width:52px;padding:4px 8px;border-radius:6px;text-align:center;font-family:monospace" id="hm-weight">70</div>
+            <span style="font-size:10px;color:#6c6c70;font-weight:600">kg</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-left:auto">
+          <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:5px 10px;min-width:110px">
+            <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#6c6c70;margin-bottom:2px">Etomidato (0.3)</div>
+            <div style="font-family:monospace;font-size:12px;font-weight:500;color:var(--lime)" id="hm-etomidato">21.0 mg</div>
+          </div>
+          <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:5px 10px;min-width:110px">
+            <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#6c6c70;margin-bottom:2px">Succinilcolina (1.5)</div>
+            <div style="font-family:monospace;font-size:12px;font-weight:500;color:var(--lime)" id="hm-succi">105.0 mg</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guide header -->
+      <div style="padding:10px 14px 8px;background:#0e0e0e;border-bottom:0.5px solid #252525">
+        <div style="font-size:11px;font-weight:700;color:var(--t1);letter-spacing:.02em;margin-bottom:3px">SECUENCIA DE INTUBACIÓN OROTRAQUEAL DE EMERGENCIA (RSI)</div>
+        <div style="font-size:8.5px;color:#3a3a3c;letter-spacing:.03em">Algoritmo Maestro Consolidado · SCCM 2023 · DAS 2025 · AHA ACLS 2025</div>
+      </div>
+
+      <!-- Steps -->
+      <div style="overflow:hidden">
+
+        <!-- Step 0 -->
+        <div class="hm-step" id="hm-s0" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm-sh0" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">0</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Evaluación y Decisión — ¿Indicar RSI?</span>
+            <span class="hm-tog" id="hm-tog0" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm-sb0" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+                <div style="background:rgba(50,215,75,.06);border:0.5px solid rgba(50,215,75,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#32d74b;margin-bottom:5px">Sin dificultad anticipada</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">→ Plan A / RSI estándar</div>
+                  <div style="font-size:9.5px;color:#6c6c70;margin-top:3px">Mallampati · dist. tiro-mentoniana · apertura bucal</div>
+                </div>
+                <div style="background:rgba(255,159,10,.06);border:0.5px solid rgba(255,159,10,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#ff9f0a;margin-bottom:5px">⚠ Dificultad anticipada</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">→ Considerar IPA</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:3px;font-style:italic">"Never sedate an airway you cannot rescue"</div>
+                </div>
+              </div>
+              <div style="font-size:8.5px;color:#3a3a3c;font-style:italic">DAS 2025 ATI · SCCM 2023</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="hm-step" id="hm-s1" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm-sh1" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Preparación — Lista de Verificación Pre-RSI</span>
+            <span class="hm-tog" id="hm-tog1" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm-sb1" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+                <div style="background:rgba(10,132,255,.06);border:0.5px solid rgba(10,132,255,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#0a84ff;margin-bottom:5px">Equipamiento</div>
+                  <ul style="padding-left:12px;font-size:10px;color:#8e8e93;line-height:1.6">
+                    <li><strong style="color:var(--t1)">Videolaringoscopio</strong> + DL respaldo</li>
+                    <li>Bougie / estilete formado</li>
+                    <li>DSG listo — Plan B</li>
+                    <li><strong style="color:var(--t1)">Kit eFONA accesible</strong></li>
+                  </ul>
+                </div>
+                <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8e8e93;margin-bottom:5px">Monitoreo y Acceso</div>
+                  <ul style="padding-left:12px;font-size:10px;color:#8e8e93;line-height:1.6">
+                    <li><strong style="color:var(--t1)">Capnografía OPERATIVA</strong></li>
+                    <li>Aspiración funcional</li>
+                    <li>Acceso IV / IO confirmado</li>
+                    <li>Monitoreo BNM cuantitativo</li>
+                  </ul>
+                </div>
+              </div>
+              <div style="font-size:8.5px;color:#3a3a3c;font-style:italic">DAS 2025 Fig.2 · SCCM 2023 Best Practice (Rec. 4)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="hm-step" id="hm-s2" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm-sh2" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Posicionamiento del Paciente</span>
+            <span class="hm-tog" id="hm-tog2" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm-sb2" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+                <div style="background:rgba(50,215,75,.06);border:0.5px solid rgba(50,215,75,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#32d74b;margin-bottom:5px">✓ Estándar — Semi-Fowler 20–30°</div>
+                  <ul style="padding-left:12px;font-size:10px;color:#8e8e93;line-height:1.6">
+                    <li>Cabeza <strong style="color:var(--t1)">y</strong> torso inclinados</li>
+                    <li>↑ Capacidad residual funcional</li>
+                    <li>↓ Riesgo aspiración pasiva</li>
+                    <li>Posición "sniffing" complementaria</li>
+                  </ul>
+                </div>
+                <div style="background:rgba(255,159,10,.06);border:0.5px solid rgba(255,159,10,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#ff9f0a;margin-bottom:5px">⚠ Excepciones</div>
+                  <ul style="padding-left:12px;font-size:10px;color:#8e8e93;line-height:1.6">
+                    <li><strong style="color:var(--t1)">Inmovilización cervical</strong></li>
+                    <li><strong style="color:var(--t1)">Shock profundo</strong></li>
+                    <li>Obeso mórbido: posición "rampa"</li>
+                  </ul>
+                </div>
+              </div>
+              <div style="font-size:8.5px;color:#3a3a3c;font-style:italic">SCCM 2023 Rec. 1 — condicional, evidencia muy baja</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="hm-step" id="hm-s3" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm-sh3" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Preoxigenación</span>
+            <span class="hm-tog" id="hm-tog3" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm-sb3" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:6px">
+                <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:7px 9px">
+                  <div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8e8e93;margin-bottom:4px">Sin hipoxemia</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">Mascarilla 100% O₂</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">× 3–5 min</div>
+                </div>
+                <div style="background:rgba(255,159,10,.06);border:0.5px solid rgba(255,159,10,.2);border-radius:6px;padding:7px 9px">
+                  <div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#ff9f0a;margin-bottom:4px">PaO₂/FiO₂ &lt;150</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">VMNI preferida</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">SCCM 2023 Rec. 2</div>
+                </div>
+                <div style="background:rgba(10,132,255,.06);border:0.5px solid rgba(10,132,255,.2);border-radius:6px;padding:7px 9px">
+                  <div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#0a84ff;margin-bottom:4px">Agitación</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">Ketamina disociativa</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">SCCM 2023 Rec. 3</div>
+                </div>
+              </div>
+              <div style="background:rgba(173,220,0,.06);border:0.5px solid rgba(173,220,0,.18);border-radius:5px;padding:6px 9px">
+                <div style="font-size:9.5px;color:var(--lime);font-weight:500">→ Mantener HFNO activo durante laringoscopia (oxigenación apneica)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="hm-step" id="hm-s4" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm-sh4" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Medicación RSI — Inducción + BNM</span>
+            <span class="hm-tog" id="hm-tog4" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm-sb4" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+                <div style="background:rgba(173,220,0,.06);border:0.5px solid rgba(173,220,0,.22);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--lime);margin-bottom:5px">Inductor 1ª línea</div>
+                  <div style="font-size:11px;font-weight:700;color:var(--t1)">Etomidato</div>
+                  <div style="font-family:monospace;font-size:11px;color:var(--lime);margin-top:2px" id="hm-etomidato2">21.0 mg IV</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">0.3 mg/kg · Hemodinámica estable</div>
+                </div>
+                <div style="background:rgba(173,220,0,.06);border:0.5px solid rgba(173,220,0,.22);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--lime);margin-bottom:5px">BNM 1ª línea</div>
+                  <div style="font-size:11px;font-weight:700;color:var(--t1)">Succinilcolina</div>
+                  <div style="font-family:monospace;font-size:11px;color:var(--lime);margin-top:2px" id="hm-succi2">105.0 mg IV</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">1.5 mg/kg · Inicio &lt;60 s</div>
+                </div>
+              </div>
+              <div style="background:rgba(255,69,58,.09);border-top:1px solid rgba(255,69,58,.25);border-bottom:1px solid rgba(255,69,58,.25);padding:7px 10px;margin:0 -14px 8px -42px;display:flex;align-items:center;gap:8px">
+                <span style="font-size:14px">⚠</span>
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:#ff453a">Inductor SIEMPRE antes del BNM</div>
+                  <div style="font-size:9px;color:#8e8e93">SCCM 2023 Best Practice Statement</div>
+                </div>
+              </div>
+              <div style="font-size:8.5px;color:#3a3a3c;font-style:italic">SCCM 2023 Rec. 9 · DAS 2025 Rec. 8 · AHA 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="hm-step" id="hm-s5">
+          <div class="hm-sh" id="hm-sh5" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">5</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Plan A — Laringoscopia</span>
+            <span class="hm-tog" id="hm-tog5" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+        </div>
+
+      </div>
+
+      </div><!-- /hm-guide-screen -->
+
+      <div class="mock-footer">
+        <span class="mock-ft">Guías: <em>11 · creciendo</em></span>
+        <span class="mock-ft">Actualización: <em>Continua</em></span>
+      </div>
+    </div>
+
+    <style>
+    .hm-sh:hover { background: #181818 }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    </style>
+
+    <script>
+    (function(){
+      function w(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+
+      /* ── Browse helpers ── */
+      async function scrollBrowse(){
+        var list = document.getElementById('hm-guide-list');
+        var container = list.parentElement;
+        var maxScroll = list.scrollHeight - container.offsetHeight;
+        if(maxScroll <= 0) return;
+        // Scroll down slowly
+        var steps = 80;
+        var delay = 40;
+        for(var i=1;i<=steps;i++){
+          var pct = i/steps;
+          // ease in-out
+          var ease = pct < 0.5 ? 2*pct*pct : -1+(4-2*pct)*pct;
+          list.style.transform = 'translateY(-' + (ease * maxScroll) + 'px)';
+          await w(delay);
+        }
+        await w(600);
+        // Scroll back up
+        for(var j=steps;j>=0;j--){
+          var pct2 = j/steps;
+          var ease2 = pct2 < 0.5 ? 2*pct2*pct2 : -1+(4-2*pct2)*pct2;
+          list.style.transform = 'translateY(-' + (ease2 * maxScroll) + 'px)';
+          await w(delay);
+        }
+      }
+      async function transitionBrowseToSearch(){
+        var bs = document.getElementById('hm-browse-screen');
+        var ss = document.getElementById('hm-search-screen');
+        ss.style.opacity = '1';
+        bs.style.opacity = '0';
+        await w(550);
+        bs.style.display = 'none';
+      }
+      function resetBrowse(){
+        var bs = document.getElementById('hm-browse-screen');
+        var list = document.getElementById('hm-guide-list');
+        list.style.transform = 'translateY(0)';
+        bs.style.opacity = '1';
+        bs.style.display = 'flex';
+      }
+
+      /* ── Search helpers ── */
+      async function typeSearch(text){
+        var el = document.getElementById('hm-search-text');
+        var box = document.getElementById('hm-searchbox');
+        box.style.borderColor = 'var(--lime)';
+        el.textContent = '';
+        for(var i=0;i<text.length;i++){
+          el.textContent += text[i];
+          await w(160 + Math.random()*90);
+        }
+      }
+      async function showResults(){
+        document.getElementById('hm-results').style.opacity = '1';
+      }
+      async function hoverCard(){
+        var c = document.getElementById('hm-result-card');
+        c.style.borderColor = 'var(--lime)';
+        c.style.background = '#181818';
+      }
+      async function transitionToGuide(){
+        var ss = document.getElementById('hm-search-screen');
+        var gs = document.getElementById('hm-guide-screen');
+        gs.style.opacity = '1';
+        ss.style.opacity = '0';
+        await w(520);
+        ss.style.display = 'none';
+      }
+      function resetSearch(){
+        var ss = document.getElementById('hm-search-screen');
+        var gs = document.getElementById('hm-guide-screen');
+        var el = document.getElementById('hm-search-text');
+        var box = document.getElementById('hm-searchbox');
+        var r = document.getElementById('hm-results');
+        var c = document.getElementById('hm-result-card');
+        el.textContent = '';
+        box.style.borderColor = '#3a3a3a';
+        r.style.opacity = '0';
+        c.style.borderColor = '#252525';
+        c.style.background = '#111';
+        gs.style.opacity = '0';
+        ss.style.opacity = '0';
+        ss.style.display = 'flex';
+      }
+
+      /* ── Guide helpers ── */
+      function openStep(id){
+        var sb = document.getElementById('hm-sb'+id);
+        var tog = document.getElementById('hm-tog'+id);
+        var sh = document.getElementById('hm-sh'+id);
+        if(!sb) return;
+        sb.style.maxHeight = sb.scrollHeight + 300 + 'px';
+        if(tog) tog.style.transform = 'rotate(180deg)';
+        if(sh) sh.style.background = '#181818';
+      }
+      function closeStep(id){
+        var sb = document.getElementById('hm-sb'+id);
+        var tog = document.getElementById('hm-tog'+id);
+        var sh = document.getElementById('hm-sh'+id);
+        if(!sb) return;
+        sb.style.maxHeight = '0';
+        if(tog) tog.style.transform = 'rotate(0deg)';
+        if(sh) sh.style.background = '';
+      }
+      function setWeight(kg){
+        document.getElementById('hm-weight').textContent = kg;
+        document.getElementById('hm-etomidato').textContent = (kg*0.3).toFixed(1)+' mg';
+        document.getElementById('hm-succi').textContent = (kg*1.5).toFixed(1)+' mg';
+        document.getElementById('hm-etomidato2').textContent = (kg*0.3).toFixed(1)+' mg IV';
+        document.getElementById('hm-succi2').textContent = (kg*1.5).toFixed(1)+' mg IV';
+      }
+      function setTab(active){
+        ['seq','pharma','score'].forEach(function(t){
+          var el = document.getElementById('hm-tab-'+t);
+          if(!el) return;
+          el.style.color = t===active ? 'var(--lime)' : '#3a3a3c';
+          el.style.borderBottomColor = t===active ? 'var(--lime)' : 'transparent';
+        });
+      }
+      async function animWeight(target){
+        var cur = parseInt(document.getElementById('hm-weight').textContent);
+        var step = target > cur ? 1 : -1;
+        while(cur !== target){ cur += step; setWeight(cur); await w(40); }
+      }
+
+      async function loop(){
+        /* 1 — Reset everything */
+        resetBrowse();
+        resetSearch();
+        closeStep(0); closeStep(1); closeStep(2); closeStep(3); closeStep(4); closeStep(5);
+        setTab('seq'); setWeight(70);
+        await w(600);
+
+        /* 2 — Browse: scroll through guide list */
+        await scrollBrowse();
+        await w(500);
+
+        /* 3 — Transition browse → search */
+        await transitionBrowseToSearch();
+        await w(600);
+
+        /* 4 — Type query */
+        await typeSearch('RSI');
+        await w(500);
+
+        /* 5 — Show result */
+        await showResults();
+        await w(900);
+
+        /* 6 — Hover result */
+        await hoverCard();
+        await w(700);
+
+        /* 7 — Transition to guide */
+        await transitionToGuide();
+        await w(600);
+
+        /* 8 — Step animations */
+        openStep(0); await w(2000); closeStep(0); await w(350);
+        openStep(1); await w(2200); closeStep(1); await w(350);
+        openStep(2); await w(2000); closeStep(2); await w(350);
+        openStep(3); await w(2200); closeStep(3); await w(350);
+
+        await animWeight(85); await w(600);
+        openStep(4); await w(3000);
+
+        closeStep(4); await w(400);
+        setTab('pharma'); await w(1400);
+        setTab('seq'); await w(500);
+
+        await animWeight(70); await w(400);
+        openStep(5); await w(800); closeStep(5); await w(600);
+
+        loop();
+      }
+
+      loop();
+    })();
+    </script>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos-strip">
+  <div class="logos-inner">
+    <span class="strip-label">Sociedades incluidas</span>
+    <div class="logos-row">
+      <span class="soc">AHA</span><span class="soc">ESC</span><span class="soc">WHO</span>
+      <span class="soc">NICE</span><span class="soc">ACOG</span><span class="soc">IDSA</span>
+      <span class="soc">AAP</span><span class="soc">KDIGO</span><span class="soc">SSC</span>
+      <span class="soc">SCCM</span><span class="soc">DAS</span><span class="soc">ADA</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PARA QUIÉN ES ══ -->
+<section style="padding:56px 28px;border-bottom:0.5px solid var(--sep)">
+  <div style="max-width:var(--max-w);margin:0 auto">
+    <div style="text-align:center;margin-bottom:32px">
+      <div class="sec-tag" style="justify-content:center;display:inline-flex">¿Para quién es?</div>
+      <h2 class="sec-h" style="text-align:center;margin-top:10px">Hecho para el médico <span class="lime">en acción</span></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5px;background:var(--border);border-radius:var(--r-lg);overflow:hidden">
+
+      <!-- Practicante -->
+      <div style="background:var(--bg-card);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+        <div style="font-size:28px;margin-bottom:14px">📚</div>
+        <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Practicante</div>
+        <p style="font-size:13px;color:var(--t3);line-height:1.65">Estás en rotaciones y cada guardia es un examen. Clinical Hub te da el respaldo de las guías vigentes para actuar con seguridad y aprender desde la evidencia real.</p>
+        </div>
+
+      <!-- Médico general -->
+      <div style="background:var(--bg-card);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+        <div style="font-size:28px;margin-bottom:14px">🩺</div>
+        <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Médico general</div>
+        <p style="font-size:13px;color:var(--t3);line-height:1.65">Tienes pacientes de todo tipo. Clinical Hub te da el protocolo correcto, rápido, con su respaldo medicolegal. Sin improvisar.</p>
+        </div>
+
+      <!-- Residente -->
+      <div style="background:var(--bg-hover);padding:28px 24px;position:relative;transition:background .18s" onmouseover="this.style.background='#1e1e1e'" onmouseout="this.style.background='var(--bg-hover)'">
+        <div style="font-size:28px;margin-bottom:14px">🏥</div>
+        <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Residente</div>
+        <p style="font-size:13px;color:var(--t3);line-height:1.65">En guardia no hay tiempo para buscar. Tienes el algoritmo paso a paso con citas exactas — tu asistente clínico sin IA que alucina.</p>
+        </div>
+
+      <!-- Especialista -->
+      <div style="background:var(--bg-card);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+        <div style="font-size:28px;margin-bottom:14px">🔬</div>
+        <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Especialista</div>
+        <p style="font-size:13px;color:var(--t3);line-height:1.65">Manejas guías de tu especialidad con mucho detalle. Clinical Hub reconcilia AHA, ESC, NICE para ti y te alerta cuando hay nueva evidencia.</p>
+        </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner" style="grid-template-columns:auto 1fr auto;align-items:center;gap:32px;max-width:var(--max-w);margin:0 auto;padding:0">
+    <div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0">
+      <div style="font-size:28px;font-weight:700;color:#000;line-height:1;letter-spacing:-.04em">+30 guías</div>
+      <div style="font-size:11px;font-weight:700;color:rgba(0,0,0,.60);letter-spacing:.04em;text-transform:uppercase">1 Julio 2026</div>
+    </div>
+    <div style="font-size:13.5px;font-weight:500;color:rgba(0,0,0,.70);line-height:1.65;border-left:1.5px solid rgba(0,0,0,.15);border-right:1.5px solid rgba(0,0,0,.15);padding:0 28px">
+      Empezamos con las urgencias que más necesitas en la práctica clínica. La biblioteca crece cada mes — y los Founders tienen voz en lo que viene.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:3px;text-align:right;flex-shrink:0">
+      <div style="font-size:14px;font-weight:700;color:#000;line-height:1.2;letter-spacing:-.01em">Membresía Founders</div>
+      <div style="font-size:11px;font-weight:600;color:rgba(0,0,0,.58);letter-spacing:.02em">Disponible hasta el 1 de julio</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAIN ══ -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-tag">El problema</div>
+      <h2 class="sec-h">¿Te suena alguna<br>de estas situaciones?</h2>
+      <p class="sec-p">Estas son las dudas reales de médicos en su práctica diaria. Cada una tiene respuesta en Clinical Hub.</p>
+    </div>
+    <div class="pain-grid reveal">
+      <div class="pain-cell">
+        <p class="pain-q">No sé si lo que aprendí sigue siendo válido</p>
+        <p class="pain-a">La medicina cambia y releer guías completas no es realista. Te presentamos <strong>lo que importa</strong>, rápido, extraído de las últimas guías, para que te mantengas al día sin horas de lectura.</p>
+      </div>
+      <div class="pain-cell">
+        <p class="pain-q">Tengo una duda ahora y no tengo tiempo de buscarla</p>
+        <p class="pain-a">En urgencias, un minuto entre pacientes marca la diferencia. Diagnóstico, manejo y dosis estructurados para que llegues en <strong>dos clics</strong>. Sin leer documentos, sin esperar respuestas de IA.</p>
+      </div>
+      <div class="pain-cell">
+        <p class="pain-q">Hay tres guías de un mismo tema que no dicen lo mismo</p>
+        <p class="pain-a">Reconciliar AHA, ESC y NICE sobre un mismo tema puede tomar horas. Hacemos ese trabajo por ti: <strong>un abordaje unificado</strong> con cita exacta de cada fuente para que lo verifiques.</p>
+      </div>
+      <div class="pain-cell">
+        <p class="pain-q">Necesito justificar mi decisión ante el equipo o ante una reclamación</p>
+        <p class="pain-a">Actuar conforme a las guías vigentes es tu mejor argumento clínico y tu mejor protección medicolegal. Cada punto cita la <strong>guía, la organización y el año.</strong></p>
+      </div>
+      <div class="pain-cell">
+        <p class="pain-q">Uso IA pero no siempre sé si puedo confiar en la respuesta</p>
+        <p class="pain-a">La única forma de detectar una alucinación o una recomendación desactualizada es saber cuál es la guía vigente. Mantenerte actualizado <strong>te convierte en evaluador</strong> de las herramientas que usas.</p>
+      </div>
+      <div class="pain-cell">
+        <p class="pain-q">El contenido en inglés me genera dudas sobre si entendí bien</p>
+        <p class="pain-a">Todo en español, <strong>revisado por nuestro equipo médico</strong>. Sin riesgo de malinterpretar una recomendación por una traducción incorrecta o un término ambiguo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCT DEMO ══ -->
+<section class="sec" id="producto">
+  <div class="sec-inner">
+    <div class="reveal" style="margin-bottom:48px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end">
+      <div>
+        <div class="sec-tag">El producto</div>
+        <h2 class="sec-h">Así se ve <span class="lime">Clinical Hub</span></h2>
+      </div>
+      <p style="font-size:14px;color:var(--t3);line-height:1.7">No es un PDF, no es un blog. Es una plataforma estructurada para consulta rápida en la práctica clínica real. Esto es exactamente lo que ves cuando abres una guía.</p>
+    </div>
+    <div class="demo-layout">
+      <div class="demo-features">
+        <div class="demo-feat">
+          <div class="demo-feat-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div>
+            <div class="demo-feat-title">Algoritmo paso a paso</div>
+            <div class="demo-feat-body">Cada guía en pasos numerados: evaluación, preparación, medicación, plan A, plan B. Sin leer el documento completo.</div>
+          </div>
+        </div>
+        <div class="demo-feat">
+          <div class="demo-feat-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="demo-feat-title">Citas exactas por cada recomendación</div>
+            <div class="demo-feat-body">Cada punto incluye sociedad, documento y año. SCCM 2023 Rec. 9 · DAS 2025 · AHA 2025. Tu respaldo medicolegal siempre visible.</div>
+          </div>
+        </div>
+        <div class="demo-feat">
+          <div class="demo-feat-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div>
+            <div class="demo-feat-title">Tips de aplicabilidad clínica</div>
+            <div class="demo-feat-body">No solo el rango de dosis — el tip de cuándo y cómo usarla. Basado en evidencia y en la experiencia de clínicos con amplia trayectoria.</div>
+          </div>
+        </div>
+        <div class="demo-feat">
+          <div class="demo-feat-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.01-5.99"/></svg>
+          </div>
+          <div>
+            <div class="demo-feat-title">Siempre actualizado · Alertas automáticas</div>
+            <div class="demo-feat-body">Cuando la AHA o la SCCM actualizan una guía que tienes guardada, recibes notificación. Nunca más desactualizaciones silenciosas.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mockup tabs -->
+      <div class="full-mock reveal d1">
+        <div class="full-mock-bar">
+          <div class="fm-dot" style="background:#FF5F57"></div>
+          <div class="fm-dot" style="background:#FFBD2E"></div>
+          <div class="fm-dot" style="background:#28CA41"></div>
+          <div class="fm-tabs">
+            <button class="fm-tab active" onclick="switchFm('alg',this)">Algoritmo</button>
+            <button class="fm-tab" onclick="switchFm('drugs',this)">Fármacos</button>
+            <button class="fm-tab" onclick="switchFm('err',this)">Errores</button>
+          </div>
+        </div>
+        <div class="fm-body">
+          <!-- ALGORITHM -->
+          <div class="fm-panel active" id="fm-alg">
+            <div class="fm-guide-hd">
+              <div class="fm-guide-name">RSI — Intubación de Emergencia</div>
+              <div class="fm-srcs">
+                <span class="fm-src" style="background:var(--lime-bg);color:var(--lime)">SCCM 2023</span>
+                <span class="fm-src" style="background:rgba(74,158,255,.09);color:#4A9EFF">DAS 2025</span>
+                <span class="fm-src" style="background:rgba(255,176,32,.09);color:#FFB020">AHA 2025</span>
+              </div>
+            </div>
+            <div class="fm-row">
+              <div class="fm-row-num">1</div>
+              <div><div class="fm-row-name">Preparación pre-RSI</div><div class="fm-row-body">VL + DL respaldo · Bougie · DSG · Kit eFONA · Capnografía operativa — DAS 2025 Fig.2</div></div>
+            </div>
+            <div class="fm-row">
+              <div class="fm-row-num">2</div>
+              <div><div class="fm-row-name">Posicionamiento Semi-Fowler 20–30°</div><div class="fm-row-body">Cabeza Y torso. ↑ CRF → ↑ tiempo apnea segura — SCCM 2023 Rec.1</div></div>
+            </div>
+            <div class="fm-row hl">
+              <div class="fm-row-num">4</div>
+              <div>
+                <div class="fm-row-name">Medicación RSI</div>
+                <div class="fm-row-body">Inductor OBLIGATORIO antes del BNM. Etomidato 0.2–0.3 mg/kg IV (1ª línea). Succinilcolina 1–1.5 mg/kg.</div>
+                <div class="fm-tip">★ NUNCA BNM sin inductor — SCCM 2023 Best Practice Statement</div>
+              </div>
+            </div>
+            <div class="fm-row">
+              <div class="fm-row-num">5</div>
+              <div><div class="fm-row-name">Plan A — Laringoscopia</div><div class="fm-row-body">Videolaringoscopio primera elección. Máx. 3 intentos → declarar falla — DAS 2025</div></div>
+            </div>
+          </div>
+          <!-- DRUGS -->
+          <div class="fm-panel" id="fm-drugs">
+            <div class="fm-guide-hd">
+              <div class="fm-guide-name">Tabla Farmacológica RSI</div>
+              <div class="fm-srcs">
+                <span class="fm-src" style="background:var(--lime-bg);color:var(--lime)">Inductores</span>
+                <span class="fm-src" style="background:rgba(74,158,255,.09);color:#4A9EFF">BNM</span>
+              </div>
+            </div>
+            <div class="fm-drug">
+              <div><div class="fm-drug-name">Etomidato</div><div class="fm-drug-note">1ª línea · Estabilidad hemodinámica · Bajo costo</div></div>
+              <div class="fm-drug-dose">0.2–0.3 mg/kg IV</div>
+            </div>
+            <div class="fm-drug">
+              <div><div class="fm-drug-name">Ketamina</div><div class="fm-drug-note">Broncoespasmo · Precarga-dependiente</div></div>
+              <div class="fm-drug-dose">1–2 mg/kg IV</div>
+            </div>
+            <div class="fm-drug">
+              <div><div class="fm-drug-name">Succinilcolina</div><div class="fm-drug-note">BNM 1ª línea · Duración corta 8–12 min</div></div>
+              <div class="fm-drug-dose">1.0–1.5 mg/kg IV</div>
+            </div>
+            <div class="fm-drug">
+              <div><div class="fm-drug-name">Rocuronio</div><div class="fm-drug-note">Si succinilcolina CI · Reversible con sugammadex</div></div>
+              <div class="fm-drug-dose">1.0–1.2 mg/kg IV</div>
+            </div>
+            <div class="fm-tip" style="margin-top:10px">★ TIP: Si usas rocuronio, sugammadex 16 mg/kg disponible de inmediato para rescate CICO — DAS 2025</div>
+          </div>
+          <!-- ERRORS -->
+          <div class="fm-panel" id="fm-err">
+            <div class="fm-guide-hd">
+              <div class="fm-guide-name">Errores a Evitar</div>
+              <div class="fm-srcs">
+                <span class="fm-src" style="background:rgba(255,50,50,.08);color:#ff6b6b">Crítico</span>
+              </div>
+            </div>
+            <div class="fm-err">
+              <div class="fm-err-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              <div class="fm-err-text"><strong>BNM sin inductor</strong> → conciencia con parálisis — SCCM 2023</div>
+            </div>
+            <div class="fm-err">
+              <div class="fm-err-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              <div class="fm-err-text"><strong>Propofol en paciente inestable</strong> → colapso CV y mortalidad — análisis INTUBE</div>
+            </div>
+            <div class="fm-err">
+              <div class="fm-err-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              <div class="fm-err-text"><strong>Más de 3 intentos</strong> sin cambiar técnica ni operador — DAS 2025</div>
+            </div>
+            <div class="fm-err">
+              <div class="fm-err-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              <div class="fm-err-text"><strong>Succinilcolina en hiperpotasemia</strong>, quemaduras >48h, lesión medular — SFAR 2017</div>
+            </div>
+            <div class="fm-err">
+              <div class="fm-err-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+              <div class="fm-err-text"><strong>Asumir posición ETT sin capnografía</strong> de onda — AHA ACLS 2025</div>
+            </div>
+          </div>
+        </div>
+        <div class="fm-footer">
+          <span class="fm-ft">Fuente: <em>SCCM 2023 · DAS 2025 · AHA 2025</em></span>
+          <span class="fm-ft" style="color:var(--lime)">Ver guía completa →</span>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-hint">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMPARE ══ -->
+<section class="sec" style="padding-top:0;border-top:none">
+  <div class="sec-inner">
+    <div class="reveal" style="margin-bottom:36px">
+      <div class="sec-tag">La diferencia</div>
+      <h2 class="sec-h">Sin Clinical Hub <span class="lime">vs.</span> con Clinical Hub</h2>
+    </div>
+    <div class="compare-wrap reveal">
+      <div class="compare-col">
+        <div class="compare-label red">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          Sin Clinical Hub
+        </div>
+        <div class="compare-item no"><span class="ci-icon ci-x"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>5 pestañas abiertas buscando lo mismo en distintas fuentes</div>
+        <div class="compare-item no"><span class="ci-icon ci-x"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Leer documentos de 80 páginas para encontrar una recomendación</div>
+        <div class="compare-item no"><span class="ci-icon ci-x"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Tres guías distintas que dicen parecido pero no igual</div>
+        <div class="compare-item no"><span class="ci-icon ci-x"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Aplicar una dosis dentro del rango sin saber cuál es la óptima</div>
+        <div class="compare-item no"><span class="ci-icon ci-x"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Usar una guía del 2019 sin saber que ya fue actualizada</div>
+        <div class="compare-item no"><span class="ci-icon ci-x"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>Dudar si entendiste bien una recomendación en inglés</div>
+      </div>
+      <div class="compare-col after">
+        <div class="compare-label green">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Con Clinical Hub
+        </div>
+        <div class="compare-item yes"><span class="ci-icon ci-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Una búsqueda, una plataforma, el resultado en segundos</div>
+        <div class="compare-item yes"><span class="ci-icon ci-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Algoritmo paso a paso — diagnóstico, manejo, dosis listos</div>
+        <div class="compare-item yes"><span class="ci-icon ci-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Abordaje unificado con cita exacta de cada fuente</div>
+        <div class="compare-item yes"><span class="ci-icon ci-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Tips de aplicabilidad basados en experiencia clínica real</div>
+        <div class="compare-item yes"><span class="ci-icon ci-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Alerta automática cuando una guía que usas se actualiza</div>
+        <div class="compare-item yes"><span class="ci-icon ci-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Todo en español, revisado por médicos. Cero ambigüedad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="sec" id="testimonios">
+  <div class="sec-inner">
+    <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:16px">
+      <div>
+        <div class="sec-tag">Testimonios</div>
+        <h2 class="sec-h">Lo que dicen los médicos<br>que <span class="lime">ya la usan</span></h2>
+      </div>
+      <a href="#precios" class="btn-lime">Unirme →</a>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal d1">
+        <div class="testi-top">
+          <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/26.jpg" alt="" onerror="this.style.display='none'">
+          <div>
+            <div class="testi-name">Valentina R.</div>
+            <div class="testi-role">Médico internista</div>
+          </div>
+        </div>
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-q">Antes tenía cinco pestañas abiertas en guardia. Ahora abro Clinical Hub, escribo lo que necesito y en segundos tengo la guía con la cita exacta. Es lo que debió existir desde siempre.</p>
+        <div class="testi-ft">
+          <span class="testi-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Suscriptora verificada</span>
+        </div>
+      </div>
+      <div class="testi-card reveal d2">
+        <div class="testi-top">
+          <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/41.jpg" alt="" onerror="this.style.display='none'">
+          <div>
+            <div class="testi-name">Andrés M.</div>
+            <div class="testi-role">Médico de urgencias</div>
+          </div>
+        </div>
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-q">En urgencias no hay tiempo para esperar que una IA formule su respuesta. Lo que más valoro es que está en español real y que cada punto tiene su cita. Eso da confianza real para actuar.</p>
+        <div class="testi-ft">
+          <span class="testi-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Suscriptor verificado</span>
+        </div>
+      </div>
+      <div class="testi-card reveal d3">
+        <div class="testi-top">
+          <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/57.jpg" alt="" onerror="this.style.display='none'">
+          <div>
+            <div class="testi-name">Carolina F.</div>
+            <div class="testi-role">Cardióloga</div>
+          </div>
+        </div>
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-q">La alerta de actualización me salvó. Llevaba meses con un protocolo que ya tenía nueva evidencia. Me avisó, actualicé mi práctica ese mismo día. Ninguna otra herramienta hace eso.</p>
+        <div class="testi-ft">
+          <span class="testi-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Suscriptora verificada</span>
+        </div>
+      </div>
+      <div class="testi-card reveal d1">
+        <div class="testi-top">
+          <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/22.jpg" alt="" onerror="this.style.display='none'">
+          <div>
+            <div class="testi-name">Santiago H.</div>
+            <div class="testi-role">Residente de medicina interna</div>
+          </div>
+        </div>
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-q">Nos enseñaron a usar UpToDate — carísimo y en inglés. Clinical Hub cubre lo que necesito en la práctica real. Y a diferencia de la IA, sé exactamente de dónde sale cada recomendación.</p>
+        <div class="testi-ft">
+          <span class="testi-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Suscriptor verificado</span>
+        </div>
+      </div>
+      <div class="testi-card reveal d2">
+        <div class="testi-top">
+          <img class="testi-avatar" src="https://randomuser.me/api/portraits/women/33.jpg" alt="" onerror="this.style.display='none'">
+          <div>
+            <div class="testi-name">Mariana C.</div>
+            <div class="testi-role">Médico general</div>
+          </div>
+        </div>
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-q">Uso IA para resolver dudas clínicas, pero ahora puedo evaluar si la respuesta tiene sentido porque sé qué dice la guía vigente. Esa combinación cambió completamente mi práctica.</p>
+        <div class="testi-ft">
+          <span class="testi-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Suscriptora verificada</span>
+        </div>
+      </div>
+      <div class="testi-card reveal d3">
+        <div class="testi-top">
+          <img class="testi-avatar" src="https://randomuser.me/api/portraits/men/64.jpg" alt="" onerror="this.style.display='none'">
+          <div>
+            <div class="testi-name">Rafael M.</div>
+            <div class="testi-role">Especialista en nefrología</div>
+          </div>
+        </div>
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-q">Lo recomendé para todo el servicio. Ahora consultamos las mismas fuentes con las mismas recomendaciones. La homogeneidad en la práctica clínica del equipo mejoró notablemente.</p>
+        <div class="testi-ft">
+          <span class="testi-ok"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Suscriptor verificado</span>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-hint">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section class="sec" id="precios">
+  <div class="sec-inner">
+    <div class="reveal">
+      <div class="sec-tag">Precios</div>
+      <h2 class="sec-h">Un solo plan.<br><span class="lime">Dos precios</span> — por ahora.</h2>
+      <p class="sec-p">Suscríbete antes del 1 de julio y conserva el precio fundador de por vida, mientras permanezcas activo.</p>
+    </div>
+
+    <!-- Countdown founder -->
+    <div class="reveal" style="display:flex;align-items:center;justify-content:space-between;gap:20px;
+      padding:16px 20px;border-radius:var(--r-md);flex-wrap:wrap;
+      background:rgba(173,220,0,0.07);border:0.5px solid var(--lime-bdr);margin-bottom:32px">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--t1);margin-bottom:2px">
+          Precio para miembros fundadores — habilitado hasta el 1 de julio
+        </div>
+        <div style="font-size:12px;color:var(--t3)">
+          Después del 1 de julio el precio sube a <strong style="color:var(--t2)">$35.000/mes</strong>. Suscríbete ahora y no vuelve a subir para ti.
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+        <div style="text-align:center;background:var(--bg-card);border:0.5px solid var(--border);border-radius:6px;padding:6px 10px;min-width:48px">
+          <div id="pcd-d" style="font-size:22px;font-weight:700;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums">00</div>
+          <div style="font-size:8px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.07em;margin-top:2px">días</div>
+        </div>
+        <span style="font-size:18px;color:var(--t4);font-weight:700;margin-bottom:6px">:</span>
+        <div style="text-align:center;background:var(--bg-card);border:0.5px solid var(--border);border-radius:6px;padding:6px 10px;min-width:48px">
+          <div id="pcd-h" style="font-size:22px;font-weight:700;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums">00</div>
+          <div style="font-size:8px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.07em;margin-top:2px">horas</div>
+        </div>
+        <span style="font-size:18px;color:var(--t4);font-weight:700;margin-bottom:6px">:</span>
+        <div style="text-align:center;background:var(--bg-card);border:0.5px solid var(--border);border-radius:6px;padding:6px 10px;min-width:48px">
+          <div id="pcd-m" style="font-size:22px;font-weight:700;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums">00</div>
+          <div style="font-size:8px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.07em;margin-top:2px">min</div>
+        </div>
+        <span style="font-size:18px;color:var(--t4);font-weight:700;margin-bottom:6px">:</span>
+        <div style="text-align:center;background:var(--bg-card);border:0.5px solid var(--border);border-radius:6px;padding:6px 10px;min-width:48px">
+          <div id="pcd-s" style="font-size:22px;font-weight:700;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums">00</div>
+          <div style="font-size:8px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.07em;margin-top:2px">seg</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="plans-grid" id="plans-grid-main" style="grid-template-columns:1fr 1fr;max-width:700px">
+
+      <!-- FOUNDER -->
+      <div class="plan best reveal d1" style="padding:0;overflow:hidden">
+        <!-- Banner lima lanzamiento -->
+        <div style="background:var(--lime);padding:9px 22px;display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:12px;font-weight:700;color:#000;letter-spacing:.03em">Precio de lanzamiento</span>
+          <span style="font-size:10.5px;font-weight:600;color:rgba(0,0,0,0.55)">Solo hasta el 1 de julio</span>
+        </div>
+        <!-- Card body -->
+        <div style="padding:22px 22px 24px">
+        <div class="plan-label" style="display:flex;align-items:center;gap:8px">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--lime);animation:hpulse 1.8s ease-in-out infinite"></span>
+          Precio Fundador
+        </div>
+        <div class="plan-price">$19.000<small> COP</small></div>
+        <div class="plan-period">/ mes · precio bloqueado de por vida</div>
+        <div style="display:flex;align-items:center;gap:5px;margin:10px 0 14px">
+          <div style="text-align:center;background:rgba(173,220,0,0.10);border:0.5px solid var(--lime-bdr);border-radius:5px;padding:4px 7px;min-width:38px">
+            <div id="fc-d" style="font-size:16px;font-weight:700;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums">00</div>
+            <div style="font-size:7px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.06em;margin-top:1px">días</div>
+          </div>
+          <span style="font-size:13px;color:var(--t4);font-weight:700;margin-bottom:4px">:</span>
+          <div style="text-align:center;background:rgba(173,220,0,0.10);border:0.5px solid var(--lime-bdr);border-radius:5px;padding:4px 7px;min-width:38px">
+            <div id="fc-h" style="font-size:16px;font-weight:700;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums">00</div>
+            <div style="font-size:7px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.06em;margin-top:1px">horas</div>
+          </div>
+          <span style="font-size:13px;color:var(--t4);font-weight:700;margin-bottom:4px">:</span>
+          <div style="text-align:center;background:rgba(173,220,0,0.10);border:0.5px solid var(--lime-bdr);border-radius:5px;padding:4px 7px;min-width:38px">
+            <div id="fc-m" style="font-size:16px;font-weight:700;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums">00</div>
+            <div style="font-size:7px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.06em;margin-top:1px">min</div>
+          </div>
+          <span style="font-size:13px;color:var(--t4);font-weight:700;margin-bottom:4px">:</span>
+          <div style="text-align:center;background:rgba(173,220,0,0.10);border:0.5px solid var(--lime-bdr);border-radius:5px;padding:4px 7px;min-width:38px">
+            <div id="fc-s" style="font-size:16px;font-weight:700;color:var(--lime);line-height:1;font-variant-numeric:tabular-nums">00</div>
+            <div style="font-size:7px;font-weight:600;color:var(--t4);text-transform:uppercase;letter-spacing:.06em;margin-top:1px">seg</div>
+          </div>
+        </div>
+        <div class="plan-desc">Para los primeros en confiar en el proyecto. El precio se mantiene contigo mientras no canceles.</div>
+        <div class="plan-hr"></div>
+        <ul class="plan-feats">
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Acceso a todas las guías</li>
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Tips de aplicabilidad clínica</li>
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Alertas de actualización</li>
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Cualquier dispositivo</li>
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span><strong style="color:var(--lime)">Voto en guías prioritarias</strong></li>
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span><strong style="color:var(--lime)">Precio bloqueado de por vida</strong></li>
+        </ul>
+        <a href="#" class="plan-btn lime">Suscribirme — $19.000/mes →</a>
+        </div><!-- end card body -->
+      </div>
+
+      <!-- REGULAR -->
+      <div class="plan reveal d2">
+        <div class="plan-label" style="color:var(--t3)">Precio regular</div>
+        <div class="plan-price" style="color:var(--t2)">$35.000<small> COP</small></div>
+        <div class="plan-period">/ mes · a partir del 1 de julio</div>
+        <div class="plan-save" style="color:var(--t4)">Disponible cuando cierre el periodo fundador</div>
+        <div class="plan-desc">Acceso completo. Cancela cuando quieras, sin penalidades.</div>
+        <div class="plan-hr"></div>
+        <ul class="plan-feats">
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Acceso a todas las guías</li>
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Tips de aplicabilidad clínica</li>
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Alertas de actualización</li>
+          <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Cualquier dispositivo</li>
+          <li><span class="pf-n"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span><span style="color:var(--t4)">Voto en guías prioritarias</span></li>
+          <li><span class="pf-n"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span><span style="color:var(--t4)">Precio bloqueado de por vida</span></li>
+        </ul>
+        <a class="plan-btn ghost" style="cursor:default;opacity:.45">Próximamente</a>
+      </div>
+
+    </div>
+    <p style="font-size:12px;color:var(--t3);margin-top:16px;line-height:1.65">
+      ¿Institución, hospital o clínica? <a href="https://wa.me/57TUNUMERO" style="color:var(--lime);text-decoration:underline;text-underline-offset:3px">Escríbenos por WhatsApp</a> — manejamos acceso para equipos completos.
+    </p>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="sec" id="faq">
+  <div class="sec-inner">
+    <div class="faq-layout">
+      <div class="reveal">
+        <div class="sec-tag">FAQ</div>
+        <h2 class="sec-h">Preguntas<br><span class="lime">frecuentes</span></h2>
+        <p style="font-size:14px;color:var(--t3);line-height:1.7;margin-top:12px;margin-bottom:22px">¿No encuentras tu respuesta? Escríbenos por WhatsApp y respondemos en menos de 24 horas.</p>
+        <a href="https://wa.me/57TUNUMERO" class="btn-ghost">Escribir por WhatsApp →</a>
+      </div>
+      <div class="faq-list reveal d1">
+        <div class="faq-item">
+          <button class="faq-q">¿Las guías son de fuentes confiables?<span class="faq-plus"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-a">Sí. Todas provienen de sociedades científicas reconocidas: AHA, ESC, WHO, NICE, ACOG, IDSA, KDIGO, SCCM, DAS, entre otras. Cada recomendación cita la sociedad, el documento y el año para que puedas verificarlo directamente.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿En qué se diferencia de UpToDate o de una IA?<span class="faq-plus"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-a">UpToDate está en inglés y es considerablemente más costoso. Una IA puede alucinar y no siempre cita sus fuentes. Clinical Hub está 100% en español, revisado por médicos, cita cada recomendación con precisión y tiene tips de aplicabilidad que no da ninguna guía oficial. Además, puedes usar nuestra plataforma para evaluar si las respuestas de IA que ya usas son correctas o están desactualizadas.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Puedo cancelar en cualquier momento?<span class="faq-plus"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-a">Sí. La membresía es mensual y se cancela en cualquier momento. El acceso continúa hasta el final del período pagado. Sin penalidades, sin letras pequeñas.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Con qué frecuencia se actualizan las guías?<span class="faq-plus"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-a">Monitoreamos las publicaciones de todas las sociedades de forma continua. Cuando sale una actualización relevante, la incorporamos y enviamos una alerta a los suscriptores que tienen esa guía guardada en su biblioteca.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Funciona desde el celular en guardia?<span class="faq-plus"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-a">Ese es exactamente el caso de uso principal. La plataforma está diseñada para responder en segundos desde cualquier dispositivo — celular, tablet o PC. Sin apps que instalar.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">¿Cómo pago? ¿Hay factura?<span class="faq-plus"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+          <div class="faq-a">El pago se procesa de forma segura a través de la plataforma. Aceptamos las formas de pago disponibles para Colombia y LATAM. ¿Tienes una pregunta específica? Escríbenos por WhatsApp.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA FINAL ══ -->
+<section class="cta-final">
+  <div class="cta-dots">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="dp2" x="0" y="0" width="26" height="26" patternUnits="userSpaceOnUse">
+        <circle cx="3" cy="3" r="1.4" fill="rgba(173,220,0,0.14)"/>
+      </pattern></defs>
+      <rect width="100%" height="100%" fill="url(#dp2)"/>
+    </svg>
+  </div>
+  <div class="cta-inner">
+    <div class="cta-eyebrow"><span class="hero-pulse"></span>Comienza hoy</div>
+    <h2 class="cta-title">Toma mejores<br>decisiones <span class="lime">clínicas</span></h2>
+    <p class="cta-sub">11 guías clínicas disponibles desde el día 1, con +30 en camino el 1 de julio. En español, con citas exactas y tips de aplicabilidad. A 2 clics.</p>
+    <div class="cta-actions">
+      <a href="#precios" class="btn-lime">Suscribirme</a>
+      <a href="https://wa.me/57TUNUMERO" class="btn-ghost">Hablar con el equipo</a>
+    </div>
+    <p class="cta-note">Sin compromisos · Cancela cuando quieras · Por Sustancia P S.A.S.</p>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="cg-foot">
+  <div class="cg-foot-inner">
+    <div>
+      <div class="f-brand-name">Sustancia Pro ® | Clinical Hub</div>
+      <p class="f-desc">Herramientas para profesionales de la salud. Una plataforma de Sustancia P S.A.S. — Barranquilla, Colombia.</p>
+    </div>
+    <div>
+      <p class="f-col-title">Plataforma</p>
+      <ul class="f-links">
+        <li><a href="#">El producto</a></li>
+        <li><a href="#">Especialidades</a></li>
+        <li><a href="#">Precios</a></li>
+        <li><a href="#">Novedades</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="f-col-title">Empresa</p>
+      <ul class="f-links">
+        <li><a href="#">Sustancia P</a></li>
+        <li><a href="#">Nosotros</a></li>
+        <li><a href="#">Blog médico</a></li>
+        <li><a href="#">Afiliados</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="f-col-title">Contacto</p>
+      <ul class="f-links">
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Email</a></li>
+        <li><a href="#">Soporte</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="f-bottom">
+    <span>© 2026 Sustancia P S.A.S.</span>
+    <span><a href="#">Términos</a> · <a href="#">Privacidad</a> · <a href="#">Ley 1581 de 2012</a></span>
+  </div>
+</footer>
+
+<script>
+// Mobile nav
+document.getElementById('navToggle').addEventListener('click', function() {
+  var mn = document.getElementById('mobileNav');
+  mn.classList.toggle('open');
+});
+document.querySelectorAll('#mobileNav a').forEach(function(a) {
+  a.addEventListener('click', function() {
+    document.getElementById('mobileNav').classList.remove('open');
+  });
+});
+
+// Product mockup tabs
+function switchFm(name, btn) {
+  document.querySelectorAll('.fm-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.fm-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('fm-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// FAQ
+document.querySelectorAll('.faq-q').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var item = btn.parentElement;
+    var open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+    if (!open) item.classList.add('open');
+  });
+});
+
+// Scroll reveal
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+</script>
+<script>
+(function(){
+  var end = new Date('2026-07-01T23:59:59').getTime();
+  function pad(n){return n<10?'0'+n:String(n)}
+  function tick(){
+    var diff = Math.max(0, end - Date.now());
+    var d = Math.floor(diff/86400000);
+    var h = Math.floor((diff%86400000)/3600000);
+    var m = Math.floor((diff%3600000)/60000);
+    var s = Math.floor((diff%60000)/1000);
+    var ids = {d:d,h:h,m:m,s:s};
+    Object.keys(ids).forEach(function(k){
+      var el = document.getElementById('pcd-'+k);
+      if(el) el.textContent = pad(ids[k]);
+      var el2 = document.getElementById('fc-'+k);
+      if(el2) el2.textContent = pad(ids[k]);
+    });
+  }
+  tick(); setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>
