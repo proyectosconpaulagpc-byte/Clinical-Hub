@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -91,6 +92,7 @@ img{max-width:100%;height:auto;display:block}
 .hero-pulse{width:6px;height:6px;border-radius:50%;background:var(--lime);flex-shrink:0;
   animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes logos-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 h1.hero-title{font-size:clamp(38px,5.5vw,64px);font-weight:700;
   line-height:1.05;letter-spacing:-.04em;color:var(--t1);margin-bottom:16px}
 h1.hero-title .lime{color:var(--lime)}
@@ -217,6 +219,12 @@ h1.hero-title .lime{color:var(--lime)}
 .fm-tab:hover{color:var(--t2);border-color:var(--border)}
 .fm-tab.active{color:var(--lime);background:var(--lime-bg);border-color:var(--lime-bdr)}
 .fm-body{padding:16px;min-height:320px}
+.stats-founders-badge{display:none}
+.prod-mobile-block{display:none}
+.prod-tag-mobile{display:none}
+.prod-title-mobile{display:none}
+.prod-mobile-subtitle{display:none}
+.logos-ticker-wrap{display:none}
 .fm-panel{display:none}
 .fm-panel.active{display:block;animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
@@ -402,6 +410,7 @@ h1.hero-title .lime{color:var(--lime)}
 .f-bottom a{color:var(--t4);transition:color .15s}
 .f-bottom a:hover{color:var(--t2)}
 
+
 /* ─── SCROLL REVEAL ─── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
@@ -412,7 +421,7 @@ h1.hero-title .lime{color:var(--lime)}
   .cg-nav{display:none}
   .nav-toggle{display:flex;align-items:center;justify-content:center}
   .hero-inner,.demo-layout,.faq-layout{grid-template-columns:1fr}
-  .hero-mockup,.full-mock{display:none}
+  .full-mock{display:none}
   .pain-grid{grid-template-columns:1fr 1fr}
   .testi-grid{grid-template-columns:1fr 1fr}
   .plans-grid{grid-template-columns:1fr}
@@ -420,12 +429,43 @@ h1.hero-title .lime{color:var(--lime)}
   .stats-inner{grid-template-columns:repeat(2,1fr)}
   .hero-proof{grid-template-columns:repeat(2,1fr)}
   .cg-foot-inner{grid-template-columns:1fr 1fr}
+
+  /* Hero mockup — visible en móvil, debajo del texto */
+  .hero-mockup{
+    display:block !important;
+    width:100%;
+    height:398px;
+    border-radius:var(--r-lg);
+    overflow:hidden;
+    margin-top:32px;
+    box-shadow:0 12px 40px rgba(0,0,0,.55);
+  }
+  /* Calculadora de dosis: apila en columna en pantallas pequeñas */
+  #hm-calc{
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  #hm-calc > div:last-child{
+    margin-left:0 !important;
+    width:100%;
+    display:flex;
+    gap:8px;
+  }
+  /* Cajas de dosis ocupan mitad del ancho */
+  #hm-calc > div:last-child > div{
+    flex:1;
+    min-width:0;
+  }
+  /* Tabs del guide más compactos */
+  #hm-tab-seq, #hm-tab-pharma, #hm-tab-score{
+    font-size:8.5px !important;
+    padding:0 7px !important;
+    letter-spacing:.02em !important;
+  }
 }
 @media(max-width:600px){
-  .hero{padding:52px 20px 48px}
   .sec{padding:36px 20px}
   .cg-head-inner{padding:0 20px}
-  h1.hero-title{font-size:34px}
   .sec-h{font-size:26px}
   .cg-foot-inner{grid-template-columns:1fr;gap:24px}
   .logos-strip{padding:14px 20px}
@@ -460,23 +500,46 @@ h1.hero-title .lime{color:var(--lime)}
     padding:8px 4px !important;
   }
 
-  /* ── PAIN CAROUSEL MOBILE ── */
+  /* ── PAIN STACK MOBILE ── */
   .pain-grid{
     display:flex !important;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    gap:12px;
-    padding:0 20px 16px;
-    margin:0 -20px;
-    scrollbar-width:none;
+    flex-direction:column !important;
+    gap:10px !important;
+    background:none !important;
+    overflow:visible !important;
+    padding:0 !important;
+    margin:0 !important;
   }
-  .pain-grid::-webkit-scrollbar{display:none}
   .pain-cell{
-    flex:0 0 80vw;
-    scroll-snap-align:start;
+    flex:none !important;
+    width:100% !important;
     border-radius:var(--r-md) !important;
+    padding:14px 16px 14px 60px !important;
+    position:relative !important;
+    counter-increment:pain-counter;
   }
+  .pain-cell::before{
+    content:counter(pain-counter);
+    position:absolute;
+    left:16px; top:50%; transform:translateY(-50%);
+    font-size:28px; font-weight:700;
+    color:rgba(173,220,0,.18);
+    line-height:1; letter-spacing:-.04em;
+    font-family:var(--font);
+  }
+  .pain-grid{ counter-reset:pain-counter; }
+  /* Accent line left */
+  .pain-cell::after{
+    content:'' !important;
+    position:absolute !important;
+    left:0 !important; top:0 !important; bottom:0 !important;
+    width:2px !important; height:100% !important;
+    background:var(--lime) !important;
+    opacity:0 !important;
+    border-radius:0 0 0 var(--r-md) !important;
+    transition:opacity .2s !important;
+  }
+  .pain-cell:hover::after{ opacity:.5 !important; }
 
   /* ── TESTIMONIALS CAROUSEL MOBILE ── */
   .testi-grid{
@@ -495,21 +558,92 @@ h1.hero-title .lime{color:var(--lime)}
     scroll-snap-align:start;
   }
 
-  /* ── PAIN CAROUSEL BACKGROUNDS ── */
+  /* ── PAIN STACK BACKGROUNDS ── */
   .pain-grid{background:transparent !important}
   .pain-cell{
-    background:#000 !important;
-    border:0.5px solid var(--border) !important;
+    background:var(--bg-card) !important;
+    border:0.5px solid var(--border-hi) !important;
   }
-  .pain-cell:hover{background:#000 !important}
-  .pain-q{color:var(--t2) !important}
-  .pain-ans{color:var(--t3) !important}
+  .pain-cell:hover{background:var(--bg-hover) !important}
+  .pain-q{
+    color:var(--t1) !important;
+    font-size:13px !important;
+    font-style:normal !important;
+    font-weight:600 !important;
+    margin-bottom:4px !important;
+  }
+  .pain-q::before{ display:none !important; }
+  .pain-a{
+    color:var(--t3) !important;
+    font-size:12px !important;
+    border-top:none !important;
+    padding-top:0 !important;
+    margin-top:0 !important;
+  }
 
   /* ── TESTIMONIALS CAROUSEL BACKGROUNDS ── */
   .testi-grid{background:transparent !important}
   .testi-card{background:#000 !important}
   .testi-card:hover{background:#000 !important}
   .testi-q{color:var(--t3) !important}
+
+
+  /* ── PRODUCT SECTION MOBILE ── */
+
+
+
+  /* ── Hero: hide animated mockup on mobile (shown in Nuestra solución instead) ── */
+  #hero-mockup-anim .hero-mockup{ display:none !important; }
+  #hero-mockup-anim .hero-mockup-label{ display:none !important; }
+
+
+  /* ── Mobile: hide animated mockup in hero (it lives in Nuestra solución now) ── */
+  #hero-mockup-anim{ display:none !important; }
+
+
+  /* ── SWAP: hero shows static list, Nuestra solución shows animated ── */
+  #hero-mockup-anim{ display:none !important; }
+  .hero-static-list{ display:block !important; }
+
+  .prod-tag-desktop{ display:none !important; }
+  .prod-tag-mobile{ display:inline !important; }
+  .prod-title{ display:none !important; }
+  .prod-title-mobile{ display:block !important; }
+  .prod-mobile-subtitle{ display:block !important; }
+  .prod-desc{ display:none !important; }
+  .demo-header{ grid-template-columns:1fr !important; }
+  .demo-layout{ grid-template-columns:1fr !important; }
+  .demo-features{ display:none !important; }
+  .full-mock{ display:none !important; }
+
+  .prod-mobile-block{ display:flex !important; flex-direction:column; gap:24px; }
+  .prod-mobile-anim{ width:100%; }
+
+  .prod-mobile-feats{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    border-top:0.5px solid var(--sep);
+  }
+  .prod-mobile-feat{
+    padding:16px 4px;
+    border-bottom:0.5px solid var(--sep);
+  }
+  .prod-mobile-feat-title{
+    font-size:14px;font-weight:600;color:var(--t1);
+    margin-bottom:5px;letter-spacing:-.01em;
+  }
+  .prod-mobile-feat-title::before{
+    content:'';display:inline-block;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--lime);margin-right:8px;
+    vertical-align:middle;
+  }
+  .prod-mobile-feat-body{
+    font-size:13px;color:var(--t3);line-height:1.65;
+    padding-left:14px;
+  }
+
 
   /* ── CAROUSEL HINT DOTS ── */
   .carousel-hint{
@@ -523,6 +657,268 @@ h1.hero-title .lime{color:var(--lime)}
     background:var(--border);display:inline-block;
   }
   .carousel-hint span:first-child{background:var(--lime)}
+
+
+  /* ── PARA QUIÉN ES — cards en columna con acordeón ── */
+  .para-quien-sec{
+    padding:36px 20px !important;
+  }
+  .para-quien-grid{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:0 !important;
+    background:none !important;
+    border-radius:0 !important;
+    overflow:visible !important;
+  }
+  .pq-card{
+    border-radius:0 !important;
+    border:none !important;
+    border-bottom:0.5px solid var(--sep) !important;
+    padding:0 !important;
+    background:transparent !important;
+    position:relative !important;
+  }
+  .pq-card:first-child{ border-top:0.5px solid var(--sep) !important; }
+  /* Header clickable */
+  .pq-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:16px 4px;
+    cursor:pointer;
+  }
+  .pq-emoji{ font-size:22px; flex-shrink:0; }
+  .pq-title{
+    font-size:14px;font-weight:700;color:var(--t1);
+    flex:1;letter-spacing:-.01em;
+  }
+  .pq-arrow{
+    font-size:11px;color:var(--t4);
+    transition:transform .25s ease;
+    flex-shrink:0;
+  }
+  .pq-card.open .pq-arrow{ transform:rotate(180deg); color:var(--lime); }
+  .pq-card.open .pq-title{ color:var(--lime); }
+  /* Body collapsible */
+  .pq-body{
+    max-height:0;overflow:hidden;
+    transition:max-height .3s ease, padding .3s ease;
+    padding:0 4px;
+  }
+  .pq-card.open .pq-body{
+    max-height:200px;
+    padding:0 4px 16px;
+  }
+  .pq-body p{
+    font-size:13px;color:var(--t3);line-height:1.65;
+    margin:0;
+  }
+  /* ── LOGOS STRIP — ticker en móvil ── */
+  .logos-strip{ padding:12px 0 !important; }
+  .logos-inner{ display:block !important; padding:0 !important; max-width:100% !important; }
+  .strip-label{ display:block; padding:0 20px 8px; }
+  .logos-row{ display:none !important; }
+  .logos-ticker-wrap{
+    display:block !important;
+    overflow:hidden;
+    position:relative;
+  }
+  .logos-ticker-wrap::before,
+  .logos-ticker-wrap::after{
+    content:'';position:absolute;top:0;bottom:0;width:28px;z-index:1;pointer-events:none;
+  }
+  .logos-ticker-wrap::before{ left:0; background:linear-gradient(to right,#000,transparent); }
+  .logos-ticker-wrap::after{  right:0; background:linear-gradient(to left,#000,transparent); }
+  .logos-track{
+    display:flex;gap:32px;width:max-content;
+    animation:logos-scroll 14s linear infinite;
+  }
+  .logos-track .soc{
+    font-size:12px !important;font-weight:700 !important;
+    color:#3a3a3c !important;white-space:nowrap;
+  }
+
+  /* ── STATS BAR MOBILE: ocultar texto central ── */
+  .stats-founders-badge{ display:inline !important }
+  .stats-bar-text{
+    display:none !important;
+  }
+  .stats-bar .stats-inner{
+    grid-template-columns:1fr 1fr !important;
+    gap:0 !important;
+  }
+  .stats-bar .stats-inner > div:first-child{
+    text-align:left;
+    border-right:1px solid rgba(0,0,0,0.15);
+    padding-right:12px;
+  }
+  .stats-bar .stats-inner > div:last-child{
+    text-align:right;
+    padding-left:12px;
+  }
+}
+
+/* ─── HERO MOCKUP LABEL ─── */
+.hero-mockup-label{ display:none; }
+@media(max-width:900px){
+  .hero-mockup-label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+  }
+  .hml-dot{
+    width:7px;height:7px;border-radius:50%;
+    background:var(--lime);flex-shrink:0;
+    animation:pulse 2s ease-in-out infinite;
+  }
+  .hml-text{
+    font-size:11px;font-weight:700;letter-spacing:.07em;
+    text-transform:uppercase;
+    /* shimmer: texto oscuro con barrido de brillo */
+    background:linear-gradient(
+      90deg,
+      var(--lime) 0%,
+      var(--lime) 35%,
+      #fff 50%,
+      var(--lime) 65%,
+      var(--lime) 100%
+    );
+    background-size:200% auto;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    animation:hml-shimmer 2.2s linear infinite;
+  }
+  @keyframes hml-shimmer{
+    0%   { background-position: 100% center; }
+    100% { background-position: -100% center; }
+  }
+}
+
+/* ─── PARA QUIÉN — mostrar/ocultar según breakpoint ─── */
+.pq-header, .pq-body{ display:none; } /* oculto en desktop */
+.pq-desktop-content{ display:block; }
+@media(max-width:900px){
+  .pq-desktop-content{ display:none !important; }
+  .pq-header{ display:flex !important; }
+  .pq-body{ display:block !important; }
+}
+
+/* ══════════════════════════════════════════
+   MOBILE REORDER + COMPACT + ANIMATIONS
+   Solo afecta max-width: 600px
+   ══════════════════════════════════════════ */
+@media(max-width:600px){
+
+  /* ── Flex column para reordenar secciones ── */
+  body{
+    display:flex;
+    flex-direction:column;
+  }
+  header.cg-head          { order:0; }
+  section.hero            { order:1; }
+  [data-sec="pain"]       { order:2; }
+  [data-sec="product"]    { order:3; }
+  [data-sec="logos"]      { order:4; }
+  [data-sec="stats"]      { order:5; }
+  [data-sec="para-quien"] { order:6; }
+  [data-sec="compare"]    { order:7; }
+  [data-sec="testimonials"]{ order:8; }
+  [data-sec="pricing"]    { order:9; }
+  [data-sec="faq"]        { order:10; }
+  [data-sec="cta"]        { order:11; }
+  [data-sec="footer"]     { order:12; }
+
+  /* ── Padding compacto — menos scroll, más lectura ── */
+  [data-sec="pain"],
+  [data-sec="product"],
+  [data-sec="para-quien"],
+  [data-sec="compare"],
+  [data-sec="testimonials"],
+  [data-sec="pricing"],
+  [data-sec="faq"]        { padding:28px 20px !important; }
+  [data-sec="cta"]        { padding:48px 20px !important; }
+  [data-sec="stats"]      { padding:12px 20px !important; }
+  [data-sec="logos"]      { padding:10px 0 !important; }
+
+  /* ── Scroll-reveal fade-up para secciones ── */
+  [data-sec="pain"],
+  [data-sec="product"],
+  [data-sec="logos"],
+  [data-sec="stats"],
+  [data-sec="para-quien"],
+  [data-sec="compare"],
+  [data-sec="testimonials"],
+  [data-sec="pricing"],
+  [data-sec="faq"],
+  [data-sec="cta"]{
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  [data-sec].sec-visible{
+    opacity:1 !important;
+    transform:translateY(0) !important;
+  }
+
+  /* ── Títulos de sección más compactos ── */
+  .sec-h{ font-size:22px !important; }
+  .sec-p{ margin-bottom:24px !important; font-size:14px !important; }
+
+  /* ── Pain grid más compacto ── */
+  /* pain-cell padding handled above */
+  .pain-q{ font-size:12.5px !important; margin-bottom:6px !important; }
+  .pain-a{ font-size:12px !important; padding-top:8px !important; }
+
+  /* ── Compare: ocultar en móvil (muy denso, ya está el hero) ── */
+  [data-sec="compare"]{ display:none !important; }
+
+  /* ── Testimonials: mostrar solo 2 ── */
+  .testi-card:nth-child(n+3){ display:none !important; }
+
+  /* ── Pricing countdown compacto ── */
+  #pcd-d, #pcd-h, #pcd-m, #pcd-s{ font-size:16px !important; }
+
+  /* ── FAQ compacto ── */
+  .faq-layout{ grid-template-columns:1fr !important; gap:20px !important; }
+  .faq-q{ font-size:13px !important; padding:13px 0 !important; }
+
+  /* ── CTA final compacto ── */
+  .cta-title{ font-size:28px !important; }
+  .cta-sub{ font-size:13px !important; margin-bottom:20px !important; }
+
+  /* ── Hero espaciado móvil calibrado ── */
+  .hero{ padding: 36px 20px 40px !important; }
+  .hero-eyebrow{ margin-bottom: 12px !important; }
+  h1.hero-title{ margin-bottom: 12px !important; font-size: 32px !important; line-height: 1.08 !important; }
+  .hero-sub{ font-size: 14px !important; line-height: 1.6 !important; margin-bottom: 0 !important; }
+  .hero-actions{ margin-bottom: 0 !important; }
+  .proof-n{ font-size: 18px !important; }
+
+  /* ── Hero: orden y espaciado entre bloques con gap uniforme ── */
+  .hero-inner > div:first-child {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .hero-sub        { order: 1; }
+  .hero-static-list{ order: 2 !important; margin: 0 !important; }
+  .hero-static-list > div { margin-top: 0 !important; }
+  .hero-proof      { order: 3; margin: 0 !important; }
+  .hero-actions    { order: 4; }
+
+  /* ── Sección producto: protagonismo en móvil ── */
+  #prod-mobile-anim-new .hero-mockup-prod {
+    transition: box-shadow 0.6s ease, border-color 0.6s ease;
+  }
+  #prod-mobile-anim-new.in-view .hero-mockup-prod {
+    border-color: rgba(173,220,0,.35) !important;
+    box-shadow: 0 0 0 1px rgba(173,220,0,.12), 0 16px 48px rgba(0,0,0,.7) !important;
+  }
+
+  /* ── Línea divisora verde lima — eliminada ── */
 }
 </style>
 </head>
@@ -579,12 +975,38 @@ h1.hero-title .lime{color:var(--lime)}
         La guía correcta,<br>
         <span class="lime">a 2 clics</span>
       </h1>
+      <!-- Mobile: static guide list in hero — justo debajo del título -->
+      <div class="hero-static-list" style="display:none">
+        <div style="background:var(--bg-card);border:0.5px solid var(--border-hi);border-radius:var(--r-lg);overflow:hidden">
+          <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:10px;height:36px">
+            <div style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px">CH</div>
+            <span style="font-size:10px;font-weight:600;color:var(--t2)">Clinical Hub</span>
+            <div style="flex:1;background:#181818;border:0.5px solid #252525;border-radius:5px;padding:4px 10px 4px 26px;position:relative;margin-left:6px">
+              <svg style="position:absolute;left:8px;top:50%;transform:translateY(-50%);opacity:.2" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#f5f5f5" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span style="font-size:9.5px;color:#3a3a3c">Buscar guía…</span>
+            </div>
+          </div>
+          <div style="padding:6px 12px;display:flex;gap:5px;border-bottom:0.5px solid #1c1c1e;overflow:hidden">
+            <span style="background:var(--lime);color:#000;font-size:7.5px;font-weight:700;padding:2px 8px;border-radius:20px;text-transform:uppercase;flex-shrink:0">Todas</span>
+            <span style="color:#6c6c70;font-size:7.5px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;border:0.5px solid #2e2e2e;flex-shrink:0">Cardio</span>
+            <span style="color:#6c6c70;font-size:7.5px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;border:0.5px solid #2e2e2e;flex-shrink:0">Infecto</span>
+            <span style="color:#6c6c70;font-size:7.5px;font-weight:600;padding:2px 8px;border-radius:20px;text-transform:uppercase;border:0.5px solid #2e2e2e;flex-shrink:0">General</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414"><div style="width:5px;height:5px;border-radius:50%;background:#bf5af2;flex-shrink:0"></div><span style="font-size:10px;font-weight:600;color:var(--t1);flex:1">Sepsis</span><span style="background:rgba(191,90,242,.1);color:#bf5af2;font-size:7px;font-weight:700;padding:1px 5px;border-radius:20px;text-transform:uppercase">Infecto</span></div>
+          <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414"><div style="width:5px;height:5px;border-radius:50%;background:#ff453a;flex-shrink:0"></div><span style="font-size:10px;font-weight:600;color:var(--t1);flex:1">SCA — Síndrome Coronario Agudo</span><span style="background:rgba(255,69,58,.09);color:#ff453a;font-size:7px;font-weight:700;padding:1px 5px;border-radius:20px;text-transform:uppercase">Cardio</span></div>
+          <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414"><div style="width:5px;height:5px;border-radius:50%;background:#0a84ff;flex-shrink:0"></div><span style="font-size:10px;font-weight:600;color:var(--t1);flex:1">Asma</span><span style="background:rgba(10,132,255,.1);color:#0a84ff;font-size:7px;font-weight:700;padding:1px 5px;border-radius:20px;text-transform:uppercase">General</span></div>
+          <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414"><div style="width:5px;height:5px;border-radius:50%;background:#bf5af2;flex-shrink:0"></div><span style="font-size:10px;font-weight:600;color:var(--t1);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Neumonía adquirida en comunidad</span><span style="background:rgba(191,90,242,.1);color:#bf5af2;font-size:7px;font-weight:700;padding:1px 5px;border-radius:20px;text-transform:uppercase;flex-shrink:0">Infecto</span></div>
+          <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414"><div style="width:5px;height:5px;border-radius:50%;background:#ff9f0a;flex-shrink:0"></div><span style="font-size:10px;font-weight:600;color:var(--t1);flex:1">RCCP — Reanimación Cardiopulmonar</span><span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 5px;border-radius:20px;text-transform:uppercase">Emergencia</span></div>
+          <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414"><div style="width:5px;height:5px;border-radius:50%;background:#32d74b;flex-shrink:0"></div><span style="font-size:10px;font-weight:600;color:var(--t1);flex:1">Diabetes y descompensaciones</span><span style="background:rgba(50,215,75,.08);color:#32d74b;font-size:7px;font-weight:700;padding:1px 5px;border-radius:20px;text-transform:uppercase">Endocrino</span></div>
+          <div style="display:flex;align-items:center;gap:9px;padding:8px 12px"><div style="width:5px;height:5px;border-radius:50%;background:var(--lime);flex-shrink:0"></div><span style="font-size:10px;font-weight:600;color:var(--t1);flex:1">SIR / IOT — Intubación de Emergencia</span><span style="background:rgba(173,220,0,.08);color:var(--lime);font-size:7px;font-weight:700;padding:1px 5px;border-radius:20px;text-transform:uppercase;flex-shrink:0">General</span></div>
+        </div>
+      </div>
       <p class="hero-sub">
         <strong>Guías clínicas internacionales en español,</strong> unificadas, siempre actualizadas y con tips de aplicabilidad. Para el médico que necesita la respuesta ahora — sin Google, sin pestañas, sin traducir.
       </p>
       <div class="hero-actions">
         <a href="#precios" class="btn-lime">Suscribirme</a>
-        <a href="#producto" class="btn-ghost">Ver el producto</a>
+        <a href="#producto" class="btn-ghost" id="btn-ver-producto">Ver el producto</a>
       </div>
       <div class="hero-proof">
         <div class="proof-item">
@@ -607,6 +1029,11 @@ h1.hero-title .lime{color:var(--lime)}
     </div>
 
     <!-- Hero mockup — animated RSI demo -->
+    <div id="hero-mockup-anim" class="hero-anim-wrapper">
+      <div class="hero-mockup-label">
+        <span class="hml-dot"></span>
+        <span class="hml-text">Así se ve Clinical Hub — en vivo</span>
+      </div>
     <div class="hero-mockup" style="overflow:hidden;padding:0;position:relative">
 
       <!-- ── BROWSE SCREEN ── -->
@@ -1022,7 +1449,8 @@ h1.hero-title .lime{color:var(--lime)}
 
     <script>
     (function(){
-      function w(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+      var spd = window.innerWidth <= 900 ? 0.55 : 1; // móvil ~45% más rápido
+      function w(ms){ return new Promise(function(r){ setTimeout(r, ms * spd); }); }
 
       /* ── Browse helpers ── */
       async function scrollBrowse(){
@@ -1032,7 +1460,7 @@ h1.hero-title .lime{color:var(--lime)}
         if(maxScroll <= 0) return;
         // Scroll down slowly
         var steps = 80;
-        var delay = 40;
+        var delay = Math.round(40 * spd);
         for(var i=1;i<=steps;i++){
           var pct = i/steps;
           // ease in-out
@@ -1073,7 +1501,7 @@ h1.hero-title .lime{color:var(--lime)}
         el.textContent = '';
         for(var i=0;i<text.length;i++){
           el.textContent += text[i];
-          await w(160 + Math.random()*90);
+          await w(Math.round((160 + Math.random()*90) * spd));
         }
       }
       async function showResults(){
@@ -1146,7 +1574,26 @@ h1.hero-title .lime{color:var(--lime)}
       async function animWeight(target){
         var cur = parseInt(document.getElementById('hm-weight').textContent);
         var step = target > cur ? 1 : -1;
-        while(cur !== target){ cur += step; setWeight(cur); await w(40); }
+        while(cur !== target){ cur += step; setWeight(cur); await w(Math.round(40 * spd)); }
+      }
+
+      /* ── Auto-scroll the steps container ── */
+      function scrollStepsTo(px){
+        var c = document.getElementById('hm2-steps-container');
+        if(c) c.scrollTop = px;
+      }
+      async function smoothScrollSteps(target, duration){
+        var c = document.getElementById('hm2-steps-container');
+        if(!c) return;
+        var start = c.scrollTop;
+        var diff = target - start;
+        var steps = Math.round(duration / 16);
+        for(var i=1; i<=steps; i++){
+          var pct = i/steps;
+          var ease = pct<0.5 ? 2*pct*pct : -1+(4-2*pct)*pct;
+          c.scrollTop = start + diff * ease;
+          await w(16);
+        }
       }
 
       async function loop(){
@@ -1154,6 +1601,7 @@ h1.hero-title .lime{color:var(--lime)}
         resetBrowse();
         resetSearch();
         closeStep(0); closeStep(1); closeStep(2); closeStep(3); closeStep(4); closeStep(5);
+        scrollStepsTo(0);
         setTab('seq'); setWeight(70);
         await w(600);
 
@@ -1179,23 +1627,32 @@ h1.hero-title .lime{color:var(--lime)}
 
         /* 7 — Transition to guide */
         await transitionToGuide();
+        await w(500);
+
+        /* 8 — Abrir todos los pasos en cascada con stagger */
+        await w(300);
+        openStep(0); await w(160);
+        openStep(1); await w(160);
+        openStep(2); await w(160);
+        openStep(3); await w(160);
+        await animWeight(85); await w(100);
+        openStep(4); await w(160);
+        openStep(5); await w(400);
+
+        /* 9 — Auto-scroll suave para mostrar contenido */
+        await smoothScrollSteps(120, 900);
         await w(600);
+        await smoothScrollSteps(280, 1000);
+        await w(700);
+        await smoothScrollSteps(480, 1100);
+        await w(800);
 
-        /* 8 — Step animations */
-        openStep(0); await w(2000); closeStep(0); await w(350);
-        openStep(1); await w(2200); closeStep(1); await w(350);
-        openStep(2); await w(2000); closeStep(2); await w(350);
-        openStep(3); await w(2200); closeStep(3); await w(350);
+        /* 10 — Pausa para que se lea */
+        await w(1800);
 
-        await animWeight(85); await w(600);
-        openStep(4); await w(3000);
-
-        closeStep(4); await w(400);
-        setTab('pharma'); await w(1400);
-        setTab('seq'); await w(500);
-
-        await animWeight(70); await w(400);
-        openStep(5); await w(800); closeStep(5); await w(600);
+        /* 11 — Scroll de vuelta arriba y reset */
+        await smoothScrollSteps(0, 800);
+        await w(400);
 
         loop();
       }
@@ -1204,10 +1661,11 @@ h1.hero-title .lime{color:var(--lime)}
     })();
     </script>
   </div>
+        </div><!-- /hero-mockup-anim wrapper -->
 </section>
 
 <!-- LOGOS -->
-<div class="logos-strip">
+<div class="logos-strip" data-sec="logos">
   <div class="logos-inner">
     <span class="strip-label">Sociedades incluidas</span>
     <div class="logos-row">
@@ -1216,44 +1674,91 @@ h1.hero-title .lime{color:var(--lime)}
       <span class="soc">AAP</span><span class="soc">KDIGO</span><span class="soc">SSC</span>
       <span class="soc">SCCM</span><span class="soc">DAS</span><span class="soc">ADA</span>
     </div>
+    <!-- Mobile ticker -->
+    <div class="logos-ticker-wrap">
+      <div class="logos-track">
+        <span class="soc">AHA</span><span class="soc">ESC</span><span class="soc">WHO</span><span class="soc">NICE</span><span class="soc">ACOG</span><span class="soc">IDSA</span><span class="soc">AAP</span><span class="soc">KDIGO</span><span class="soc">SSC</span><span class="soc">SCCM</span><span class="soc">DAS</span><span class="soc">ADA</span>
+        <span class="soc">AHA</span><span class="soc">ESC</span><span class="soc">WHO</span><span class="soc">NICE</span><span class="soc">ACOG</span><span class="soc">IDSA</span><span class="soc">AAP</span><span class="soc">KDIGO</span><span class="soc">SSC</span><span class="soc">SCCM</span><span class="soc">DAS</span><span class="soc">ADA</span>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ══ PARA QUIÉN ES ══ -->
-<section style="padding:56px 28px;border-bottom:0.5px solid var(--sep)">
+<section class="para-quien-sec" data-sec="para-quien" style="padding:56px 28px;border-bottom:0.5px solid var(--sep)">
   <div style="max-width:var(--max-w);margin:0 auto">
     <div style="text-align:center;margin-bottom:32px">
       <div class="sec-tag" style="justify-content:center;display:inline-flex">¿Para quién es?</div>
       <h2 class="sec-h" style="text-align:center;margin-top:10px">Hecho para el médico <span class="lime">en acción</span></h2>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5px;background:var(--border);border-radius:var(--r-lg);overflow:hidden">
+    <div class="para-quien-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5px;background:var(--border);border-radius:var(--r-lg);overflow:hidden">
 
       <!-- Practicante -->
-      <div style="background:var(--bg-card);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-card)'">
-        <div style="font-size:28px;margin-bottom:14px">📚</div>
-        <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Practicante</div>
-        <p style="font-size:13px;color:var(--t3);line-height:1.65">Estás en rotaciones y cada guardia es un examen. Clinical Hub te da el respaldo de las guías vigentes para actuar con seguridad y aprender desde la evidencia real.</p>
+      <div class="pq-card" style="background:var(--bg-card);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+        <!-- desktop: original layout -->
+        <div class="pq-desktop-content">
+          <div style="font-size:28px;margin-bottom:14px">📚</div>
+          <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Practicante</div>
+          <p style="font-size:13px;color:var(--t3);line-height:1.65">Estás en rotaciones y cada guardia es un examen. Clinical Hub te da el respaldo de las guías vigentes para actuar con seguridad y aprender desde la evidencia real.</p>
+        </div>
+        <!-- mobile: accordion -->
+        <div class="pq-header" onclick="togglePQ(this.parentElement)">
+          <span class="pq-emoji">📚</span>
+          <span class="pq-title">Practicante</span>
+          <span class="pq-arrow">▾</span>
+        </div>
+        <div class="pq-body"><p>Estás en rotaciones y cada guardia es un examen. Clinical Hub te da el respaldo de las guías vigentes para actuar con seguridad y aprender desde la evidencia real.</p></div>
         </div>
 
       <!-- Médico general -->
-      <div style="background:var(--bg-card);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-card)'">
-        <div style="font-size:28px;margin-bottom:14px">🩺</div>
-        <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Médico general</div>
-        <p style="font-size:13px;color:var(--t3);line-height:1.65">Tienes pacientes de todo tipo. Clinical Hub te da el protocolo correcto, rápido, con su respaldo medicolegal. Sin improvisar.</p>
+      <div class="pq-card" style="background:var(--bg-card);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+        <!-- desktop: original layout -->
+        <div class="pq-desktop-content">
+          <div style="font-size:28px;margin-bottom:14px">🩺</div>
+          <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Médico general</div>
+          <p style="font-size:13px;color:var(--t3);line-height:1.65">Tienes pacientes de todo tipo. Clinical Hub te da el protocolo correcto, rápido, con su respaldo medicolegal. Sin improvisar.</p>
+        </div>
+        <!-- mobile: accordion -->
+        <div class="pq-header" onclick="togglePQ(this.parentElement)">
+          <span class="pq-emoji">🩺</span>
+          <span class="pq-title">Médico general</span>
+          <span class="pq-arrow">▾</span>
+        </div>
+        <div class="pq-body"><p>Tienes pacientes de todo tipo. Clinical Hub te da el protocolo correcto, rápido, con su respaldo medicolegal. Sin improvisar.</p></div>
         </div>
 
       <!-- Residente -->
-      <div style="background:var(--bg-hover);padding:28px 24px;position:relative;transition:background .18s" onmouseover="this.style.background='#1e1e1e'" onmouseout="this.style.background='var(--bg-hover)'">
-        <div style="font-size:28px;margin-bottom:14px">🏥</div>
-        <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Residente</div>
-        <p style="font-size:13px;color:var(--t3);line-height:1.65">En guardia no hay tiempo para buscar. Tienes el algoritmo paso a paso con citas exactas — tu asistente clínico sin IA que alucina.</p>
+      <div class="pq-card" style="background:var(--bg-hover);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='#1e1e1e'" onmouseout="this.style.background='var(--bg-hover)'">
+        <!-- desktop: original layout -->
+        <div class="pq-desktop-content">
+          <div style="font-size:28px;margin-bottom:14px">🏥</div>
+          <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Residente</div>
+          <p style="font-size:13px;color:var(--t3);line-height:1.65">En guardia no hay tiempo para buscar. Tienes el algoritmo paso a paso con citas exactas — tu asistente clínico sin IA que alucina.</p>
+        </div>
+        <!-- mobile: accordion -->
+        <div class="pq-header" onclick="togglePQ(this.parentElement)">
+          <span class="pq-emoji">🏥</span>
+          <span class="pq-title">Residente</span>
+          <span class="pq-arrow">▾</span>
+        </div>
+        <div class="pq-body"><p>En guardia no hay tiempo para buscar. Tienes el algoritmo paso a paso con citas exactas — tu asistente clínico sin IA que alucina.</p></div>
         </div>
 
       <!-- Especialista -->
-      <div style="background:var(--bg-card);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-card)'">
-        <div style="font-size:28px;margin-bottom:14px">🔬</div>
-        <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Especialista</div>
-        <p style="font-size:13px;color:var(--t3);line-height:1.65">Manejas guías de tu especialidad con mucho detalle. Clinical Hub reconcilia AHA, ESC, NICE para ti y te alerta cuando hay nueva evidencia.</p>
+      <div class="pq-card" style="background:var(--bg-card);padding:28px 24px;transition:background .18s;position:relative" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--bg-card)'">
+        <!-- desktop: original layout -->
+        <div class="pq-desktop-content">
+          <div style="font-size:28px;margin-bottom:14px">🔬</div>
+          <div style="font-size:14px;font-weight:700;color:var(--t1);margin-bottom:8px;letter-spacing:-.01em">Especialista</div>
+          <p style="font-size:13px;color:var(--t3);line-height:1.65">Manejas guías de tu especialidad con mucho detalle. Clinical Hub reconcilia AHA, ESC, NICE para ti y te alerta cuando hay nueva evidencia.</p>
+        </div>
+        <!-- mobile: accordion -->
+        <div class="pq-header" onclick="togglePQ(this.parentElement)">
+          <span class="pq-emoji">🔬</span>
+          <span class="pq-title">Especialista</span>
+          <span class="pq-arrow">▾</span>
+        </div>
+        <div class="pq-body"><p>Manejas guías de tu especialidad con mucho detalle. Clinical Hub reconcilia AHA, ESC, NICE para ti y te alerta cuando hay nueva evidencia.</p></div>
         </div>
 
     </div>
@@ -1261,68 +1766,70 @@ h1.hero-title .lime{color:var(--lime)}
 </section>
 
 <!-- STATS BAR -->
-<div class="stats-bar">
+<div class="stats-bar" data-sec="stats">
   <div class="stats-inner" style="grid-template-columns:auto 1fr auto;align-items:center;gap:32px;max-width:var(--max-w);margin:0 auto;padding:0">
     <div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0">
       <div style="font-size:28px;font-weight:700;color:#000;line-height:1;letter-spacing:-.04em">+30 guías</div>
       <div style="font-size:11px;font-weight:700;color:rgba(0,0,0,.60);letter-spacing:.04em;text-transform:uppercase">1 Julio 2026</div>
     </div>
-    <div style="font-size:13.5px;font-weight:500;color:rgba(0,0,0,.70);line-height:1.65;border-left:1.5px solid rgba(0,0,0,.15);border-right:1.5px solid rgba(0,0,0,.15);padding:0 28px">
+    <div class="stats-bar-text" style="font-size:13.5px;font-weight:500;color:rgba(0,0,0,.70);line-height:1.65;border-left:1.5px solid rgba(0,0,0,.15);border-right:1.5px solid rgba(0,0,0,.15);padding:0 28px">
       Empezamos con las urgencias que más necesitas en la práctica clínica. La biblioteca crece cada mes — y los Founders tienen voz en lo que viene.
     </div>
     <div style="display:flex;flex-direction:column;gap:3px;text-align:right;flex-shrink:0">
       <div style="font-size:14px;font-weight:700;color:#000;line-height:1.2;letter-spacing:-.01em">Membresía Founders</div>
+      <div class="stats-founders-badge" style="font-size:12px;font-weight:700;color:rgba(0,0,0,.75);letter-spacing:.01em">≈ 40% OFF para siempre</div>
       <div style="font-size:11px;font-weight:600;color:rgba(0,0,0,.58);letter-spacing:.02em">Disponible hasta el 1 de julio</div>
     </div>
   </div>
 </div>
 
 <!-- ══ PAIN ══ -->
-<section class="sec">
+<section class="sec" data-sec="pain">
   <div class="sec-inner">
     <div class="reveal">
       <div class="sec-tag">El problema</div>
       <h2 class="sec-h">¿Te suena alguna<br>de estas situaciones?</h2>
-      <p class="sec-p">Estas son las dudas reales de médicos en su práctica diaria. Cada una tiene respuesta en Clinical Hub.</p>
     </div>
     <div class="pain-grid reveal">
       <div class="pain-cell">
-        <p class="pain-q">No sé si lo que aprendí sigue siendo válido</p>
-        <p class="pain-a">La medicina cambia y releer guías completas no es realista. Te presentamos <strong>lo que importa</strong>, rápido, extraído de las últimas guías, para que te mantengas al día sin horas de lectura.</p>
+        <p class="pain-q">¿Lo que aprendí sigue siendo válido?</p>
+        <p class="pain-a">La medicina cambia. Clinical Hub te trae <strong>lo que importa</strong>, actualizado, sin releer guías completas.</p>
       </div>
       <div class="pain-cell">
-        <p class="pain-q">Tengo una duda ahora y no tengo tiempo de buscarla</p>
-        <p class="pain-a">En urgencias, un minuto entre pacientes marca la diferencia. Diagnóstico, manejo y dosis estructurados para que llegues en <strong>dos clics</strong>. Sin leer documentos, sin esperar respuestas de IA.</p>
+        <p class="pain-q">Tengo una duda ahora y no tengo tiempo</p>
+        <p class="pain-a">Diagnóstico, manejo y dosis en <strong>dos clics</strong>. Sin documentos, sin esperar.</p>
       </div>
       <div class="pain-cell">
-        <p class="pain-q">Hay tres guías de un mismo tema que no dicen lo mismo</p>
-        <p class="pain-a">Reconciliar AHA, ESC y NICE sobre un mismo tema puede tomar horas. Hacemos ese trabajo por ti: <strong>un abordaje unificado</strong> con cita exacta de cada fuente para que lo verifiques.</p>
+        <p class="pain-q">Tres guías del mismo tema que no coinciden</p>
+        <p class="pain-a">Las reconciliamos por ti y entregamos <strong>un abordaje unificado</strong>, con cita exacta de cada fuente.</p>
       </div>
       <div class="pain-cell">
-        <p class="pain-q">Necesito justificar mi decisión ante el equipo o ante una reclamación</p>
-        <p class="pain-a">Actuar conforme a las guías vigentes es tu mejor argumento clínico y tu mejor protección medicolegal. Cada punto cita la <strong>guía, la organización y el año.</strong></p>
+        <p class="pain-q">Necesito respaldar mi decisión clínica</p>
+        <p class="pain-a">Cada recomendación cita <strong>guía, organización y año</strong>. Tu mejor argumento clínico y medicolegal.</p>
       </div>
       <div class="pain-cell">
-        <p class="pain-q">Uso IA pero no siempre sé si puedo confiar en la respuesta</p>
-        <p class="pain-a">La única forma de detectar una alucinación o una recomendación desactualizada es saber cuál es la guía vigente. Mantenerte actualizado <strong>te convierte en evaluador</strong> de las herramientas que usas.</p>
+        <p class="pain-q">¿Puedo confiar en lo que me dice la IA?</p>
+        <p class="pain-a">Solo quien conoce la guía vigente puede evaluar una respuesta de IA. Clinical Hub te convierte en <strong>evaluador</strong>.</p>
       </div>
       <div class="pain-cell">
-        <p class="pain-q">El contenido en inglés me genera dudas sobre si entendí bien</p>
-        <p class="pain-a">Todo en español, <strong>revisado por nuestro equipo médico</strong>. Sin riesgo de malinterpretar una recomendación por una traducción incorrecta o un término ambiguo.</p>
+        <p class="pain-q">Las guías en inglés me generan dudas</p>
+        <p class="pain-a">Todo en español, <strong>revisado por médicos</strong>. Sin riesgo de malinterpretar una recomendación.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ══ PRODUCT DEMO ══ -->
-<section class="sec" id="producto">
+<section class="sec" id="producto" data-sec="product">
   <div class="sec-inner">
-    <div class="reveal" style="margin-bottom:48px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end">
+    <div class="reveal demo-header" style="margin-bottom:48px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end">
       <div>
-        <div class="sec-tag">El producto</div>
-        <h2 class="sec-h">Así se ve <span class="lime">Clinical Hub</span></h2>
+        <div class="sec-tag prod-tag"><span class="prod-tag-desktop">El producto</span><span class="prod-tag-mobile" style="display:none">Nuestra solución</span></div>
+        <h2 class="sec-h prod-title">Así se ve <span class="lime">Clinical Hub</span></h2>
+        <h2 class="sec-h prod-title-mobile" style="display:none">Así es <span class="lime">Clinical Hub</span></h2>
+        <p class="prod-mobile-subtitle" style="display:none;font-size:14px;color:var(--t3);line-height:1.7;margin-top:12px">No es un PDF, no es un blog. Es una plataforma estructurada donde el médico hispanohablante encuentra, en segundos, el protocolo correcto para el paciente que tiene enfrente — con el respaldo exacto de las guías internacionales vigentes, en español, sin traducir, sin buscar en documentos de 80 páginas, sin confiar en una IA que puede alucinar.<br><br>Cada guía: algoritmo paso a paso, dosis calculadas, cita exacta de sociedad y año. Tu decisión clínica, blindada.</p>
       </div>
-      <p style="font-size:14px;color:var(--t3);line-height:1.7">No es un PDF, no es un blog. Es una plataforma estructurada para consulta rápida en la práctica clínica real. Esto es exactamente lo que ves cuando abres una guía.</p>
+      <p class="prod-desc" style="font-size:14px;color:var(--t3);line-height:1.7">No es un PDF, no es un blog. Es una plataforma estructurada donde el médico hispanohablante encuentra, en segundos, el protocolo correcto para el paciente que tiene enfrente — con el respaldo exacto de las guías internacionales vigentes, en español, sin traducir, sin buscar en documentos de 80 páginas, sin confiar en una IA que puede alucinar.<br><br>Cada guía: algoritmo paso a paso, dosis calculadas, cita exacta de sociedad y año. Tu decisión clínica, blindada.</p>
     </div>
     <div class="demo-layout">
       <div class="demo-features">
@@ -1363,6 +1870,694 @@ h1.hero-title .lime{color:var(--lime)}
           </div>
         </div>
       </div>
+
+      <!-- Mobile-only: hero animation clone + feature list -->
+      <div class="prod-mobile-block">
+    <div id="prod-mobile-anim-new" class="prod-mobile-anim">
+    <div class="hero-mockup-prod" style="overflow:hidden;padding:0;position:relative;height:420px;border-radius:var(--r-lg);border:0.5px solid var(--border-hi);box-shadow:0 12px 40px rgba(0,0,0,.55)">
+
+      <!-- ── BROWSE SCREEN ── -->
+      <div id="hm2-browse-screen" style="position:absolute;inset:0;background:#000;z-index:20;display:flex;flex-direction:column;opacity:1;transition:opacity .5s ease">
+
+        <!-- Nav -->
+        <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:10px;height:40px;flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <div style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:.05em;line-height:1">CH</div>
+            <span style="font-size:10px;font-weight:600;color:var(--t2);letter-spacing:.04em">Clinical Hub</span>
+          </div>
+          <div style="flex:1;position:relative">
+            <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:5px 10px 5px 28px">
+              <svg style="position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.2" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f5f5f5" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span style="font-size:10px;color:#3a3a3c;letter-spacing:.02em">Buscar guía…</span>
+            </div>
+          </div>
+          <div style="background:var(--lime);color:#000;font-size:9px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0;letter-spacing:.03em">Mi cuenta</div>
+        </div>
+
+        <!-- Category pills -->
+        <div style="padding:8px 12px;display:flex;gap:5px;border-bottom:0.5px solid #1c1c1e;flex-shrink:0">
+          <span style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase">Todas</span>
+          <span style="color:#6c6c70;font-size:8px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Cardio</span>
+          <span style="color:#6c6c70;font-size:8px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Infecto</span>
+          <span style="color:#6c6c70;font-size:8px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">General</span>
+          <span style="color:#6c6c70;font-size:8px;font-weight:600;padding:2px 9px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Endocrino</span>
+        </div>
+
+        <!-- Guide list (overflow hidden, inner scrolls via JS) -->
+        <div style="flex:1;overflow:hidden;position:relative">
+          <div id="hm2-guide-list" style="will-change:transform">
+
+            <!-- helper macro: each row -->
+            <!-- 1. Sepsis -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#bf5af2;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">Sepsis</span>
+              <span style="background:rgba(191,90,242,.1);color:#bf5af2;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Infecto</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 2. SCA -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#ff453a;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">SCA — Síndrome Coronario Agudo</span>
+              <span style="background:rgba(255,69,58,.09);color:#ff453a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Cardio</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 3. Asma -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0a84ff;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">Asma</span>
+              <span style="background:rgba(10,132,255,.1);color:#0a84ff;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">General</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 4. EPOC -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0a84ff;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">EPOC</span>
+              <span style="background:rgba(10,132,255,.1);color:#0a84ff;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">General</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 5. NAC -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#bf5af2;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Neumonía adquirida en comunidad</span>
+              <span style="background:rgba(191,90,242,.1);color:#bf5af2;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Infecto</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 6. Shock -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#ff453a;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">¿Y si se me "choquea" el paciente? <span style="color:#3a3a3c">#Nervios</span></span>
+              <span style="background:rgba(255,69,58,.09);color:#ff453a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Shock</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 7. Arritmias -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#ff453a;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Bradiarritmias y taquiarritmias en urgencias</span>
+              <span style="background:rgba(255,69,58,.09);color:#ff453a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0">Cardio</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 8. Diabetes -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#32d74b;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">Diabetes y descompensaciones</span>
+              <span style="background:rgba(50,215,75,.08);color:#32d74b;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Endocrino</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 9. ACV -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0a84ff;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">ACV — Accidente Cerebrovascular</span>
+              <span style="background:rgba(10,132,255,.1);color:#0a84ff;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Neuro</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 10. RCCP -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:0.5px solid #141414">
+              <div style="width:5px;height:5px;border-radius:50%;background:#ff9f0a;flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">RCCP — Reanimación Cardiopulmonar</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+            <!-- 11. SIR/IOT -->
+            <div style="display:flex;align-items:center;gap:9px;padding:8px 12px">
+              <div style="width:5px;height:5px;border-radius:50%;background:var(--lime);flex-shrink:0"></div>
+              <span style="font-size:10.5px;font-weight:600;color:var(--t1);flex:1;letter-spacing:-.01em">SIR / IOT — Intubación de Emergencia</span>
+              <span style="background:rgba(173,220,0,.08);color:var(--lime);font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">General</span>
+              <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+
+          </div>
+          <!-- fade mask at bottom -->
+          <div style="position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,#000);pointer-events:none"></div>
+        </div>
+      </div>
+
+      <!-- ── SEARCH SCREEN ── -->
+      <div id="hm2-search-screen" style="position:absolute;inset:0;background:#000;z-index:10;display:flex;flex-direction:column;opacity:0;transition:opacity .5s ease">
+
+        <!-- Search nav -->
+        <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:10px;height:40px;flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <div style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:.05em;line-height:1">CH</div>
+            <span style="font-size:10px;font-weight:600;color:var(--t2);letter-spacing:.04em">Clinical Hub</span>
+          </div>
+          <div style="flex:1;position:relative">
+            <div style="background:#181818;border:0.5px solid #3a3a3a;border-radius:6px;padding:5px 10px 5px 28px;display:flex;align-items:center;gap:6px;transition:border-color .2s" id="hm2-searchbox">
+              <svg style="position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.35" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f5f5f5" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span id="hm2-search-text" style="font-size:10px;color:var(--t1);font-family:monospace;letter-spacing:.02em"></span>
+              <span id="hm2-cursor" style="display:inline-block;width:1px;height:11px;background:var(--lime);margin-left:1px;animation:blink .8s step-end infinite"></span>
+            </div>
+          </div>
+          <div style="background:var(--lime);color:#000;font-size:9px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0;letter-spacing:.03em">Mi cuenta</div>
+        </div>
+
+        <!-- Category pills -->
+        <div style="padding:10px 12px;display:flex;gap:6px;border-bottom:0.5px solid #1c1c1e;flex-shrink:0">
+          <span style="background:var(--lime);color:#000;font-size:8.5px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase">Todas</span>
+          <span style="background:none;color:#6c6c70;font-size:8.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Cardio</span>
+          <span style="background:none;color:#6c6c70;font-size:8.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">Infecto</span>
+          <span style="background:none;color:#6c6c70;font-size:8.5px;font-weight:600;padding:3px 10px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;border:0.5px solid #2e2e2e">General</span>
+        </div>
+
+        <!-- Search results (hidden until typed) -->
+        <div id="hm2-results" style="flex:1;padding:10px 12px;opacity:0;transition:opacity .35s ease">
+
+          <!-- Result card -->
+          <div style="font-size:8px;font-weight:700;color:#3a3a3c;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">1 resultado</div>
+          <div id="hm2-result-card" style="background:#111;border:0.5px solid #252525;border-radius:8px;padding:10px 12px;cursor:pointer;transition:border-color .2s,background .2s">
+            <div style="display:flex;align-items:flex-start;gap:9px">
+              <div style="width:28px;height:28px;border-radius:6px;background:var(--lime-bg);border:0.5px solid var(--lime-bdr);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#addc00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:10.5px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:3px">Secuencia de Intubación Orotraqueal de Emergencia (RSI)</div>
+                <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px">
+                  <span style="background:rgba(10,132,255,.1);color:#0a84ff;font-size:7.5px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">General</span>
+                  <span style="background:rgba(255,159,10,.08);color:#ff9f0a;font-size:7.5px;font-weight:700;padding:1px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em">Emergencia</span>
+                </div>
+                <div style="font-size:9px;color:#6c6c70">SCCM 2023 · DAS 2025 · AHA ACLS 2025</div>
+              </div>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#3a3a3c" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── GUIDE SCREEN ── -->
+      <div id="hm2-guide-screen" style="opacity:0;transition:opacity .5s ease;display:flex;flex-direction:column;position:absolute;inset:0;overflow:hidden">
+
+      <!-- App nav bar -->
+      <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:0;height:40px">
+        <div style="display:flex;align-items:center;gap:6px;margin-right:14px;flex-shrink:0">
+          <div style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:.05em;line-height:1">CH</div>
+          <span style="font-size:10px;font-weight:600;color:var(--t2);letter-spacing:.04em">Clinical Hub</span>
+        </div>
+        <div id="hm2-tab-seq" style="font-size:9.5px;font-weight:600;color:var(--lime);padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid var(--lime);letter-spacing:.04em;text-transform:uppercase;cursor:default">Secuencia</div>
+        <div id="hm2-tab-pharma" style="font-size:9.5px;font-weight:600;color:#3a3a3c;padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid transparent;letter-spacing:.04em;text-transform:uppercase;cursor:default;transition:all .25s">Farmacología</div>
+        <div id="hm2-tab-score" style="font-size:9.5px;font-weight:600;color:#3a3a3c;padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid transparent;letter-spacing:.04em;text-transform:uppercase;cursor:default;transition:all .25s">Scores</div>
+      </div>
+
+      <!-- Dose calculator bar -->
+      <div id="hm2-calc" style="background:#111;border-bottom:0.5px solid #252525;padding:8px 14px;display:flex;align-items:center;gap:12px">
+        <div>
+          <div style="font-size:8px;font-weight:700;color:#3a3a3c;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">Calculadora de Dosis</div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <div style="background:#181818;border:0.5px solid #3a3a3a;color:var(--lime);font-size:15px;font-weight:500;width:52px;padding:4px 8px;border-radius:6px;text-align:center;font-family:monospace" id="hm2-weight">70</div>
+            <span style="font-size:10px;color:#6c6c70;font-weight:600">kg</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-left:auto">
+          <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:5px 10px;min-width:110px">
+            <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#6c6c70;margin-bottom:2px">Etomidato (0.3)</div>
+            <div style="font-family:monospace;font-size:12px;font-weight:500;color:var(--lime)" id="hm2-etomidato">21.0 mg</div>
+          </div>
+          <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:5px 10px;min-width:110px">
+            <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#6c6c70;margin-bottom:2px">Succinilcolina (1.5)</div>
+            <div style="font-family:monospace;font-size:12px;font-weight:500;color:var(--lime)" id="hm2-succi">105.0 mg</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guide header -->
+      <div style="padding:10px 14px 8px;background:#0e0e0e;border-bottom:0.5px solid #252525">
+        <div style="font-size:11px;font-weight:700;color:var(--t1);letter-spacing:.02em;margin-bottom:3px">SECUENCIA DE INTUBACIÓN OROTRAQUEAL DE EMERGENCIA (RSI)</div>
+        <div style="font-size:8.5px;color:#3a3a3c;letter-spacing:.03em">Algoritmo Maestro Consolidado · SCCM 2023 · DAS 2025 · AHA ACLS 2025</div>
+      </div>
+
+      <!-- Steps -->
+      <div id="hm2-steps-container" style="overflow-y:auto;flex:1;scroll-behavior:smooth;scrollbar-width:none"><style>#hm2-steps-container::-webkit-scrollbar{display:none}</style>
+
+        <!-- Step 0 -->
+        <div class="hm-step" id="hm2-s0" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh0" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">0</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Evaluación y Decisión — ¿Indicar RSI?</span>
+            <span class="hm-tog" id="hm2-tog0" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm2-sb0" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+                <div style="background:rgba(50,215,75,.06);border:0.5px solid rgba(50,215,75,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#32d74b;margin-bottom:5px">Sin dificultad anticipada</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">→ Plan A / RSI estándar</div>
+                  <div style="font-size:9.5px;color:#6c6c70;margin-top:3px">Mallampati · dist. tiro-mentoniana · apertura bucal</div>
+                </div>
+                <div style="background:rgba(255,159,10,.06);border:0.5px solid rgba(255,159,10,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#ff9f0a;margin-bottom:5px">⚠ Dificultad anticipada</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">→ Considerar IPA</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:3px;font-style:italic">"Never sedate an airway you cannot rescue"</div>
+                </div>
+              </div>
+              <div style="font-size:8.5px;color:#3a3a3c;font-style:italic">DAS 2025 ATI · SCCM 2023</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="hm-step" id="hm2-s1" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh1" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Preparación — Lista de Verificación Pre-RSI</span>
+            <span class="hm-tog" id="hm2-tog1" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm2-sb1" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+                <div style="background:rgba(10,132,255,.06);border:0.5px solid rgba(10,132,255,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#0a84ff;margin-bottom:5px">Equipamiento</div>
+                  <ul style="padding-left:12px;font-size:10px;color:#8e8e93;line-height:1.6">
+                    <li><strong style="color:var(--t1)">Videolaringoscopio</strong> + DL respaldo</li>
+                    <li>Bougie / estilete formado</li>
+                    <li>DSG listo — Plan B</li>
+                    <li><strong style="color:var(--t1)">Kit eFONA accesible</strong></li>
+                  </ul>
+                </div>
+                <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8e8e93;margin-bottom:5px">Monitoreo y Acceso</div>
+                  <ul style="padding-left:12px;font-size:10px;color:#8e8e93;line-height:1.6">
+                    <li><strong style="color:var(--t1)">Capnografía OPERATIVA</strong></li>
+                    <li>Aspiración funcional</li>
+                    <li>Acceso IV / IO confirmado</li>
+                    <li>Monitoreo BNM cuantitativo</li>
+                  </ul>
+                </div>
+              </div>
+              <div style="font-size:8.5px;color:#3a3a3c;font-style:italic">DAS 2025 Fig.2 · SCCM 2023 Best Practice (Rec. 4)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="hm-step" id="hm2-s2" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh2" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Posicionamiento del Paciente</span>
+            <span class="hm-tog" id="hm2-tog2" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm2-sb2" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
+                <div style="background:rgba(50,215,75,.06);border:0.5px solid rgba(50,215,75,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#32d74b;margin-bottom:5px">✓ Estándar — Semi-Fowler 20–30°</div>
+                  <ul style="padding-left:12px;font-size:10px;color:#8e8e93;line-height:1.6">
+                    <li>Cabeza <strong style="color:var(--t1)">y</strong> torso inclinados</li>
+                    <li>↑ Capacidad residual funcional</li>
+                    <li>↓ Riesgo aspiración pasiva</li>
+                    <li>Posición "sniffing" complementaria</li>
+                  </ul>
+                </div>
+                <div style="background:rgba(255,159,10,.06);border:0.5px solid rgba(255,159,10,.2);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#ff9f0a;margin-bottom:5px">⚠ Excepciones</div>
+                  <ul style="padding-left:12px;font-size:10px;color:#8e8e93;line-height:1.6">
+                    <li><strong style="color:var(--t1)">Inmovilización cervical</strong></li>
+                    <li><strong style="color:var(--t1)">Shock profundo</strong></li>
+                    <li>Obeso mórbido: posición "rampa"</li>
+                  </ul>
+                </div>
+              </div>
+              <div style="font-size:8.5px;color:#3a3a3c;font-style:italic">SCCM 2023 Rec. 1 — condicional, evidencia muy baja</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="hm-step" id="hm2-s3" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh3" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Preoxigenación</span>
+            <span class="hm-tog" id="hm2-tog3" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm2-sb3" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:6px">
+                <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:7px 9px">
+                  <div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8e8e93;margin-bottom:4px">Sin hipoxemia</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">Mascarilla 100% O₂</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">× 3–5 min</div>
+                </div>
+                <div style="background:rgba(255,159,10,.06);border:0.5px solid rgba(255,159,10,.2);border-radius:6px;padding:7px 9px">
+                  <div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#ff9f0a;margin-bottom:4px">PaO₂/FiO₂ &lt;150</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">VMNI preferida</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">SCCM 2023 Rec. 2</div>
+                </div>
+                <div style="background:rgba(10,132,255,.06);border:0.5px solid rgba(10,132,255,.2);border-radius:6px;padding:7px 9px">
+                  <div style="font-size:7px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#0a84ff;margin-bottom:4px">Agitación</div>
+                  <div style="font-size:10px;font-weight:600;color:var(--t1)">Ketamina disociativa</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">SCCM 2023 Rec. 3</div>
+                </div>
+              </div>
+              <div style="background:rgba(173,220,0,.06);border:0.5px solid rgba(173,220,0,.18);border-radius:5px;padding:6px 9px">
+                <div style="font-size:9.5px;color:var(--lime);font-weight:500">→ Mantener HFNO activo durante laringoscopia (oxigenación apneica)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="hm-step" id="hm2-s4" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh4" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Medicación RSI — Inducción + BNM</span>
+            <span class="hm-tog" id="hm2-tog4" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+          <div class="hm-sb" id="hm2-sb4" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+            <div style="padding:0 14px 10px 42px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+                <div style="background:rgba(173,220,0,.06);border:0.5px solid rgba(173,220,0,.22);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--lime);margin-bottom:5px">Inductor 1ª línea</div>
+                  <div style="font-size:11px;font-weight:700;color:var(--t1)">Etomidato</div>
+                  <div style="font-family:monospace;font-size:11px;color:var(--lime);margin-top:2px" id="hm2-etomidato2">21.0 mg IV</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">0.3 mg/kg · Hemodinámica estable</div>
+                </div>
+                <div style="background:rgba(173,220,0,.06);border:0.5px solid rgba(173,220,0,.22);border-radius:6px;padding:8px 10px">
+                  <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--lime);margin-bottom:5px">BNM 1ª línea</div>
+                  <div style="font-size:11px;font-weight:700;color:var(--t1)">Succinilcolina</div>
+                  <div style="font-family:monospace;font-size:11px;color:var(--lime);margin-top:2px" id="hm2-succi2">105.0 mg IV</div>
+                  <div style="font-size:9px;color:#6c6c70;margin-top:2px">1.5 mg/kg · Inicio &lt;60 s</div>
+                </div>
+              </div>
+              <div style="background:rgba(255,69,58,.09);border-top:1px solid rgba(255,69,58,.25);border-bottom:1px solid rgba(255,69,58,.25);padding:7px 10px;margin:0 -14px 8px -42px;display:flex;align-items:center;gap:8px">
+                <span style="font-size:14px">⚠</span>
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:#ff453a">Inductor SIEMPRE antes del BNM</div>
+                  <div style="font-size:9px;color:#8e8e93">SCCM 2023 Best Practice Statement</div>
+                </div>
+              </div>
+              <div style="font-size:8.5px;color:#3a3a3c;font-style:italic">SCCM 2023 Rec. 9 · DAS 2025 Rec. 8 · AHA 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="hm-step" id="hm2-s5">
+          <div class="hm-sh" id="hm2-sh5" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+            <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">5</div>
+            <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Plan A — Laringoscopia</span>
+            <span class="hm-tog" id="hm2-tog5" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+          </div>
+        </div>
+
+      </div>
+
+      </div><!-- /hm-guide-screen -->
+
+      <div class="mock-footer">
+        <span class="mock-ft">Guías: <em>11 · creciendo</em></span>
+        <span class="mock-ft">Actualización: <em>Continua</em></span>
+      </div>
+    </div>
+
+    <style>
+    .hm-sh:hover { background: #181818 }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    </style>
+
+    <script>
+    (function(){
+      var spd = window.innerWidth <= 900 ? 0.55 : 1; // móvil ~45% más rápido
+      function w(ms){ return new Promise(function(r){ setTimeout(r, ms * spd); }); }
+
+      /* ── Browse helpers ── */
+      async function scrollBrowse(){
+        var list = document.getElementById('hm2-guide-list');
+        var container = list.parentElement;
+        var maxScroll = list.scrollHeight - container.offsetHeight;
+        if(maxScroll <= 0) return;
+        // Scroll down slowly
+        var steps = 80;
+        var delay = Math.round(40 * spd);
+        for(var i=1;i<=steps;i++){
+          var pct = i/steps;
+          // ease in-out
+          var ease = pct < 0.5 ? 2*pct*pct : -1+(4-2*pct)*pct;
+          list.style.transform = 'translateY(-' + (ease * maxScroll) + 'px)';
+          await w(delay);
+        }
+        await w(600);
+        // Scroll back up
+        for(var j=steps;j>=0;j--){
+          var pct2 = j/steps;
+          var ease2 = pct2 < 0.5 ? 2*pct2*pct2 : -1+(4-2*pct2)*pct2;
+          list.style.transform = 'translateY(-' + (ease2 * maxScroll) + 'px)';
+          await w(delay);
+        }
+      }
+      async function transitionBrowseToSearch(){
+        var bs = document.getElementById('hm2-browse-screen');
+        var ss = document.getElementById('hm2-search-screen');
+        ss.style.opacity = '1';
+        bs.style.opacity = '0';
+        await w(550);
+        bs.style.display = 'none';
+      }
+      function resetBrowse(){
+        var bs = document.getElementById('hm2-browse-screen');
+        var list = document.getElementById('hm2-guide-list');
+        list.style.transform = 'translateY(0)';
+        bs.style.opacity = '1';
+        bs.style.display = 'flex';
+      }
+
+      /* ── Search helpers ── */
+      async function typeSearch(text){
+        var el = document.getElementById('hm2-search-text');
+        var box = document.getElementById('hm2-searchbox');
+        box.style.borderColor = 'var(--lime)';
+        el.textContent = '';
+        for(var i=0;i<text.length;i++){
+          el.textContent += text[i];
+          await w(Math.round((160 + Math.random()*90) * spd));
+        }
+      }
+      async function showResults(){
+        document.getElementById('hm2-results').style.opacity = '1';
+      }
+      async function hoverCard(){
+        var c = document.getElementById('hm2-result-card');
+        c.style.borderColor = 'var(--lime)';
+        c.style.background = '#181818';
+      }
+      async function transitionToGuide(){
+        var ss = document.getElementById('hm2-search-screen');
+        var gs = document.getElementById('hm2-guide-screen');
+        gs.style.opacity = '1';
+        ss.style.opacity = '0';
+        await w(520);
+        ss.style.display = 'none';
+      }
+      function resetSearch(){
+        var ss = document.getElementById('hm2-search-screen');
+        var gs = document.getElementById('hm2-guide-screen');
+        var el = document.getElementById('hm2-search-text');
+        var box = document.getElementById('hm2-searchbox');
+        var r = document.getElementById('hm2-results');
+        var c = document.getElementById('hm2-result-card');
+        el.textContent = '';
+        box.style.borderColor = '#3a3a3a';
+        r.style.opacity = '0';
+        c.style.borderColor = '#252525';
+        c.style.background = '#111';
+        gs.style.opacity = '0';
+        ss.style.opacity = '0';
+        ss.style.display = 'flex';
+      }
+
+      /* ── Guide helpers ── */
+      function openStep(id){
+        var sb = document.getElementById('hm2-sb'+id);
+        var tog = document.getElementById('hm2-tog'+id);
+        var sh = document.getElementById('hm2-sh'+id);
+        if(!sb) return;
+        sb.style.maxHeight = sb.scrollHeight + 300 + 'px';
+        if(tog) tog.style.transform = 'rotate(180deg)';
+        if(sh) sh.style.background = '#181818';
+      }
+      function closeStep(id){
+        var sb = document.getElementById('hm2-sb'+id);
+        var tog = document.getElementById('hm2-tog'+id);
+        var sh = document.getElementById('hm2-sh'+id);
+        if(!sb) return;
+        sb.style.maxHeight = '0';
+        if(tog) tog.style.transform = 'rotate(0deg)';
+        if(sh) sh.style.background = '';
+      }
+      function setWeight(kg){
+        document.getElementById('hm2-weight').textContent = kg;
+        document.getElementById('hm2-etomidato').textContent = (kg*0.3).toFixed(1)+' mg';
+        document.getElementById('hm2-succi').textContent = (kg*1.5).toFixed(1)+' mg';
+        document.getElementById('hm2-etomidato2').textContent = (kg*0.3).toFixed(1)+' mg IV';
+        document.getElementById('hm2-succi2').textContent = (kg*1.5).toFixed(1)+' mg IV';
+      }
+      function setTab(active){
+        ['seq','pharma','score'].forEach(function(t){
+          var el = document.getElementById('hm2-tab-'+t);
+          if(!el) return;
+          el.style.color = t===active ? 'var(--lime)' : '#3a3a3c';
+          el.style.borderBottomColor = t===active ? 'var(--lime)' : 'transparent';
+        });
+      }
+      async function animWeight(target){
+        var cur = parseInt(document.getElementById('hm2-weight').textContent);
+        var step = target > cur ? 1 : -1;
+        while(cur !== target){ cur += step; setWeight(cur); await w(Math.round(40 * spd)); }
+      }
+
+      /* ── Auto-scroll the steps container ── */
+      function scrollStepsTo(px){
+        var c = document.getElementById('hm2-steps-container');
+        if(c) c.scrollTop = px;
+      }
+      async function smoothScrollSteps(target, duration){
+        var c = document.getElementById('hm2-steps-container');
+        if(!c) return;
+        var start = c.scrollTop;
+        var diff = target - start;
+        var steps = Math.round(duration / 16);
+        for(var i=1; i<=steps; i++){
+          var pct = i/steps;
+          var ease = pct<0.5 ? 2*pct*pct : -1+(4-2*pct)*pct;
+          c.scrollTop = start + diff * ease;
+          await w(16);
+        }
+      }
+
+      async function loop(){
+        /* 1 — Reset */
+        resetBrowse();
+        resetSearch();
+        closeStep(0); closeStep(1); closeStep(2); closeStep(3); closeStep(4); closeStep(5);
+        scrollStepsTo(0);
+        setTab('seq'); setWeight(70);
+        await w(600);
+
+        /* 2 — Browse scroll */
+        await scrollBrowse();
+        await w(500);
+
+        /* 3 — Browse → search */
+        await transitionBrowseToSearch();
+        await w(600);
+
+        /* 4 — Type */
+        await typeSearch('RSI');
+        await w(500);
+
+        /* 5 — Show result */
+        await showResults();
+        await w(900);
+
+        /* 6 — Hover */
+        await hoverCard();
+        await w(700);
+
+        /* 7 — Open guide */
+        await transitionToGuide();
+        await w(600);
+
+        /* 8 — Efecto grabacion de pantalla:
+               cada paso se abre y la camara lo sigue bajando en paralelo */
+
+        /* Paso 0: abre y baja para centrarlo */
+        openStep(0);
+        await w(500);
+        smoothScrollSteps(80, 700);
+        await w(1400);
+
+        /* Paso 1 */
+        openStep(1);
+        await w(400);
+        smoothScrollSteps(220, 750);
+        await w(1400);
+
+        /* Paso 2 */
+        openStep(2);
+        await w(400);
+        smoothScrollSteps(380, 750);
+        await w(1300);
+
+        /* Paso 3 */
+        openStep(3);
+        await w(400);
+        smoothScrollSteps(530, 800);
+        await w(1300);
+
+        /* Paso 4 — con calculadora de dosis animada */
+        await animWeight(85);
+        openStep(4);
+        await w(400);
+        smoothScrollSteps(700, 850);
+        await w(1600);
+
+        /* Paso 5 */
+        openStep(5);
+        await w(400);
+        smoothScrollSteps(880, 800);
+        await w(1800);
+
+        /* 9 — Pausa final, todo visible */
+        await w(1200);
+
+        /* 10 — Scroll cinematico de vuelta arriba, lento */
+        await smoothScrollSteps(0, 1400);
+        await w(600);
+
+        loop();
+      }
+
+      var _at = document.getElementById('prod-mobile-anim-new');
+      var _started = false;
+      if(window.innerWidth <= 600 && _at){
+        var _obs = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting && !_started){
+              _started = true; _obs.disconnect();
+              setTimeout(loop, 400);
+            }
+          });
+        }, {threshold:0.3});
+        _obs.observe(_at);
+      } else { loop(); }
+    })();
+    </script>
+  </div>
+        </div><!-- /prod-mobile-anim-new -->
+
+
+        <!-- Feature list below animation -->
+        <div class="prod-mobile-feats">
+          <div class="prod-mobile-feat">
+            <div class="prod-mobile-feat-title">Algoritmo paso a paso</div>
+            <div class="prod-mobile-feat-body">Cada guía en pasos numerados: evaluación, preparación, medicación, plan A, plan B. Sin leer el documento completo.</div>
+          </div>
+          <div class="prod-mobile-feat">
+            <div class="prod-mobile-feat-title">Citas exactas por cada recomendación</div>
+            <div class="prod-mobile-feat-body">Cada punto incluye sociedad, documento y año. SCCM 2023 Rec. 9 · DAS 2025 · AHA 2025. Tu respaldo medicolegal siempre visible.</div>
+          </div>
+          <div class="prod-mobile-feat">
+            <div class="prod-mobile-feat-title">Tips de aplicabilidad clínica</div>
+            <div class="prod-mobile-feat-body">No solo el rango de dosis — el tip de cuándo y cómo usarla. Basado en evidencia y en la experiencia de clínicos con amplia trayectoria.</div>
+          </div>
+          <div class="prod-mobile-feat">
+            <div class="prod-mobile-feat-title">Siempre actualizado · Alertas automáticas</div>
+            <div class="prod-mobile-feat-body">Cuando la AHA o la SCCM actualizan una guía que tienes guardada, recibes notificación. Nunca más desactualizaciones silenciosas.</div>
+          </div>
+        </div>
+      </div><!-- /prod-mobile-block -->
 
       <!-- Mockup tabs -->
       <div class="full-mock reveal d1">
@@ -1478,7 +2673,7 @@ h1.hero-title .lime{color:var(--lime)}
 </section>
 
 <!-- ══ COMPARE ══ -->
-<section class="sec" style="padding-top:0;border-top:none">
+<section class="sec" data-sec="compare" style="padding-top:0;border-top:none">
   <div class="sec-inner">
     <div class="reveal" style="margin-bottom:36px">
       <div class="sec-tag">La diferencia</div>
@@ -1514,7 +2709,7 @@ h1.hero-title .lime{color:var(--lime)}
 </section>
 
 <!-- ══ TESTIMONIALS ══ -->
-<section class="sec" id="testimonios">
+<section class="sec" id="testimonios" data-sec="testimonials">
   <div class="sec-inner">
     <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:16px">
       <div>
@@ -1616,7 +2811,7 @@ h1.hero-title .lime{color:var(--lime)}
 </section>
 
 <!-- ══ PRICING ══ -->
-<section class="sec" id="precios">
+<section class="sec" id="precios" data-sec="pricing">
   <div class="sec-inner">
     <div class="reveal">
       <div class="sec-tag">Precios</div>
@@ -1707,7 +2902,7 @@ h1.hero-title .lime{color:var(--lime)}
           <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span><strong style="color:var(--lime)">Voto en guías prioritarias</strong></li>
           <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span><strong style="color:var(--lime)">Precio bloqueado de por vida</strong></li>
         </ul>
-        <a href="#" class="plan-btn lime">Suscribirme — $19.000/mes →</a>
+        <a href="https://pay.hotmart.com/V95891029B?off=4gqxtfaf&checkoutMode=10&offDiscount=miembro-fundador-colombia" class="plan-btn lime" target="_blank" rel="noopener">Suscribirme — $19.000/mes →</a>
         </div><!-- end card body -->
       </div>
 
@@ -1732,20 +2927,20 @@ h1.hero-title .lime{color:var(--lime)}
 
     </div>
     <p style="font-size:12px;color:var(--t3);margin-top:16px;line-height:1.65">
-      ¿Institución, hospital o clínica? <a href="https://wa.me/57TUNUMERO" style="color:var(--lime);text-decoration:underline;text-underline-offset:3px">Escríbenos por WhatsApp</a> — manejamos acceso para equipos completos.
+      ¿Institución, hospital o clínica? <a href="https://wa.link/zz8afv" style="color:var(--lime);text-decoration:underline;text-underline-offset:3px">Escríbenos por WhatsApp</a> — manejamos acceso para equipos completos.
     </p>
   </div>
 </section>
 
 <!-- ══ FAQ ══ -->
-<section class="sec" id="faq">
+<section class="sec" id="faq" data-sec="faq">
   <div class="sec-inner">
     <div class="faq-layout">
       <div class="reveal">
         <div class="sec-tag">FAQ</div>
         <h2 class="sec-h">Preguntas<br><span class="lime">frecuentes</span></h2>
         <p style="font-size:14px;color:var(--t3);line-height:1.7;margin-top:12px;margin-bottom:22px">¿No encuentras tu respuesta? Escríbenos por WhatsApp y respondemos en menos de 24 horas.</p>
-        <a href="https://wa.me/57TUNUMERO" class="btn-ghost">Escribir por WhatsApp →</a>
+        <a href="https://wa.link/zz8afv" class="btn-ghost">Escribir por WhatsApp →</a>
       </div>
       <div class="faq-list reveal d1">
         <div class="faq-item">
@@ -1778,7 +2973,7 @@ h1.hero-title .lime{color:var(--lime)}
 </section>
 
 <!-- ══ CTA FINAL ══ -->
-<section class="cta-final">
+<section class="cta-final" data-sec="cta">
   <div class="cta-dots">
     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
       <defs><pattern id="dp2" x="0" y="0" width="26" height="26" patternUnits="userSpaceOnUse">
@@ -1793,14 +2988,14 @@ h1.hero-title .lime{color:var(--lime)}
     <p class="cta-sub">11 guías clínicas disponibles desde el día 1, con +30 en camino el 1 de julio. En español, con citas exactas y tips de aplicabilidad. A 2 clics.</p>
     <div class="cta-actions">
       <a href="#precios" class="btn-lime">Suscribirme</a>
-      <a href="https://wa.me/57TUNUMERO" class="btn-ghost">Hablar con el equipo</a>
+      <a href="https://wa.link/zz8afv" class="btn-ghost">Hablar con el equipo</a>
     </div>
     <p class="cta-note">Sin compromisos · Cancela cuando quieras · Por Sustancia P S.A.S.</p>
   </div>
 </section>
 
 <!-- ══ FOOTER ══ -->
-<footer class="cg-foot">
+<footer class="cg-foot" data-sec="footer">
   <div class="cg-foot-inner">
     <div>
       <div class="f-brand-name">Sustancia Pro ® | Clinical Hub</div>
@@ -1818,19 +3013,16 @@ h1.hero-title .lime{color:var(--lime)}
     <div>
       <p class="f-col-title">Empresa</p>
       <ul class="f-links">
-        <li><a href="#">Sustancia P</a></li>
-        <li><a href="#">Nosotros</a></li>
-        <li><a href="#">Blog médico</a></li>
-        <li><a href="#">Afiliados</a></li>
+        <li><a href="https://www.instagram.com/sustanciap" target="_blank" rel="noopener">Sustancia P S.A.S.</a></li>
       </ul>
     </div>
     <div>
       <p class="f-col-title">Contacto</p>
       <ul class="f-links">
-        <li><a href="#">WhatsApp</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Email</a></li>
-        <li><a href="#">Soporte</a></li>
+        <li><a href="https://wa.me/573004067138" target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href="https://www.instagram.com/sustanciap" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="mailto:sustanciapro@gmail.com">Email</a></li>
+        <li><a href="https://wa.me/573004067138" target="_blank" rel="noopener">Soporte</a></li>
       </ul>
     </div>
   </div>
@@ -1841,6 +3033,10 @@ h1.hero-title .lime{color:var(--lime)}
 </footer>
 
 <script>
+// Forzar scroll al inicio al cargar
+if(history.scrollRestoration) history.scrollRestoration = 'manual';
+window.scrollTo(0,0);
+
 // Mobile nav
 document.getElementById('navToggle').addEventListener('click', function() {
   var mn = document.getElementById('mobileNav');
@@ -1897,5 +3093,63 @@ document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
   tick(); setInterval(tick,1000);
 })();
 </script>
+<script>
+(function(){
+  var btn = document.getElementById('btn-ver-producto');
+  if(!btn) return;
+  btn.addEventListener('click', function(e){
+    if(window.innerWidth <= 900){
+      e.preventDefault();
+      var target = document.getElementById('hero-mockup-anim');
+      if(target){
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    }
+  });
+})();
+</script>
+<script>
+function togglePQ(card){
+  var isOpen = card.classList.contains('open');
+  document.querySelectorAll('.pq-card').forEach(function(c){ c.classList.remove('open'); });
+  if(!isOpen) card.classList.add('open');
+}
+</script>
+
+
+
+
+<script>
+(function(){
+  if(window.innerWidth > 600) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) e.target.classList.add('sec-visible');
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('[data-sec]').forEach(function(el){ io.observe(el); });
+})();
+</script>
+<script>
+/* ── Protagonismo mockup producto en móvil ── */
+(function(){
+  if(window.innerWidth > 600) return;
+  var el = document.getElementById('prod-mobile-anim-new');
+  if(!el) return;
+  var glowObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        el.classList.add('in-view');
+      } else {
+        el.classList.remove('in-view');
+      }
+    });
+  }, { threshold: 0.3 });
+  glowObs.observe(el);
+})();
+</script>
+
+
+
 </body>
 </html>
