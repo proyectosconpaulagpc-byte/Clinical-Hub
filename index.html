@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -463,10 +464,8 @@ h1.hero-title .lime{color:var(--lime)}
   }
 }
 @media(max-width:600px){
-  .hero{padding:52px 20px 48px}
   .sec{padding:36px 20px}
   .cg-head-inner{padding:0 20px}
-  h1.hero-title{font-size:34px}
   .sec-h{font-size:26px}
   .cg-foot-inner{grid-template-columns:1fr;gap:24px}
   .logos-strip{padding:14px 20px}
@@ -890,34 +889,36 @@ h1.hero-title .lime{color:var(--lime)}
   .cta-title{ font-size:28px !important; }
   .cta-sub{ font-size:13px !important; margin-bottom:20px !important; }
 
-  /* ── Número hero proof compacto ── */
-  .hero-proof{ margin-top:24px !important; }
-  .proof-n{ font-size:18px !important; }
+  /* ── Hero espaciado móvil calibrado ── */
+  .hero{ padding: 36px 20px 40px !important; }
+  .hero-eyebrow{ margin-bottom: 12px !important; }
+  h1.hero-title{ margin-bottom: 12px !important; font-size: 32px !important; line-height: 1.08 !important; }
+  .hero-sub{ font-size: 14px !important; line-height: 1.6 !important; margin-bottom: 0 !important; }
+  .hero-actions{ margin-bottom: 0 !important; }
+  .proof-n{ font-size: 18px !important; }
 
-  /* ── Hero: imagen debajo del título — quitar margin-top del wrapper ── */
-  .hero-static-list > div { margin-top: 0 !important; }
-  .hero-static-list { margin-top: 20px !important; margin-bottom: 24px !important; }
-
-  /* ── Hero: proof (stats) encima de los botones en móvil ── */
+  /* ── Hero: orden y espaciado entre bloques con gap uniforme ── */
   .hero-inner > div:first-child {
     display: flex !important;
     flex-direction: column !important;
+    gap: 16px !important;
   }
   .hero-sub        { order: 1; }
-  .hero-static-list{ order: 2 !important; }
+  .hero-static-list{ order: 2 !important; margin: 0 !important; }
+  .hero-static-list > div { margin-top: 0 !important; }
+  .hero-proof      { order: 3; margin: 0 !important; }
   .hero-actions    { order: 4; }
-  .hero-proof      { order: 3; margin-bottom: 16px !important; margin-top: 0 !important; }
 
-  /* ── Línea divisora verde lima sutil en secciones clave ── */
-  [data-sec="pain"]::before,
-  [data-sec="testimonials"]::before{
-    content:'';display:block;
-    height:2px;width:32px;
-    background:var(--lime);
-    margin-bottom:24px;
-    border-radius:2px;
-    opacity:.6;
+  /* ── Sección producto: protagonismo en móvil ── */
+  #prod-mobile-anim-new .hero-mockup-prod {
+    transition: box-shadow 0.6s ease, border-color 0.6s ease;
   }
+  #prod-mobile-anim-new.in-view .hero-mockup-prod {
+    border-color: rgba(173,220,0,.35) !important;
+    box-shadow: 0 0 0 1px rgba(173,220,0,.12), 0 16px 48px rgba(0,0,0,.7) !important;
+  }
+
+  /* ── Línea divisora verde lima — eliminada ── */
 }
 </style>
 </head>
@@ -1576,11 +1577,31 @@ h1.hero-title .lime{color:var(--lime)}
         while(cur !== target){ cur += step; setWeight(cur); await w(Math.round(40 * spd)); }
       }
 
+      /* ── Auto-scroll the steps container ── */
+      function scrollStepsTo(px){
+        var c = document.getElementById('hm2-steps-container');
+        if(c) c.scrollTop = px;
+      }
+      async function smoothScrollSteps(target, duration){
+        var c = document.getElementById('hm2-steps-container');
+        if(!c) return;
+        var start = c.scrollTop;
+        var diff = target - start;
+        var steps = Math.round(duration / 16);
+        for(var i=1; i<=steps; i++){
+          var pct = i/steps;
+          var ease = pct<0.5 ? 2*pct*pct : -1+(4-2*pct)*pct;
+          c.scrollTop = start + diff * ease;
+          await w(16);
+        }
+      }
+
       async function loop(){
         /* 1 — Reset everything */
         resetBrowse();
         resetSearch();
         closeStep(0); closeStep(1); closeStep(2); closeStep(3); closeStep(4); closeStep(5);
+        scrollStepsTo(0);
         setTab('seq'); setWeight(70);
         await w(600);
 
@@ -1606,23 +1627,32 @@ h1.hero-title .lime{color:var(--lime)}
 
         /* 7 — Transition to guide */
         await transitionToGuide();
+        await w(500);
+
+        /* 8 — Abrir todos los pasos en cascada con stagger */
+        await w(300);
+        openStep(0); await w(160);
+        openStep(1); await w(160);
+        openStep(2); await w(160);
+        openStep(3); await w(160);
+        await animWeight(85); await w(100);
+        openStep(4); await w(160);
+        openStep(5); await w(400);
+
+        /* 9 — Auto-scroll suave para mostrar contenido */
+        await smoothScrollSteps(120, 900);
         await w(600);
+        await smoothScrollSteps(280, 1000);
+        await w(700);
+        await smoothScrollSteps(480, 1100);
+        await w(800);
 
-        /* 8 — Step animations */
-        openStep(0); await w(2000); closeStep(0); await w(350);
-        openStep(1); await w(2200); closeStep(1); await w(350);
-        openStep(2); await w(2000); closeStep(2); await w(350);
-        openStep(3); await w(2200); closeStep(3); await w(350);
+        /* 10 — Pausa para que se lea */
+        await w(1800);
 
-        await animWeight(85); await w(600);
-        openStep(4); await w(3000);
-
-        closeStep(4); await w(400);
-        setTab('pharma'); await w(1400);
-        setTab('seq'); await w(500);
-
-        await animWeight(70); await w(400);
-        openStep(5); await w(800); closeStep(5); await w(600);
+        /* 11 — Scroll de vuelta arriba y reset */
+        await smoothScrollSteps(0, 800);
+        await w(400);
 
         loop();
       }
@@ -1843,11 +1873,11 @@ h1.hero-title .lime{color:var(--lime)}
 
       <!-- Mobile-only: hero animation clone + feature list -->
       <div class="prod-mobile-block">
-        <div class="prod-mobile-anim" id="prod-mobile-anim">
-          <div class="hero-mockup-prod" style="overflow:hidden;padding:0;position:relative;height:398px;background:var(--bg-card);border:0.5px solid var(--border-hi);border-radius:var(--r-lg);box-shadow:0 12px 40px rgba(0,0,0,.55)">
+    <div id="prod-mobile-anim-new" class="prod-mobile-anim">
+    <div class="hero-mockup-prod" style="overflow:hidden;padding:0;position:relative;height:420px;border-radius:var(--r-lg);border:0.5px solid var(--border-hi);box-shadow:0 12px 40px rgba(0,0,0,.55)">
 
       <!-- ── BROWSE SCREEN ── -->
-      <div id="p2-hm-browse-screen" style="position:absolute;inset:0;background:#000;z-index:20;display:flex;flex-direction:column;opacity:1;transition:opacity .5s ease">
+      <div id="hm2-browse-screen" style="position:absolute;inset:0;background:#000;z-index:20;display:flex;flex-direction:column;opacity:1;transition:opacity .5s ease">
 
         <!-- Nav -->
         <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:10px;height:40px;flex-shrink:0">
@@ -1875,7 +1905,7 @@ h1.hero-title .lime{color:var(--lime)}
 
         <!-- Guide list (overflow hidden, inner scrolls via JS) -->
         <div style="flex:1;overflow:hidden;position:relative">
-          <div id="p2-hm-guide-list" style="will-change:transform">
+          <div id="hm2-guide-list" style="will-change:transform">
 
             <!-- helper macro: each row -->
             <!-- 1. Sepsis -->
@@ -1977,7 +2007,7 @@ h1.hero-title .lime{color:var(--lime)}
       </div>
 
       <!-- ── SEARCH SCREEN ── -->
-      <div id="p2-hm-search-screen" style="position:absolute;inset:0;background:#000;z-index:10;display:flex;flex-direction:column;opacity:0;transition:opacity .5s ease">
+      <div id="hm2-search-screen" style="position:absolute;inset:0;background:#000;z-index:10;display:flex;flex-direction:column;opacity:0;transition:opacity .5s ease">
 
         <!-- Search nav -->
         <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:10px;height:40px;flex-shrink:0">
@@ -1986,10 +2016,10 @@ h1.hero-title .lime{color:var(--lime)}
             <span style="font-size:10px;font-weight:600;color:var(--t2);letter-spacing:.04em">Clinical Hub</span>
           </div>
           <div style="flex:1;position:relative">
-            <div style="background:#181818;border:0.5px solid #3a3a3a;border-radius:6px;padding:5px 10px 5px 28px;display:flex;align-items:center;gap:6px;transition:border-color .2s" id="p2-hm-searchbox">
+            <div style="background:#181818;border:0.5px solid #3a3a3a;border-radius:6px;padding:5px 10px 5px 28px;display:flex;align-items:center;gap:6px;transition:border-color .2s" id="hm2-searchbox">
               <svg style="position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.35" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f5f5f5" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <span id="p2-hm-search-text" style="font-size:10px;color:var(--t1);font-family:monospace;letter-spacing:.02em"></span>
-              <span id="p2-hm-cursor" style="display:inline-block;width:1px;height:11px;background:var(--lime);margin-left:1px;animation:blink .8s step-end infinite"></span>
+              <span id="hm2-search-text" style="font-size:10px;color:var(--t1);font-family:monospace;letter-spacing:.02em"></span>
+              <span id="hm2-cursor" style="display:inline-block;width:1px;height:11px;background:var(--lime);margin-left:1px;animation:blink .8s step-end infinite"></span>
             </div>
           </div>
           <div style="background:var(--lime);color:#000;font-size:9px;font-weight:700;padding:4px 10px;border-radius:20px;flex-shrink:0;letter-spacing:.03em">Mi cuenta</div>
@@ -2004,11 +2034,11 @@ h1.hero-title .lime{color:var(--lime)}
         </div>
 
         <!-- Search results (hidden until typed) -->
-        <div id="p2-hm-results" style="flex:1;padding:10px 12px;opacity:0;transition:opacity .35s ease">
+        <div id="hm2-results" style="flex:1;padding:10px 12px;opacity:0;transition:opacity .35s ease">
 
           <!-- Result card -->
           <div style="font-size:8px;font-weight:700;color:#3a3a3c;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">1 resultado</div>
-          <div id="p2-hm-result-card" style="background:#111;border:0.5px solid #252525;border-radius:8px;padding:10px 12px;cursor:pointer;transition:border-color .2s,background .2s">
+          <div id="hm2-result-card" style="background:#111;border:0.5px solid #252525;border-radius:8px;padding:10px 12px;cursor:pointer;transition:border-color .2s,background .2s">
             <div style="display:flex;align-items:flex-start;gap:9px">
               <div style="width:28px;height:28px;border-radius:6px;background:var(--lime-bg);border:0.5px solid var(--lime-bdr);display:flex;align-items:center;justify-content:center;flex-shrink:0">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#addc00" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -2029,7 +2059,7 @@ h1.hero-title .lime{color:var(--lime)}
       </div>
 
       <!-- ── GUIDE SCREEN ── -->
-      <div id="p2-hm-guide-screen" style="opacity:0;transition:opacity .5s ease">
+      <div id="hm2-guide-screen" style="opacity:0;transition:opacity .5s ease;display:flex;flex-direction:column;position:absolute;inset:0;overflow:hidden">
 
       <!-- App nav bar -->
       <div style="background:#111;border-bottom:0.5px solid #1c1c1e;padding:0 12px;display:flex;align-items:center;gap:0;height:40px">
@@ -2037,28 +2067,28 @@ h1.hero-title .lime{color:var(--lime)}
           <div style="background:var(--lime);color:#000;font-size:8px;font-weight:700;padding:2px 5px;border-radius:3px;letter-spacing:.05em;line-height:1">CH</div>
           <span style="font-size:10px;font-weight:600;color:var(--t2);letter-spacing:.04em">Clinical Hub</span>
         </div>
-        <div id="p2-hm-tab-seq" style="font-size:9.5px;font-weight:600;color:var(--lime);padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid var(--lime);letter-spacing:.04em;text-transform:uppercase;cursor:default">Secuencia</div>
-        <div id="p2-hm-tab-pharma" style="font-size:9.5px;font-weight:600;color:#3a3a3c;padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid transparent;letter-spacing:.04em;text-transform:uppercase;cursor:default;transition:all .25s">Farmacología</div>
-        <div id="p2-hm-tab-score" style="font-size:9.5px;font-weight:600;color:#3a3a3c;padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid transparent;letter-spacing:.04em;text-transform:uppercase;cursor:default;transition:all .25s">Scores</div>
+        <div id="hm2-tab-seq" style="font-size:9.5px;font-weight:600;color:var(--lime);padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid var(--lime);letter-spacing:.04em;text-transform:uppercase;cursor:default">Secuencia</div>
+        <div id="hm2-tab-pharma" style="font-size:9.5px;font-weight:600;color:#3a3a3c;padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid transparent;letter-spacing:.04em;text-transform:uppercase;cursor:default;transition:all .25s">Farmacología</div>
+        <div id="hm2-tab-score" style="font-size:9.5px;font-weight:600;color:#3a3a3c;padding:0 10px;height:40px;display:flex;align-items:center;border-bottom:1.5px solid transparent;letter-spacing:.04em;text-transform:uppercase;cursor:default;transition:all .25s">Scores</div>
       </div>
 
       <!-- Dose calculator bar -->
-      <div id="p2-hm-calc" style="background:#111;border-bottom:0.5px solid #252525;padding:8px 14px;display:flex;align-items:center;gap:12px">
+      <div id="hm2-calc" style="background:#111;border-bottom:0.5px solid #252525;padding:8px 14px;display:flex;align-items:center;gap:12px">
         <div>
           <div style="font-size:8px;font-weight:700;color:#3a3a3c;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">Calculadora de Dosis</div>
           <div style="display:flex;align-items:center;gap:6px">
-            <div style="background:#181818;border:0.5px solid #3a3a3a;color:var(--lime);font-size:15px;font-weight:500;width:52px;padding:4px 8px;border-radius:6px;text-align:center;font-family:monospace" id="p2-hm-weight">70</div>
+            <div style="background:#181818;border:0.5px solid #3a3a3a;color:var(--lime);font-size:15px;font-weight:500;width:52px;padding:4px 8px;border-radius:6px;text-align:center;font-family:monospace" id="hm2-weight">70</div>
             <span style="font-size:10px;color:#6c6c70;font-weight:600">kg</span>
           </div>
         </div>
         <div style="display:flex;gap:8px;margin-left:auto">
           <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:5px 10px;min-width:110px">
             <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#6c6c70;margin-bottom:2px">Etomidato (0.3)</div>
-            <div style="font-family:monospace;font-size:12px;font-weight:500;color:var(--lime)" id="p2-hm-etomidato">21.0 mg</div>
+            <div style="font-family:monospace;font-size:12px;font-weight:500;color:var(--lime)" id="hm2-etomidato">21.0 mg</div>
           </div>
           <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:5px 10px;min-width:110px">
             <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#6c6c70;margin-bottom:2px">Succinilcolina (1.5)</div>
-            <div style="font-family:monospace;font-size:12px;font-weight:500;color:var(--lime)" id="p2-hm-succi">105.0 mg</div>
+            <div style="font-family:monospace;font-size:12px;font-weight:500;color:var(--lime)" id="hm2-succi">105.0 mg</div>
           </div>
         </div>
       </div>
@@ -2070,16 +2100,16 @@ h1.hero-title .lime{color:var(--lime)}
       </div>
 
       <!-- Steps -->
-      <div style="overflow:hidden">
+      <div id="hm2-steps-container" style="overflow-y:auto;flex:1;scroll-behavior:smooth;scrollbar-width:none"><style>#hm2-steps-container::-webkit-scrollbar{display:none}</style>
 
         <!-- Step 0 -->
-        <div class="hm-step" id="p2-hm-s0" style="border-bottom:0.5px solid #1c1c1e">
-          <div class="hm-sh" id="p2-hm-sh0" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+        <div class="hm-step" id="hm2-s0" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh0" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
             <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">0</div>
             <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Evaluación y Decisión — ¿Indicar RSI?</span>
-            <span class="hm-tog" id="p2-hm-tog0" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+            <span class="hm-tog" id="hm2-tog0" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
           </div>
-          <div class="hm-sb" id="p2-hm-sb0" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+          <div class="hm-sb" id="hm2-sb0" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
             <div style="padding:0 14px 10px 42px">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
                 <div style="background:rgba(50,215,75,.06);border:0.5px solid rgba(50,215,75,.2);border-radius:6px;padding:8px 10px">
@@ -2099,13 +2129,13 @@ h1.hero-title .lime{color:var(--lime)}
         </div>
 
         <!-- Step 1 -->
-        <div class="hm-step" id="p2-hm-s1" style="border-bottom:0.5px solid #1c1c1e">
-          <div class="hm-sh" id="p2-hm-sh1" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+        <div class="hm-step" id="hm2-s1" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh1" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
             <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
             <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Preparación — Lista de Verificación Pre-RSI</span>
-            <span class="hm-tog" id="p2-hm-tog1" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+            <span class="hm-tog" id="hm2-tog1" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
           </div>
-          <div class="hm-sb" id="p2-hm-sb1" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+          <div class="hm-sb" id="hm2-sb1" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
             <div style="padding:0 14px 10px 42px">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
                 <div style="background:rgba(10,132,255,.06);border:0.5px solid rgba(10,132,255,.2);border-radius:6px;padding:8px 10px">
@@ -2133,13 +2163,13 @@ h1.hero-title .lime{color:var(--lime)}
         </div>
 
         <!-- Step 2 -->
-        <div class="hm-step" id="p2-hm-s2" style="border-bottom:0.5px solid #1c1c1e">
-          <div class="hm-sh" id="p2-hm-sh2" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+        <div class="hm-step" id="hm2-s2" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh2" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
             <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
             <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Posicionamiento del Paciente</span>
-            <span class="hm-tog" id="p2-hm-tog2" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+            <span class="hm-tog" id="hm2-tog2" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
           </div>
-          <div class="hm-sb" id="p2-hm-sb2" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+          <div class="hm-sb" id="hm2-sb2" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
             <div style="padding:0 14px 10px 42px">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
                 <div style="background:rgba(50,215,75,.06);border:0.5px solid rgba(50,215,75,.2);border-radius:6px;padding:8px 10px">
@@ -2166,13 +2196,13 @@ h1.hero-title .lime{color:var(--lime)}
         </div>
 
         <!-- Step 3 -->
-        <div class="hm-step" id="p2-hm-s3" style="border-bottom:0.5px solid #1c1c1e">
-          <div class="hm-sh" id="p2-hm-sh3" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+        <div class="hm-step" id="hm2-s3" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh3" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
             <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
             <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Preoxigenación</span>
-            <span class="hm-tog" id="p2-hm-tog3" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+            <span class="hm-tog" id="hm2-tog3" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
           </div>
-          <div class="hm-sb" id="p2-hm-sb3" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+          <div class="hm-sb" id="hm2-sb3" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
             <div style="padding:0 14px 10px 42px">
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:6px">
                 <div style="background:#181818;border:0.5px solid #252525;border-radius:6px;padding:7px 9px">
@@ -2199,25 +2229,25 @@ h1.hero-title .lime{color:var(--lime)}
         </div>
 
         <!-- Step 4 -->
-        <div class="hm-step" id="p2-hm-s4" style="border-bottom:0.5px solid #1c1c1e">
-          <div class="hm-sh" id="p2-hm-sh4" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+        <div class="hm-step" id="hm2-s4" style="border-bottom:0.5px solid #1c1c1e">
+          <div class="hm-sh" id="hm2-sh4" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
             <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
             <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Medicación RSI — Inducción + BNM</span>
-            <span class="hm-tog" id="p2-hm-tog4" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+            <span class="hm-tog" id="hm2-tog4" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
           </div>
-          <div class="hm-sb" id="p2-hm-sb4" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
+          <div class="hm-sb" id="hm2-sb4" style="overflow:hidden;max-height:0;transition:max-height .4s ease">
             <div style="padding:0 14px 10px 42px">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
                 <div style="background:rgba(173,220,0,.06);border:0.5px solid rgba(173,220,0,.22);border-radius:6px;padding:8px 10px">
                   <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--lime);margin-bottom:5px">Inductor 1ª línea</div>
                   <div style="font-size:11px;font-weight:700;color:var(--t1)">Etomidato</div>
-                  <div style="font-family:monospace;font-size:11px;color:var(--lime);margin-top:2px" id="p2-hm-etomidato2">21.0 mg IV</div>
+                  <div style="font-family:monospace;font-size:11px;color:var(--lime);margin-top:2px" id="hm2-etomidato2">21.0 mg IV</div>
                   <div style="font-size:9px;color:#6c6c70;margin-top:2px">0.3 mg/kg · Hemodinámica estable</div>
                 </div>
                 <div style="background:rgba(173,220,0,.06);border:0.5px solid rgba(173,220,0,.22);border-radius:6px;padding:8px 10px">
                   <div style="font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--lime);margin-bottom:5px">BNM 1ª línea</div>
                   <div style="font-size:11px;font-weight:700;color:var(--t1)">Succinilcolina</div>
-                  <div style="font-family:monospace;font-size:11px;color:var(--lime);margin-top:2px" id="p2-hm-succi2">105.0 mg IV</div>
+                  <div style="font-family:monospace;font-size:11px;color:var(--lime);margin-top:2px" id="hm2-succi2">105.0 mg IV</div>
                   <div style="font-size:9px;color:#6c6c70;margin-top:2px">1.5 mg/kg · Inicio &lt;60 s</div>
                 </div>
               </div>
@@ -2234,11 +2264,11 @@ h1.hero-title .lime{color:var(--lime)}
         </div>
 
         <!-- Step 5 -->
-        <div class="hm-step" id="p2-hm-s5">
-          <div class="hm-sh" id="p2-hm-sh5" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
+        <div class="hm-step" id="hm2-s5">
+          <div class="hm-sh" id="hm2-sh5" style="display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:default;transition:background .2s">
             <div class="hm-snum" style="width:20px;height:20px;border-radius:50%;background:var(--lime);color:#000;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">5</div>
             <span style="font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.03em;text-transform:uppercase;flex:1">Plan A — Laringoscopia</span>
-            <span class="hm-tog" id="p2-hm-tog5" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
+            <span class="hm-tog" id="hm2-tog5" style="color:#3a3a3c;font-size:11px;transition:transform .3s">▾</span>
           </div>
         </div>
 
@@ -2251,7 +2281,12 @@ h1.hero-title .lime{color:var(--lime)}
         <span class="mock-ft">Actualización: <em>Continua</em></span>
       </div>
     </div>
-        </div>
+
+    <style>
+    .hm-sh:hover { background: #181818 }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    </style>
+
     <script>
     (function(){
       var spd = window.innerWidth <= 900 ? 0.55 : 1; // móvil ~45% más rápido
@@ -2259,7 +2294,7 @@ h1.hero-title .lime{color:var(--lime)}
 
       /* ── Browse helpers ── */
       async function scrollBrowse(){
-        var list = document.getElementById('p2-hm-guide-list');
+        var list = document.getElementById('hm2-guide-list');
         var container = list.parentElement;
         var maxScroll = list.scrollHeight - container.offsetHeight;
         if(maxScroll <= 0) return;
@@ -2283,16 +2318,16 @@ h1.hero-title .lime{color:var(--lime)}
         }
       }
       async function transitionBrowseToSearch(){
-        var bs = document.getElementById('p2-hm-browse-screen');
-        var ss = document.getElementById('p2-hm-search-screen');
+        var bs = document.getElementById('hm2-browse-screen');
+        var ss = document.getElementById('hm2-search-screen');
         ss.style.opacity = '1';
         bs.style.opacity = '0';
         await w(550);
         bs.style.display = 'none';
       }
       function resetBrowse(){
-        var bs = document.getElementById('p2-hm-browse-screen');
-        var list = document.getElementById('p2-hm-guide-list');
+        var bs = document.getElementById('hm2-browse-screen');
+        var list = document.getElementById('hm2-guide-list');
         list.style.transform = 'translateY(0)';
         bs.style.opacity = '1';
         bs.style.display = 'flex';
@@ -2300,8 +2335,8 @@ h1.hero-title .lime{color:var(--lime)}
 
       /* ── Search helpers ── */
       async function typeSearch(text){
-        var el = document.getElementById('p2-hm-search-text');
-        var box = document.getElementById('p2-hm-searchbox');
+        var el = document.getElementById('hm2-search-text');
+        var box = document.getElementById('hm2-searchbox');
         box.style.borderColor = 'var(--lime)';
         el.textContent = '';
         for(var i=0;i<text.length;i++){
@@ -2310,28 +2345,28 @@ h1.hero-title .lime{color:var(--lime)}
         }
       }
       async function showResults(){
-        document.getElementById('p2-hm-results').style.opacity = '1';
+        document.getElementById('hm2-results').style.opacity = '1';
       }
       async function hoverCard(){
-        var c = document.getElementById('p2-hm-result-card');
+        var c = document.getElementById('hm2-result-card');
         c.style.borderColor = 'var(--lime)';
         c.style.background = '#181818';
       }
       async function transitionToGuide(){
-        var ss = document.getElementById('p2-hm-search-screen');
-        var gs = document.getElementById('p2-hm-guide-screen');
+        var ss = document.getElementById('hm2-search-screen');
+        var gs = document.getElementById('hm2-guide-screen');
         gs.style.opacity = '1';
         ss.style.opacity = '0';
         await w(520);
         ss.style.display = 'none';
       }
       function resetSearch(){
-        var ss = document.getElementById('p2-hm-search-screen');
-        var gs = document.getElementById('p2-hm-guide-screen');
-        var el = document.getElementById('p2-hm-search-text');
-        var box = document.getElementById('p2-hm-searchbox');
-        var r = document.getElementById('p2-hm-results');
-        var c = document.getElementById('p2-hm-result-card');
+        var ss = document.getElementById('hm2-search-screen');
+        var gs = document.getElementById('hm2-guide-screen');
+        var el = document.getElementById('hm2-search-text');
+        var box = document.getElementById('hm2-searchbox');
+        var r = document.getElementById('hm2-results');
+        var c = document.getElementById('hm2-result-card');
         el.textContent = '';
         box.style.borderColor = '#3a3a3a';
         r.style.opacity = '0';
@@ -2344,61 +2379,81 @@ h1.hero-title .lime{color:var(--lime)}
 
       /* ── Guide helpers ── */
       function openStep(id){
-        var sb = document.getElementById('hm-sb'+id);
-        var tog = document.getElementById('hm-tog'+id);
-        var sh = document.getElementById('hm-sh'+id);
+        var sb = document.getElementById('hm2-sb'+id);
+        var tog = document.getElementById('hm2-tog'+id);
+        var sh = document.getElementById('hm2-sh'+id);
         if(!sb) return;
         sb.style.maxHeight = sb.scrollHeight + 300 + 'px';
         if(tog) tog.style.transform = 'rotate(180deg)';
         if(sh) sh.style.background = '#181818';
       }
       function closeStep(id){
-        var sb = document.getElementById('hm-sb'+id);
-        var tog = document.getElementById('hm-tog'+id);
-        var sh = document.getElementById('hm-sh'+id);
+        var sb = document.getElementById('hm2-sb'+id);
+        var tog = document.getElementById('hm2-tog'+id);
+        var sh = document.getElementById('hm2-sh'+id);
         if(!sb) return;
         sb.style.maxHeight = '0';
         if(tog) tog.style.transform = 'rotate(0deg)';
         if(sh) sh.style.background = '';
       }
       function setWeight(kg){
-        document.getElementById('p2-hm-weight').textContent = kg;
-        document.getElementById('p2-hm-etomidato').textContent = (kg*0.3).toFixed(1)+' mg';
-        document.getElementById('p2-hm-succi').textContent = (kg*1.5).toFixed(1)+' mg';
-        document.getElementById('p2-hm-etomidato2').textContent = (kg*0.3).toFixed(1)+' mg IV';
-        document.getElementById('p2-hm-succi2').textContent = (kg*1.5).toFixed(1)+' mg IV';
+        document.getElementById('hm2-weight').textContent = kg;
+        document.getElementById('hm2-etomidato').textContent = (kg*0.3).toFixed(1)+' mg';
+        document.getElementById('hm2-succi').textContent = (kg*1.5).toFixed(1)+' mg';
+        document.getElementById('hm2-etomidato2').textContent = (kg*0.3).toFixed(1)+' mg IV';
+        document.getElementById('hm2-succi2').textContent = (kg*1.5).toFixed(1)+' mg IV';
       }
       function setTab(active){
         ['seq','pharma','score'].forEach(function(t){
-          var el = document.getElementById('hm-tab-'+t);
+          var el = document.getElementById('hm2-tab-'+t);
           if(!el) return;
           el.style.color = t===active ? 'var(--lime)' : '#3a3a3c';
           el.style.borderBottomColor = t===active ? 'var(--lime)' : 'transparent';
         });
       }
       async function animWeight(target){
-        var cur = parseInt(document.getElementById('p2-hm-weight').textContent);
+        var cur = parseInt(document.getElementById('hm2-weight').textContent);
         var step = target > cur ? 1 : -1;
         while(cur !== target){ cur += step; setWeight(cur); await w(Math.round(40 * spd)); }
       }
 
+      /* ── Auto-scroll the steps container ── */
+      function scrollStepsTo(px){
+        var c = document.getElementById('hm2-steps-container');
+        if(c) c.scrollTop = px;
+      }
+      async function smoothScrollSteps(target, duration){
+        var c = document.getElementById('hm2-steps-container');
+        if(!c) return;
+        var start = c.scrollTop;
+        var diff = target - start;
+        var steps = Math.round(duration / 16);
+        for(var i=1; i<=steps; i++){
+          var pct = i/steps;
+          var ease = pct<0.5 ? 2*pct*pct : -1+(4-2*pct)*pct;
+          c.scrollTop = start + diff * ease;
+          await w(16);
+        }
+      }
+
       async function loop(){
-        /* 1 — Reset everything */
+        /* 1 — Reset */
         resetBrowse();
         resetSearch();
         closeStep(0); closeStep(1); closeStep(2); closeStep(3); closeStep(4); closeStep(5);
+        scrollStepsTo(0);
         setTab('seq'); setWeight(70);
         await w(600);
 
-        /* 2 — Browse: scroll through guide list */
+        /* 2 — Browse scroll */
         await scrollBrowse();
         await w(500);
 
-        /* 3 — Transition browse → search */
+        /* 3 — Browse → search */
         await transitionBrowseToSearch();
         await w(600);
 
-        /* 4 — Type query */
+        /* 4 — Type */
         await typeSearch('RSI');
         await w(500);
 
@@ -2406,38 +2461,82 @@ h1.hero-title .lime{color:var(--lime)}
         await showResults();
         await w(900);
 
-        /* 6 — Hover result */
+        /* 6 — Hover */
         await hoverCard();
         await w(700);
 
-        /* 7 — Transition to guide */
+        /* 7 — Open guide */
         await transitionToGuide();
         await w(600);
 
-        /* 8 — Step animations */
-        openStep(0); await w(2000); closeStep(0); await w(350);
-        openStep(1); await w(2200); closeStep(1); await w(350);
-        openStep(2); await w(2000); closeStep(2); await w(350);
-        openStep(3); await w(2200); closeStep(3); await w(350);
+        /* 8 — Efecto grabacion de pantalla:
+               cada paso se abre y la camara lo sigue bajando en paralelo */
 
-        await animWeight(85); await w(600);
-        openStep(4); await w(3000);
+        /* Paso 0: abre y baja para centrarlo */
+        openStep(0);
+        await w(500);
+        smoothScrollSteps(80, 700);
+        await w(1400);
 
-        closeStep(4); await w(400);
-        setTab('pharma'); await w(1400);
-        setTab('seq'); await w(500);
+        /* Paso 1 */
+        openStep(1);
+        await w(400);
+        smoothScrollSteps(220, 750);
+        await w(1400);
 
-        await animWeight(70); await w(400);
-        openStep(5); await w(800); closeStep(5); await w(600);
+        /* Paso 2 */
+        openStep(2);
+        await w(400);
+        smoothScrollSteps(380, 750);
+        await w(1300);
+
+        /* Paso 3 */
+        openStep(3);
+        await w(400);
+        smoothScrollSteps(530, 800);
+        await w(1300);
+
+        /* Paso 4 — con calculadora de dosis animada */
+        await animWeight(85);
+        openStep(4);
+        await w(400);
+        smoothScrollSteps(700, 850);
+        await w(1600);
+
+        /* Paso 5 */
+        openStep(5);
+        await w(400);
+        smoothScrollSteps(880, 800);
+        await w(1800);
+
+        /* 9 — Pausa final, todo visible */
+        await w(1200);
+
+        /* 10 — Scroll cinematico de vuelta arriba, lento */
+        await smoothScrollSteps(0, 1400);
+        await w(600);
 
         loop();
       }
 
-      loop();
+      var _at = document.getElementById('prod-mobile-anim-new');
+      var _started = false;
+      if(window.innerWidth <= 600 && _at){
+        var _obs = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting && !_started){
+              _started = true; _obs.disconnect();
+              setTimeout(loop, 400);
+            }
+          });
+        }, {threshold:0.3});
+        _obs.observe(_at);
+      } else { loop(); }
     })();
     </script>
   </div>
-    </div><!-- /hero-mockup-anim wrapper -->
+        </div><!-- /prod-mobile-anim-new -->
+
 
         <!-- Feature list below animation -->
         <div class="prod-mobile-feats">
@@ -3029,6 +3128,24 @@ function togglePQ(card){
     });
   }, { threshold: 0.08 });
   document.querySelectorAll('[data-sec]').forEach(function(el){ io.observe(el); });
+})();
+</script>
+<script>
+/* ── Protagonismo mockup producto en móvil ── */
+(function(){
+  if(window.innerWidth > 600) return;
+  var el = document.getElementById('prod-mobile-anim-new');
+  if(!el) return;
+  var glowObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        el.classList.add('in-view');
+      } else {
+        el.classList.remove('in-view');
+      }
+    });
+  }, { threshold: 0.3 });
+  glowObs.observe(el);
 })();
 </script>
 
