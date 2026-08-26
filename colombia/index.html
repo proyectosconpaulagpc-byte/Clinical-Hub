@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sustancia Pro ® | Clinical Hub — Guías clínicas a 2 clics</title>
 <meta name="description" content="Guías clínicas internacionales en español, unificadas, actualizadas y con tips de aplicabilidad. Para el médico que necesita la respuesta ahora.">
+<!-- ── Favicon · el archivo vive en la raíz del repo, junto al CNAME ──
+     Ruta absoluta a propósito: así sirve igual desde /index.html que
+     desde /colombia/, /mexico/, /latam/ o /españa/. -->
+<link rel="icon" type="image/png" href="/faviconclinicalhub.png">
+<link rel="apple-touch-icon" href="/faviconclinicalhub.png">
+<link rel="shortcut icon" type="image/png" href="/faviconclinicalhub.png">
+<meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
@@ -4854,6 +4861,293 @@ document.getElementById('cx-mock').innerHTML=
   run();
 })();
 
+</script>
+
+
+<style id="capa-movil-v3">
+/* ══════════════════════════════════════════════════════════════════
+   CAPA MÓVIL v3 — COMPACTACIÓN  (≤760px)
+   · Nada de esto toca el escritorio: TODO vive dentro de
+     @media (max-width:760px), salvo los elementos inyectados por JS,
+     que nacen con display:none y solo se encienden dentro del media.
+   · Objetivo: menos scroll, misma información. Lo largo se pliega
+     (acordeones), lo duplicado se oculta, el ritmo se aprieta.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* elementos que inyecta el JS: invisibles fuera del móvil */
+.m-chev, .m-tg{ display:none; }
+
+@media (max-width:760px){
+
+  /* ── 1 · RITMO GLOBAL ─────────────────────────────────────── */
+  .pA,
+  #problema, #producto, #comparativa, #contenido, #precios, #faq{
+    padding:40px 0 !important;
+  }
+  section[id]{ scroll-margin-top:62px; }          /* la cabecera es sticky */
+  .pA h2{ font-size:24px !important; line-height:1.14 !important; }
+  .pA .lead{ font-size:14.5px !important; line-height:1.55 !important; }
+  .pA .eyebrow{ font-size:9.5px !important; margin-bottom:8px !important; }
+  #problema h2 br{ display:none; }
+
+  /* ── 2 · HERO ─────────────────────────────────────────────── */
+  .banner{ font-size:11px !important; padding:7px 12px !important; }
+  .hero{ padding:22px 0 30px !important; }
+  .hero-inner{ gap:20px !important; }
+  .hero-eyebrow{ margin-bottom:11px !important; padding:4px 10px !important; }
+  h1.hero-title{ font-size:29px !important; margin-bottom:11px !important; }
+  .hero-sub{ font-size:14.5px !important; line-height:1.55 !important;
+             margin-bottom:16px !important; }
+
+  /* los dos botones caben lado a lado: −56px de alto */
+  .hero-actions{ grid-template-columns:1fr 1fr !important;
+                 gap:8px !important; margin-bottom:16px !important; }
+  .hero-actions a{ padding:13px 8px !important; font-size:13px !important; }
+
+  .proof-item{ padding:9px 8px !important; }
+  .proof-n{ font-size:17px !important; }
+  .proof-l{ font-size:8.5px !important; line-height:1.25; }
+
+  .hero-mockup-label{ margin-bottom:8px !important; }
+  .hero-mockup-label .hml-text{ font-size:10px; }
+  #cx-mock{ height:420px; }
+
+  /* ── 3 · FUENTES ──────────────────────────────────────────── */
+  .fuentes{ padding:13px 0 !important; }
+  .fuentes-lbl{ margin-bottom:9px !important; font-size:9.5px; }
+  .fuentes-marq span{ font-size:11px; }
+
+  /* ── 4 · EL PROBLEMA → acordeón ───────────────────────────── */
+  #problema .g3{ gap:7px !important; margin-top:20px !important; }
+  #problema .card{ padding:13px 40px 13px 15px !important; position:relative; }
+  #problema .card .num{ margin-bottom:5px !important; font-size:10px !important; }
+  #problema .card h3{ font-size:16px !important; margin-bottom:0 !important; }
+  #problema .card p{ display:none; }
+  #problema .card.m-open p{ display:block; font-size:13.5px !important;
+                            margin-top:8px; animation:mFade .18s ease; }
+  #problema .card-cta{ padding-right:15px !important; }
+  #problema .card-cta p{ display:block !important; font-size:13.5px !important;
+                         margin-top:8px; }
+
+  /* ── 5 · PRODUCTO ─────────────────────────────────────────── */
+  .vpwrap{ margin-top:20px !important; }
+  .vpindex{ margin:0 -18px 14px !important; padding:0 18px 4px !important; }
+  .vpi{ padding:9px 12px !important; font-size:11.5px !important; min-height:38px !important; }
+  .vp-claim{ margin-bottom:12px !important; }
+  .vp-n{ margin-bottom:5px !important; }
+  .vp-claim h3{ font-size:19px !important; line-height:1.18 !important; }
+  .vp-claim p{ font-size:13.5px !important; line-height:1.5 !important; }
+  .vp-tag{ padding:7px 12px !important; font-size:8px !important; }
+  .vp-exhibit .gv{ max-height:min(58vh,430px) !important; }
+  .gv > .wrapg:first-child{ padding-top:14px; }
+
+  /* ── 6 · COMPARATIVA ──────────────────────────────────────── */
+  #swipe-hint{ font-size:10px !important; margin:18px 0 6px !important; }
+  .cmp{ min-width:600px !important; font-size:11px !important; }
+  .cmp th, .cmp td{ padding:8px 7px !important; }
+  .cmp thead th:first-child, .cmp tbody th, .cmp tfoot th{ min-width:126px !important; }
+  .cmp thead th:not(:first-child), .cmp tbody td:not(:first-child){ min-width:84px !important; }
+  .cmp-key{ gap:9px !important; font-size:10px !important; margin-top:12px !important; }
+  .cmp-key-note{ font-size:10.5px; }
+  /* la nota metodológica se pliega: son 9 líneas de letra pequeña */
+  .cmp-src{ display:none; }
+  .cmp-src.m-open{ display:block; font-size:11.5px !important; margin-top:8px !important;
+                   animation:mFade .18s ease; }
+
+  /* ── 7 · CONTENIDO → catálogo plegable ────────────────────── */
+  .guides{ gap:7px !important; margin-top:20px !important; }
+  .guide{ padding:11px 34px 11px 14px !important; position:relative; }
+  .guide .sp{ font-size:9px !important; margin-bottom:3px !important; }
+  .guide b{ font-size:14px !important; margin-bottom:0 !important; }
+  .guide p, .guide .srcs{ display:none; }
+  .guide.m-open p{ display:block; font-size:12.5px !important;
+                   margin:8px 0 8px !important; animation:mFade .18s ease; }
+  .guide.m-open .srcs{ display:flex; }
+
+  .soon{ margin-top:22px !important; padding-top:18px !important; }
+  .fbar-a, .fbar-b, .fbar-c{ padding:13px 16px !important; }
+  .fbar-a b{ font-size:22px !important; }
+  .fbar-b p{ font-size:13.5px !important; }
+
+  /* ── 8 · PRECIOS ──────────────────────────────────────────── */
+  /* el contador de arriba repetía el del plan: un solo reloj por pantalla */
+  .cd-strip{ display:none !important; }
+  .plans-grid{ gap:10px !important; margin-top:24px !important; }
+  .plan:not(.best){ padding:18px 16px !important; }
+  .plan.best .plan-body{ padding:18px 16px 20px !important; }
+  .plan-banner{ padding:9px 14px !important; }
+  .plan-price{ font-size:29px !important; }
+  .plan-desc{ font-size:13px !important; line-height:1.5 !important; }
+  .plan-cd{ margin:10px 0 !important; }
+  .plan-feats{ gap:8px !important; }
+  .plan-feats li{ font-size:13px !important; line-height:1.45 !important; }
+  .plan-btn{ padding:13px !important; font-size:13px !important; }
+  .plan-note{ font-size:11.5px !important; margin-top:12px !important; }
+
+  /* plan regular: aún no se puede comprar → resumen plegado */
+  .plan:not(.best) .plan-desc,
+  .plan:not(.best) .plan-hr,
+  .plan:not(.best) .plan-feats{ display:none; }
+  .plan:not(.best).m-open .plan-desc,
+  .plan:not(.best).m-open .plan-hr{ display:block; }
+  .plan:not(.best).m-open .plan-feats{ display:flex; animation:mFade .18s ease; }
+
+  /* ── 9 · FAQ ──────────────────────────────────────────────── */
+  .faq-layout{ gap:20px !important; }
+  #faq .faq-intro h2{ font-size:24px !important; }
+  #faq .faq-intro .lead{ font-size:14px !important; }
+  #faq .faq-intro p[style]{ margin-top:16px !important; }
+  .faq-q{ font-size:14.5px !important; padding:13px 0 !important; }
+  .faq-a{ font-size:13.5px !important; }
+
+  /* ── 10 · CTA FINAL + PIE ─────────────────────────────────── */
+  .cta-final{ padding:44px 18px !important; }
+  .cta-title{ font-size:26px !important; }
+  .cta-sub{ font-size:14px !important; margin-bottom:18px !important; }
+  .cta-actions{ grid-template-columns:1fr 1fr !important; gap:8px !important; }
+  .cta-actions a{ padding:13px 8px !important; font-size:13px !important; }
+  .cta-note{ font-size:11px !important; }
+
+  .cg-foot{ padding:26px 18px 18px !important; }
+  .cg-foot-inner{ grid-template-columns:1fr 1fr !important; gap:16px 14px !important; }
+  .cg-foot-inner > div:first-child{ grid-column:1 / -1; }
+  .f-desc{ font-size:12px; margin-top:6px; }
+  .f-col-title{ margin-bottom:6px; }
+  .f-links a{ padding:3px 0 !important; font-size:12.5px !important; }
+  .f-bottom{ gap:6px !important; margin-top:18px; font-size:11px; }
+  .f-legal-inline{ display:none; }   /* ya están arriba, en la columna Legal */
+
+  /* ── 11 · AFORDANCIA: el signo + de los plegables ─────────── */
+  .m-chev{ display:block; position:absolute; top:14px; right:13px;
+           width:15px; height:15px; opacity:.5; pointer-events:none;
+           transition:transform .2s ease, opacity .2s ease; }
+  .m-chev::before, .m-chev::after{
+    content:''; position:absolute; left:50%; top:50%;
+    width:11px; height:1.5px; background:currentColor; border-radius:2px;
+    transform:translate(-50%,-50%); }
+  .m-chev::after{ transform:translate(-50%,-50%) rotate(90deg);
+                  transition:transform .2s ease; }
+  .m-open > .m-chev{ opacity:.85; }
+  .m-open > .m-chev::after{ transform:translate(-50%,-50%) rotate(0deg); }
+  #problema .card .m-chev{ color:var(--lime-text); }
+  .guide .m-chev{ top:12px; right:12px; color:var(--t3); }
+
+  /* botón de texto para los plegables que no son tarjeta */
+  .m-tg{ display:inline-flex; align-items:center; gap:7px;
+         background:none; border:none; padding:8px 0; cursor:pointer;
+         font-family:var(--mono); font-size:10.5px; letter-spacing:.06em;
+         text-transform:uppercase; color:var(--t3);
+         -webkit-tap-highlight-color:transparent; }
+  .m-tg::after{ content:'+'; font-size:13px; line-height:1; color:var(--lime-text); }
+  .m-tg[aria-expanded="true"]::after{ content:'–'; }
+  .plan .m-tg{ margin-top:6px; }
+
+  @keyframes mFade{ from{ opacity:0; transform:translateY(-3px) } to{ opacity:1; transform:none } }
+
+  /* ── 12 · TRES ARREGLOS QUE SOLO SE VEÍAN EN MÓVIL ────────── */
+  /* a) la hamburguesa existía pero sus tres barras medían 0 de ancho
+        (una regla vieja le puso align-items:center en un flex column) */
+  .nav-toggle span{ width:18px !important; }
+  /* b) "Abrir la plataforma →" caía en la regla que oculta .link-ghost
+        del encabezado por debajo de 520px; aquí sí debe verse */
+  #problema .card-cta .link-ghost{ display:inline !important; }
+  /* c) el <br> del título de FAQ estaba anulado y quedaba "Preguntasfrecuentes" */
+  #faq .faq-intro h2 br{ display:inline !important; }
+}
+
+@media (max-width:430px){
+  h1.hero-title{ font-size:26px !important; }
+  .pA h2{ font-size:22px !important; }
+  #cx-mock{ height:398px; }
+  .hero-actions a, .cta-actions a{ font-size:12.5px !important; padding:12px 6px !important; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .m-open > .m-chev::after{ transition:none; }
+}
+</style>
+
+<script>
+/* ── CAPA MÓVIL v3 · plegables ────────────────────────────────────
+   Solo actúan por debajo de 760px: en escritorio el CSS de arriba
+   no aplica, así que las clases que añade este script no cambian nada.
+   ───────────────────────────────────────────────────────────────── */
+(function(){
+  var MQ = window.matchMedia('(max-width:760px)');
+  var movil = function(){ return MQ.matches; };
+
+  function signo(){ var s = document.createElement('span'); s.className = 'm-chev'; return s; }
+
+  /* A · tarjetas que se abren al tocarlas (problema + guías) */
+  function plegable(el){
+    el.appendChild(signo());
+    el.addEventListener('click', function(e){
+      if(!movil()) return;
+      if(e.target.closest('a')) return;          /* los enlaces siguen siendo enlaces */
+      el.classList.toggle('m-open');
+      el.setAttribute('aria-expanded', el.classList.contains('m-open') ? 'true' : 'false');
+    });
+    el.addEventListener('keydown', function(e){
+      if(!movil()) return;
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); el.click(); }
+    });
+  }
+
+  var tarjetas = [].slice.call(document.querySelectorAll('#problema .card:not(.card-cta)'))
+        .concat([].slice.call(document.querySelectorAll('#contenido .guide')));
+  tarjetas.forEach(plegable);
+
+  /* la primera de cada grupo abierta: enseña que se abren */
+  var p1 = document.querySelector('#problema .card:not(.card-cta)');
+  var g1 = document.querySelector('#contenido .guide');
+  if(p1) p1.classList.add('m-open');
+  if(g1) g1.classList.add('m-open');
+
+  /* B · botón de texto para bloques sueltos */
+  function boton(texto, antesDe, alAbrir){
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'm-tg'; b.textContent = texto;
+    b.setAttribute('aria-expanded', 'false');
+    antesDe.parentNode.insertBefore(b, antesDe);
+    b.addEventListener('click', function(){
+      var abierto = b.getAttribute('aria-expanded') === 'true';
+      b.setAttribute('aria-expanded', abierto ? 'false' : 'true');
+      alAbrir(!abierto);
+    });
+    return b;
+  }
+
+  /* nota metodológica de la comparativa */
+  var src = document.querySelector('#comparativa .cmp-src');
+  if(src) boton('Nota metodológica y fuentes', src, function(abrir){
+    src.classList.toggle('m-open', abrir);
+  });
+
+  /* plan regular: se despliega lo que incluye */
+  var regular = document.querySelector('#precios .plan:not(.best)');
+  var hr = regular && regular.querySelector('.plan-hr');
+  if(regular && hr) boton('Ver qué incluye', hr, function(abrir){
+    regular.classList.toggle('m-open', abrir);
+  });
+
+  /* C · accesibilidad: solo mientras estemos en móvil */
+  function sincronizar(){
+    tarjetas.forEach(function(el){
+      if(movil()){
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('role', 'button');
+        el.setAttribute('aria-expanded', el.classList.contains('m-open') ? 'true' : 'false');
+      } else {
+        el.removeAttribute('tabindex');
+        el.removeAttribute('role');
+        el.removeAttribute('aria-expanded');
+      }
+    });
+  }
+  sincronizar();
+  if(MQ.addEventListener) MQ.addEventListener('change', sincronizar);
+  else if(MQ.addListener) MQ.addListener(sincronizar);
+})();
 </script>
 
 </body></html>
