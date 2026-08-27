@@ -3243,7 +3243,6 @@ h1.hero-title{ font-weight:600; letter-spacing:-.035em; }
       <span><i class="chip c-y"><svg class="mk" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 8.5 6.3 11.5 12.8 4.8"/></svg></i>Lo resuelve</span>
       <span><i class="chip c-p"><svg class="mk" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 8h8"/></svg></i>A medias</span>
       <span><i class="chip c-n"><svg class="mk" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.4 4.4 11.6 11.6M11.6 4.4 4.4 11.6"/></svg></i>No lo resuelve</span>
-      <span class="cmp-key-note">El marcador cuenta los seis criterios de sí/no. Tiempo y costo se leen aparte.</span>
     </div>
   </div>
 </section>
@@ -3963,7 +3962,6 @@ function togglePQ(card){
   .cmp .chip{ width:24px; height:24px; }
   .cmp td.hi .chip{ width:26px; height:26px; }
   .cmp-key{ gap:14px; font-size:11px; }
-  .cmp-key-note{ margin-left:0; width:100%; }
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -4901,29 +4899,33 @@ document.getElementById('cx-mock').innerHTML=
   /* ── 1 · RITMO GLOBAL ─────────────────────────────────────── */
   .pA,
   #problema, #producto, #comparativa, #contenido, #precios, #faq{
-    padding:40px 0 !important;
+    padding:48px 0 !important;
   }
   section[id]{ scroll-margin-top:62px; }          /* la cabecera es sticky */
-  .pA h2{ font-size:24px !important; line-height:1.14 !important; }
-  .pA .lead{ font-size:14.5px !important; line-height:1.55 !important; }
-  .pA .eyebrow{ font-size:9.5px !important; margin-bottom:8px !important; }
-  #problema h2 br{ display:none; }
+  /* interlineado más suelto: a 24px y tres líneas, 1.14 ahogaba el título */
+  .pA h2{ font-size:24px !important; line-height:1.22 !important;
+          margin-bottom:14px !important; }
+  .pA .lead{ font-size:15px !important; line-height:1.62 !important; }
+  .pA .eyebrow{ font-size:10px !important; margin-bottom:12px !important; }
+  /* el <br> se queda: sin él las dos frases se pegan ("sepas.Es que") */
+  #problema h2 br{ display:inline !important; }
 
   /* ── 2 · HERO ─────────────────────────────────────────────── */
   .banner{ font-size:11px !important; padding:7px 12px !important; }
   .hero{ padding:22px 0 30px !important; }
   .hero-inner{ gap:20px !important; }
   .hero-eyebrow{ margin-bottom:11px !important; padding:4px 10px !important; }
-  h1.hero-title{ font-size:29px !important; margin-bottom:11px !important; }
-  .hero-sub{ font-size:14.5px !important; line-height:1.55 !important;
-             margin-bottom:16px !important; }
+  h1.hero-title{ font-size:29px !important; line-height:1.14 !important;
+                 margin-bottom:14px !important; }
+  .hero-sub{ font-size:15px !important; line-height:1.62 !important;
+             margin-bottom:20px !important; }
 
   /* los dos botones caben lado a lado: −56px de alto */
   .hero-actions{ grid-template-columns:1fr 1fr !important;
-                 gap:8px !important; margin-bottom:16px !important; }
+                 gap:9px !important; margin-bottom:20px !important; }
   .hero-actions a{ padding:13px 8px !important; font-size:13px !important; }
 
-  .proof-item{ padding:9px 8px !important; }
+  .proof-item{ padding:12px 8px !important; }
   .proof-n{ font-size:17px !important; }
   .proof-l{ font-size:8.5px !important; line-height:1.25; }
 
@@ -4937,13 +4939,15 @@ document.getElementById('cx-mock').innerHTML=
   .fuentes-marq span{ font-size:11px; }
 
   /* ── 4 · EL PROBLEMA → acordeón ───────────────────────────── */
-  #problema .g3{ gap:7px !important; margin-top:20px !important; }
-  #problema .card{ padding:13px 40px 13px 15px !important; position:relative; }
-  #problema .card .num{ margin-bottom:5px !important; font-size:10px !important; }
-  #problema .card h3{ font-size:16px !important; margin-bottom:0 !important; }
+  #problema .g3{ gap:9px !important; margin-top:26px !important; }
+  #problema .card{ padding:16px 42px 16px 17px !important; position:relative; }
+  #problema .card .num{ margin-bottom:7px !important; font-size:10px !important; }
+  #problema .card h3{ font-size:16.5px !important; line-height:1.25 !important;
+                      margin-bottom:0 !important; }
   #problema .card p{ display:none; }
-  #problema .card.m-open p{ display:block; font-size:13.5px !important;
-                            margin-top:8px; animation:mFade .18s ease; }
+  #problema .card.m-open p{ display:block; font-size:14px !important;
+                            line-height:1.6 !important;
+                            margin-top:10px; animation:mFade .18s ease; }
   #problema .card-cta{ padding-right:15px !important; }
   #problema .card-cta p{ display:block !important; font-size:13.5px !important;
                          margin-top:8px; }
@@ -4954,8 +4958,8 @@ document.getElementById('cx-mock').innerHTML=
   .vpi{ padding:9px 12px !important; font-size:11.5px !important; min-height:38px !important; }
   .vp-claim{ margin-bottom:12px !important; }
   .vp-n{ margin-bottom:5px !important; }
-  .vp-claim h3{ font-size:19px !important; line-height:1.18 !important; }
-  .vp-claim p{ font-size:13.5px !important; line-height:1.5 !important; }
+  .vp-claim h3{ font-size:19px !important; line-height:1.24 !important; }
+  .vp-claim p{ font-size:14px !important; line-height:1.6 !important; }
   .vp-tag{ padding:7px 12px !important; font-size:8px !important; }
   .vp-exhibit .gv{ max-height:min(58vh,430px) !important; }
   /* el fragmento deja de ir a sangre: vuelve a ser una tarjeta dentro
@@ -4981,17 +4985,17 @@ document.getElementById('cx-mock').innerHTML=
   .cmp thead th:first-child, .cmp tbody th, .cmp tfoot th{ min-width:126px !important; }
   .cmp thead th:not(:first-child), .cmp tbody td:not(:first-child){ min-width:84px !important; }
   .cmp-key{ gap:9px !important; font-size:10px !important; margin-top:12px !important; }
-  .cmp-key-note{ font-size:10.5px; }
   /* la nota metodológica se pliega: son 9 líneas de letra pequeña */
 
   /* ── 7 · CONTENIDO → catálogo plegable ────────────────────── */
-  .guides{ gap:7px !important; margin-top:20px !important; }
-  .guide{ padding:11px 34px 11px 14px !important; position:relative; }
-  .guide .sp{ font-size:9px !important; margin-bottom:3px !important; }
-  .guide b{ font-size:14px !important; margin-bottom:0 !important; }
+  .guides{ gap:8px !important; margin-top:26px !important; }
+  .guide{ padding:14px 36px 14px 16px !important; position:relative; }
+  .guide .sp{ font-size:9px !important; margin-bottom:5px !important; }
+  .guide b{ font-size:14.5px !important; line-height:1.3 !important;
+            margin-bottom:0 !important; }
   .guide p, .guide .srcs{ display:none; }
-  .guide.m-open p{ display:block; font-size:12.5px !important;
-                   margin:8px 0 8px !important; animation:mFade .18s ease; }
+  .guide.m-open p{ display:block; font-size:13px !important; line-height:1.6 !important;
+                   margin:10px 0 10px !important; animation:mFade .18s ease; }
   .guide.m-open .srcs{ display:flex; }
 
   .soon{ margin-top:22px !important; padding-top:18px !important; }
@@ -5009,8 +5013,8 @@ document.getElementById('cx-mock').innerHTML=
   .plan-price{ font-size:29px !important; }
   .plan-desc{ font-size:13px !important; line-height:1.5 !important; }
   .plan-cd{ margin:10px 0 !important; }
-  .plan-feats{ gap:8px !important; }
-  .plan-feats li{ font-size:13px !important; line-height:1.45 !important; }
+  .plan-feats{ gap:11px !important; }
+  .plan-feats li{ font-size:13.5px !important; line-height:1.5 !important; }
   .plan-btn{ padding:13px !important; font-size:13px !important; }
   .plan-note{ font-size:11.5px !important; margin-top:12px !important; }
 
@@ -5027,13 +5031,15 @@ document.getElementById('cx-mock').innerHTML=
   #faq .faq-intro h2{ font-size:24px !important; }
   #faq .faq-intro .lead{ font-size:14px !important; }
   #faq .faq-intro p[style]{ margin-top:16px !important; }
-  .faq-q{ font-size:14.5px !important; padding:13px 0 !important; }
-  .faq-a{ font-size:13.5px !important; }
+  .faq-q{ font-size:14.5px !important; line-height:1.35 !important;
+          padding:15px 0 !important; }
+  .faq-a{ font-size:14px !important; line-height:1.65 !important; }
 
   /* ── 10 · CTA FINAL + PIE ─────────────────────────────────── */
   .cta-final{ padding:44px 18px !important; }
   .cta-title{ font-size:26px !important; }
-  .cta-sub{ font-size:14px !important; margin-bottom:18px !important; }
+  .cta-sub{ font-size:14.5px !important; line-height:1.6 !important;
+            margin-bottom:22px !important; }
   .cta-actions{ grid-template-columns:1fr 1fr !important; gap:8px !important; }
   .cta-actions a{ padding:13px 8px !important; font-size:13px !important; }
   .cta-note{ font-size:11px !important; }
@@ -5046,7 +5052,7 @@ document.getElementById('cx-mock').innerHTML=
   .f-links a{ padding:3px 0 !important; font-size:12.5px !important; }
 
   /* ── 11 · AFORDANCIA: el signo + de los plegables ─────────── */
-  .m-chev{ display:block; position:absolute; top:14px; right:13px;
+  .m-chev{ display:block; position:absolute; top:17px; right:15px;
            width:15px; height:15px; opacity:.5; pointer-events:none;
            transition:transform .2s ease, opacity .2s ease; }
   .m-chev::before, .m-chev::after{
@@ -5058,7 +5064,7 @@ document.getElementById('cx-mock').innerHTML=
   .m-open > .m-chev{ opacity:.85; }
   .m-open > .m-chev::after{ transform:translate(-50%,-50%) rotate(0deg); }
   #problema .card .m-chev{ color:var(--lime-text); }
-  .guide .m-chev{ top:12px; right:12px; color:var(--t3); }
+  .guide .m-chev{ top:15px; right:14px; color:var(--t3); }
 
   /* botón de texto para los plegables que no son tarjeta */
   .m-tg{ display:inline-flex; align-items:center; gap:7px;
