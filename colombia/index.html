@@ -405,7 +405,7 @@ h1.hero-title .lime{color:var(--lime-text)}
 /* ─── FOOTER ─── */
 .cg-foot{border-top:0.5px solid var(--sep);padding:24px 28px}
 .cg-foot-inner{max-width:var(--max-w);margin:0 auto;
-  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:28px}
+  display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;margin-bottom:28px}
 .f-brand-name{font-size:13.5px;font-weight:600;color:var(--t1);letter-spacing:-.02em;
   display:flex;align-items:center;gap:7px;margin-bottom:8px}
 .f-brand-mark{background:var(--lime);color:#000;font-size:9px;font-weight:700;
@@ -3356,7 +3356,7 @@ h1.hero-title{ font-weight:600; letter-spacing:-.035em; }
 
     </div>
 
-    <p class="plan-note">Pago mensual por Hotmart · cancelas cuando quieras desde tu cuenta, sin penalidades. ¿Institución, hospital o clínica? <a href="https://wa.link/zz8afv" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> — manejamos acceso para equipos completos.</p>
+    <p class="plan-note">¿Institución, hospital o clínica? <a href="https://wa.link/zz8afv" target="_blank" rel="noopener">Escríbenos por WhatsApp</a> — manejamos acceso para equipos completos.</p>
   </div>
 </section>
 
@@ -3429,7 +3429,7 @@ h1.hero-title{ font-weight:600; letter-spacing:-.035em; }
       <a class="btn-lime" href="https://pay.hotmart.com/V95891029B?off=4gqxtfaf&amp;checkoutMode=10&amp;offDiscount=miembro-fundador-colombia" target="_blank" rel="noopener">Suscribirme</a>
       <a class="btn-ghost" href="https://wa.link/zz8afv" target="_blank" rel="noopener">Hablar con el equipo</a>
     </div>
-    <p class="cta-note">Sin compromisos · Cancela cuando quieras · Por Sustancia P S.A.S.</p>
+    <p class="cta-note">Sin compromisos · Cancela cuando quieras<span class="cta-note-firma"> · Por Sustancia P S.A.S.</span></p>
   </div>
 </section>
 
@@ -3438,25 +3438,16 @@ h1.hero-title{ font-weight:600; letter-spacing:-.035em; }
   <div class="cg-foot-inner">
 
     <div>
-      <div class="f-brand-name"><span class="f-brand-mark">CH</span>Sustancia Pro ® | Clinical Hub</div>
+      <div class="f-brand-name"><span class="f-brand-mark">CH</span><span class="f-brand-txt"><span class="f-pro">Sustancia Pro ® | </span>Clinical Hub</span></div>
       <p class="f-desc">Herramientas para profesionales de la salud. Una plataforma de Sustancia P S.A.S. — Barranquilla, Colombia.</p>
-    </div>
-
-    <div>
-      <div class="f-col-title">Plataforma</div>
-      <ul class="f-links">
-        <li><a href="#producto">El producto</a></li>
-        <li><a href="#contenido">Guías</a></li>
-        <li><a href="#precios">Precios</a></li>
-        <li><a href="#faq">Preguntas</a></li>
-      </ul>
+      <p class="f-desc-mob">Una plataforma de Sustancia P S.A.S. · Colombia</p>
     </div>
 
     <div>
       <div class="f-col-title">Legal</div>
       <ul class="f-links">
         <li><a href="https://access-clinicalhub.sustanciapro.com/tyc/" target="_blank" rel="noopener">Términos y condiciones</a></li>
-        <li><a href="https://access-clinicalhub.sustanciapro.com/politicas-de-tratamiento-de-datos-personales/" target="_blank" rel="noopener">Política de tratamiento de datos</a></li>
+        <li><a href="https://access-clinicalhub.sustanciapro.com/politicas-de-tratamiento-de-datos-personales/" target="_blank" rel="noopener">Privacidad</a></li>
         <li><a href="https://access-clinicalhub.sustanciapro.com/aviso-clinico/" target="_blank" rel="noopener">Aviso clínico</a></li>
       </ul>
     </div>
@@ -4882,6 +4873,9 @@ document.getElementById('cx-mock').innerHTML=
 </style>
 
 <style id="capa-movil-v3">
+/* la línea corta del pie solo existe en móvil */
+.f-desc-mob{ display:none; }
+
 /* ══════════════════════════════════════════════════════════════════
    CAPA MÓVIL v3 — COMPACTACIÓN  (≤760px)
    · Nada de esto toca el escritorio: TODO vive dentro de
@@ -4923,7 +4917,7 @@ document.getElementById('cx-mock').innerHTML=
   /* los dos botones caben lado a lado: −56px de alto */
   .hero-actions{ grid-template-columns:1fr 1fr !important;
                  gap:9px !important; margin-bottom:20px !important; }
-  .hero-actions a{ padding:13px 8px !important; font-size:13px !important; }
+  .hero-actions a{ padding:15px 8px !important; font-size:13.5px !important; }
 
   .proof-item{ padding:12px 8px !important; }
   .proof-n{ font-size:17px !important; }
@@ -5041,15 +5035,37 @@ document.getElementById('cx-mock').innerHTML=
   .cta-sub{ font-size:14.5px !important; line-height:1.6 !important;
             margin-bottom:22px !important; }
   .cta-actions{ grid-template-columns:1fr 1fr !important; gap:8px !important; }
-  .cta-actions a{ padding:13px 8px !important; font-size:13px !important; }
-  .cta-note{ font-size:11px !important; }
+  .cta-actions a{ padding:15px 8px !important; font-size:13.5px !important; }
+  .cta-note{ font-size:11.5px !important; color:var(--t3) !important;
+             margin-top:16px !important; }
+  /* la firma se repite tres líneas más abajo, en el pie: aquí sobra */
+  .cta-note-firma{ display:none; }
 
-  .cg-foot{ padding:26px 18px 18px !important; }
-  .cg-foot-inner{ grid-template-columns:1fr 1fr !important; gap:16px 14px !important; }
-  .cg-foot-inner > div:first-child{ grid-column:1 / -1; }
-  .f-desc{ font-size:12px; margin-top:6px; }
-  .f-col-title{ margin-bottom:6px; }
-  .f-links a{ padding:3px 0 !important; font-size:12.5px !important; }
+  /* PIE — con solo cinco enlaces, dos columnas con encabezado pesan
+     más de lo que ordenan: se funden en una fila que se envuelve sola. */
+  .cg-foot{ padding:32px 18px 30px !important; }
+  .cg-foot-inner{ display:flex !important; flex-wrap:wrap !important;
+                  align-items:baseline; justify-content:center !important;
+                  text-align:center; gap:6px 14px !important;
+                  margin-bottom:0 !important; }
+  .cg-foot-inner > div{ display:contents; }   /* disuelve las columnas */
+  .f-brand-name{ width:100%; justify-content:center;
+                 font-size:13px !important; margin-bottom:0 !important; }
+  /* sin distintivo: en el pie el lima es lo más brillante de la
+     pantalla justo donde ya no hay nada que mirar. Y basta con
+     "Clinical Hub": la relación con la empresa la explica la línea
+     de abajo, en vez de comprimirse en un "|". */
+  .f-brand-mark, .f-pro{ display:none; }
+  .f-desc{ display:none; }                    /* la larga se queda en escritorio */
+  .f-desc-mob{ display:block; width:100%; font-size:11.5px !important;
+               color:var(--t3); line-height:1.55; margin:7px 0 20px !important; }
+  .f-col-title{ display:none; }               /* los rótulos sobran aquí */
+  .cg-foot-inner > div:last-child{ display:none; }   /* Contacto: fuera en móvil */
+  .f-links{ display:contents; }
+  .f-links a{ padding:0 !important; font-size:12px !important;
+              color:var(--t2) !important; line-height:2; }
+  .f-links li::after{ content:'·'; margin-left:14px; color:var(--t4); opacity:.6; }
+  .f-links li:last-child::after{ content:none; }
 
   /* ── 11 · AFORDANCIA: el signo + de los plegables ─────────── */
   .m-chev{ display:block; position:absolute; top:17px; right:15px;
@@ -5093,7 +5109,7 @@ document.getElementById('cx-mock').innerHTML=
   h1.hero-title{ font-size:26px !important; }
   .pA h2{ font-size:22px !important; }
   #cx-mock{ height:398px; }
-  .hero-actions a, .cta-actions a{ font-size:12.5px !important; padding:12px 6px !important; }
+  .hero-actions a, .cta-actions a{ font-size:13px !important; padding:14px 6px !important; }
 }
 
 @media (max-width:430px){
