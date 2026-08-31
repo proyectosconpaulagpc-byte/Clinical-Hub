@@ -2179,7 +2179,7 @@ h1.hero-title{ font-weight:600; letter-spacing:-.035em; }
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-ND62RHNF"
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KZK6DW8X"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <div class="banner">
@@ -2190,7 +2190,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="head-in">
     <a class="logo" href="#top">
       <span class="logo-mark">CH</span>
-      <span class="logo-name">Sustancia Pro | Clinical Hub</span>
+      <span class="logo-name"><span class="logo-short">Sustancia Pro | </span>Clinical Hub</span>
     </a>
     <ul class="nav">
       <li><a href="#producto">Ver por dentro</a></li>
@@ -3385,7 +3385,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Puntos complementarios de aplicabilidad clínica</li>
             <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Acceso desde cualquier dispositivo</li>
             <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span><strong style="color:var(--lime)">Voto en la próxima guía</strong><span class="founders-pill">Solo Founders</span></li>
-            <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span><strong style="color:var(--lime)">Precio bloqueado</strong><span class="founders-pill">Solo Founders</span></li>
+            <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span><strong style="color:var(--lime)">Descuento permanente</strong><span class="founders-pill">Solo Founders</span></li>
           </ul>
           <a href="https://pay.hotmart.com/V95891029B?off=4gqxtfaf&amp;checkoutMode=10&amp;offDiscount=miembro-fundador-colombia" class="plan-btn lime" target="_blank" rel="noopener">Suscribirme — $19.900/mes →</a>
         </div>
@@ -3405,7 +3405,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Puntos complementarios de aplicabilidad clínica</li>
           <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Acceso desde cualquier dispositivo</li>
           <li><span class="pf-n"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span><span style="color:var(--t4)">Voto en la próxima guía</span></li>
-          <li><span class="pf-n"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span><span style="color:var(--t4)">Precio bloqueado</span></li>
+          <li><span class="pf-n"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span><span style="color:var(--t4)">Descuento permanente</span></li>
         </ul>
         <a class="plan-btn ghost">Próximamente</a>
       </div>
@@ -3889,7 +3889,10 @@ function togglePQ(card){
   .head-act .link-ghost{ display:none !important; }
   .logo-name{ font-size:12.5px; }
   .head-act .btn-sm{ font-size:12.5px; padding:8px 14px; }
-  .nav-toggle{ display:flex !important; }
+  .nav-toggle{ display:flex !important; margin-right:-8px; }
+  /* en móvil .head .nav (el flex:1 que empujaba a la derecha) está oculto:
+     sin esto el bloque logo+CTA+hamburguesa queda pegado a la izquierda */
+  .head-act{ margin-left:auto; }
   .banner{ font-size:11.5px; padding:8px 14px; line-height:1.45; }
   .mobile-nav a{ min-height:44px; display:flex; align-items:center; }
 }
@@ -4891,7 +4894,25 @@ document.getElementById('cx-mock').innerHTML=
 
   function run(){clr();seq();}
   setSpeed(SP);
-  run();
+  show('home');   /* deja la primera pantalla puesta: si el mock asoma por
+                     abajo no se ve un marco vacío mientras espera turno */
+
+  /* La animación ya no arranca al cargar la página: en móvil el mock nace
+     debajo del pliegue y para cuando el usuario llega ya va por la mitad.
+     Ahora empieza desde el paso 1 cuando el marco entra en pantalla, y se
+     detiene al salir (seq() reinicia todo el estado en cada arranque). */
+  var cxHost = document.getElementById('cx-mock');
+  if (cxHost && 'IntersectionObserver' in window) {
+    var cxCorriendo = false;
+    new IntersectionObserver(function(entradas){
+      entradas.forEach(function(e){
+        if (e.isIntersecting && !cxCorriendo) { cxCorriendo = true; run(); }
+        else if (!e.isIntersecting && cxCorriendo) { cxCorriendo = false; clr(); }
+      });
+    }, { threshold: 0.6 }).observe(cxHost);
+  } else {
+    run();
+  }
 })();
 
 </script>
@@ -4908,6 +4929,10 @@ document.getElementById('cx-mock').innerHTML=
   .cmp-box{ position:relative; overflow:hidden; border-radius:var(--r-lg); }
 
   .cmp-box .cmp-wrap{ overflow:hidden !important;
+                      box-sizing:content-box !important;  /* ver encajar() en el JS */
+                      margin:0 !important;       /* el scale() no cuenta márgenes:
+                                                    los 8px de .reveal recortaban
+                                                    la última fila de la tabla */
                       transform-origin:top left;
                       box-shadow:none !important;
                       opacity:1 !important;      /* la escala pisa el .reveal */
@@ -4926,7 +4951,15 @@ document.getElementById('cx-mock').innerHTML=
 
   #swipe-hint{ display:none !important; }      /* ya no se desliza: entra entera */
 }
+
+/* ─────────── PARCHE MÓVIL · CABECERA ESTRECHA ───────────
+   Con la tipografía real el logo completo no cabe en 375-390px
+   y la hamburguesa se montaba sobre el botón "Suscribirme". */
+@media (max-width:430px){
+  .logo-short{ display:none; }
+}
 </style>
+
 
 <style id="capa-movil-v3">
 /* la línea corta del pie solo existe en móvil */
@@ -5175,6 +5208,38 @@ document.getElementById('cx-mock').innerHTML=
 @media (prefers-reduced-motion:reduce){
   .m-open > .m-chev::after{ transition:none; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   PARCHE MÓVIL · 2ª RONDA
+   ══════════════════════════════════════════════════════════════════ */
+@media (max-width:760px){
+
+  /* a) ESQUINA DE LA TABLA · el marco (.cmp-wrap) se dibuja a tamaño
+     natural y luego se encoge con scale(), así que su radio de 16px
+     se ve como ~11px. La caja que lo recorta NO se escala, y su
+     radio de 16px mordía la esquina inferior derecha (la lima).
+     Sin radio en la caja, el redondeo lo pone el marco. */
+  .cmp-box{ border-radius:0 !important; }
+
+  /* b) BOTONES · misma altura que las pestañas "Eliges por patología"
+     (.vpi = 38px). El alto sale de min-height, no del padding
+     vertical, para que no cambie si el texto parte en dos líneas. */
+  .hero-actions a,
+  .cta-actions a{
+    min-height:38px !important;
+    padding:0 14px !important;
+    font-size:13px !important;
+    line-height:1.2 !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+
+  /* c) CABECERA · fuera el CTA "Suscribirme" en móvil.
+     Queda logo + hamburguesa; el .head-act sigue con margin-left:auto,
+     así que la hamburguesa se mantiene pegada al margen derecho. */
+  .head-act .btn-sm{ display:none !important; }
+}
 </style>
 
 <script>
@@ -5281,6 +5346,12 @@ document.getElementById('cx-mock').innerHTML=
     var natural = tabla.offsetWidth;          /* el ancho real de la tabla */
     if(!natural) return;
     wrap.style.width = natural + 'px';        /* el marco se ajusta a ella */
+    /* El marco lleva 1px de borde a cada lado. Con box-sizing:border-box esos
+       2px se descontaban por dentro y se comían el borde lima derecho de la
+       columna Clinical Hub. En móvil el marco pasa a content-box (ver CSS), así
+       que su ancho real es tabla + bordes: hay que medirlo de nuevo aquí para
+       que el scale() lo tenga en cuenta y el marco entre entero. */
+    natural = wrap.offsetWidth;
     var k = Math.min(1, disponible / natural);
     wrap.style.transform = 'scale(' + k + ')';
     box.style.height = Math.round(wrap.offsetHeight * k) + 'px';
