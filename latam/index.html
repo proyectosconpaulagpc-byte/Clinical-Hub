@@ -2184,8 +2184,9 @@ h1.hero-title{ font-weight:600; letter-spacing:-.035em; }
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P9V6CTW7"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-<div class="banner">
-  Membresía Founders — <b>45% de descuento permanente</b> hasta el 15 de septiembre.
+<div class="banner" id="ub">
+  <span id="ub-txt"><b>45% OFF permanente</b> para fundadores · faltan <b>29 horas</b></span>
+  <a class="banner-cta" href="https://pay.hotmart.com/V95891029B?off=7s2j9jmi&amp;checkoutMode=10&amp;bid=1779371707224&amp;offDiscount=miembro-fundador">Suscribirme</a>
 </div>
 
 <header class="head">
@@ -5364,6 +5365,135 @@ document.getElementById('cx-mock').innerHTML=
   window.addEventListener('orientationchange', function(){ setTimeout(encajar, 250); });
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(encajar);
   window.addEventListener('load', encajar);
+})();
+</script>
+
+<style>
+/* ─── BARRA FOUNDERS (pegajosa, solo horas) ─── */
+.banner{position:sticky;top:0;display:flex;align-items:center;justify-content:center;
+  gap:14px;white-space:nowrap}
+.banner b{background:none;padding:0;margin:0;font-family:inherit;font-weight:700;
+  font-variant-numeric:tabular-nums}
+.banner-cta{color:#000;font-weight:700;text-decoration:underline;text-underline-offset:3px;
+  flex-shrink:0}
+.banner-cta:hover{color:#000;opacity:.7}
+.banner[hidden]{display:none}
+@media(max-width:700px){.banner{gap:10px}}
+</style>
+
+<script>
+(function(){
+  var end  = new Date('2026-09-15T23:59:59-05:00').getTime();
+  var bar  = document.getElementById('ub'),
+      txt  = document.getElementById('ub-txt'),
+      head = document.querySelector('.head');
+  function ajustarNav(){
+    if(head) head.style.top = (bar.hidden ? 0 : bar.offsetHeight) + 'px';
+  }
+  function tick(){
+    var d = end - Date.now();
+    if(d <= 0){                                  /* cerró: la barra se retira sola */
+      bar.hidden = true; ajustarNav(); return clearInterval(id);
+    }
+    var h = Math.ceil(d/3600000);                /* hacia arriba: nunca "0 horas" */
+    var chico = innerWidth <= 700;
+    var oferta = '<b>45% OFF permanente</b>';
+    if(h > 1){
+      txt.innerHTML = chico ? oferta + ' · faltan <b>' + h + ' h</b>'
+                            : oferta + ' para fundadores · faltan <b>' + h + ' horas</b>';
+    } else {
+      txt.innerHTML = chico ? oferta + ' · <b>última hora</b>'
+                            : oferta + ' para fundadores · <b>última hora</b>';
+    }
+    ajustarNav();
+  }
+  var id = setInterval(tick, 30000); tick();
+  addEventListener('resize', function(){ tick(); });
+})();
+</script>
+
+<!-- ═══ RECUADRO DE SALIDA ═══ -->
+<div class="xm" id="xm" hidden>
+  <div class="xm-card" role="dialog" aria-modal="true" aria-labelledby="xm-t">
+    <button class="xm-x" id="xm-x" aria-label="Cerrar">&times;</button>
+    <h3 class="xm-h" id="xm-t">Te vas justo ahora que quedan</h3>
+    <div class="xm-clock"><b id="xm-h">29</b><s>:</s><b id="xm-m">14</b><s>:</s><b id="xm-s">03</b></div>
+    <div class="xm-units"><span>horas</span><span>min</span><span>seg</span></div>
+    <div class="xm-track"><i id="xm-fill"></i></div>
+    <p class="xm-p">Cuando el reloj llegue a cero, la suscripción pasa a tarifa plena y el voto
+       de fundadores deja de existir.</p>
+    <a class="xm-cta" href="https://pay.hotmart.com/V95891029B?off=7s2j9jmi&amp;checkoutMode=10&amp;bid=1779371707224&amp;offDiscount=miembro-fundador">Quiero mi acceso</a>
+    <button class="xm-no" id="xm-no">No, gracias</button>
+  </div>
+</div>
+
+<style>
+.xm{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.75);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;padding:20px}
+.xm[hidden]{display:none}
+.xm-card{position:relative;width:100%;max-width:400px;background:var(--bg-card);
+  border:0.5px solid var(--border-hi);border-radius:16px;padding:30px 24px 24px;text-align:center;
+  animation:xm-in .28s ease-out}
+@keyframes xm-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.xm-x{position:absolute;top:9px;right:13px;background:none;border:none;color:var(--t4);
+  font-size:21px;line-height:1;cursor:pointer;font-family:inherit}
+.xm-h{color:var(--t1);font-size:19px;font-weight:600;line-height:1.3;margin-bottom:14px}
+.xm-clock{display:flex;justify-content:center;gap:6px;font-family:'DM Mono',ui-monospace,monospace;
+  color:var(--lime);font-size:44px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums}
+.xm-clock s{color:var(--t4);text-decoration:none}
+.xm-units{display:flex;justify-content:center;gap:34px;color:var(--t3);font-size:11px;margin-top:6px}
+.xm-track{height:3px;background:var(--border);border-radius:2px;margin-top:16px;overflow:hidden}
+.xm-track i{display:block;height:100%;background:var(--lime);width:100%;transition:width 1s linear}
+.xm-p{color:var(--t2);font-size:13.5px;line-height:1.6;margin-top:14px}
+.xm-cta{display:block;background:var(--lime);color:#000;font-size:14px;font-weight:600;
+  padding:13px;border-radius:var(--r-pill);margin-top:18px}
+.xm-cta:hover{opacity:.85;color:#000}
+.xm-no{background:none;border:none;color:var(--t4);font-size:12px;margin:12px auto 0;display:block;
+  cursor:pointer;font-family:inherit;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:420px){.xm-clock{font-size:36px}.xm-units{gap:26px}}
+@media(prefers-reduced-motion:reduce){.xm-card{animation:none}}
+</style>
+
+<script>
+(function(){
+  var end   = new Date('2026-09-15T23:59:59-05:00').getTime();
+  var start = end - 48*3600000;                 /* la línea se vacía en las últimas 48 h */
+  var m = document.getElementById('xm');
+  if(!m) return;
+  function pad(n){ return n<10 ? '0'+n : ''+n; }
+  setInterval(function(){
+    var d = Math.max(0, end - Date.now());
+    document.getElementById('xm-h').textContent = pad(Math.floor(d/3600000));
+    document.getElementById('xm-m').textContent = pad(Math.floor(d%3600000/60000));
+    document.getElementById('xm-s').textContent = pad(Math.floor(d%60000/1000));
+    var p = Math.max(0, Math.min(1, (end - Date.now())/(end - start)));
+    document.getElementById('xm-fill').style.width = (p*100).toFixed(2) + '%';
+  }, 1000);
+
+  function abrir(){
+    if(sessionStorage.getItem('xm-visto') || Date.now() > end) return;
+    sessionStorage.setItem('xm-visto','1');
+    m.hidden = false;
+  }
+  function cerrar(){ m.hidden = true; }
+
+  document.addEventListener('mouseout', function(e){     /* desktop: el cursor sale por arriba */
+    if(!e.relatedTarget && e.clientY <= 0) abrir();
+  });
+  if(matchMedia('(pointer:coarse)').matches){            /* móvil: scroll + 2 s */
+    var armado = false;
+    addEventListener('scroll', function(){
+      if(armado) return;
+      if(scrollY / (document.body.scrollHeight - innerHeight) > .5){
+        armado = true; setTimeout(abrir, 2000);
+      }
+    }, {passive:true});
+  }
+  document.getElementById('xm-x').onclick = cerrar;
+  document.getElementById('xm-no').onclick = cerrar;
+  m.addEventListener('click', function(e){ if(e.target === m) cerrar(); });
+  addEventListener('keydown', function(e){ if(e.key === 'Escape') cerrar(); });
 })();
 </script>
 </body></html>
