@@ -52,9 +52,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --bg:        #000000;
   --bg-card:   #111111;
   --bg-hover:  #181818;
-  --border:    #252525;
-  --border-hi: #2e2e2e;
-  --sep:       #1c1c1e;
+  --border:    #3a3a3c;
+  --border-hi: #48484c;
+  --sep:       #28282a;
   --t1:        #f5f5f5;
   --t2:        #aeaeb2;
   --t3:        #8e8e93;
@@ -1423,7 +1423,7 @@ h1.hero-title .lime{color:var(--lime-text)}
 /* PALETA COMPLETA DE LA VERSIÓN A, aplicada a toda la landing */
 :root{
   --bg:#000; --bg-card:#0e0e0e; --bg-card2:#141414; --bg-hover:#181818;
-  --border:#232323; --border-hi:#2e2e2e; --sep:#1a1a1a;
+  --border:#3a3a3c; --border-hi:#48484c; --sep:#28282a;
   --t1:#f5f5f5; --t2:#aeaeb2; --t3:#8e8e93; --t4:#7c7c81;
   --lime:#addc00; --lime-text:#addc00; --lime-d:#8db400; --lime-bg:rgba(173,220,0,.09); --lime-bdr:rgba(173,220,0,.22);
   --red:#e2484f; --amber:#e0a800; --blue:#4d9be6; --violet:#8b7fe0;
@@ -2278,6 +2278,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="proof-n">11</div>
           <div class="proof-l">Temas</div>
         </div>
+        <div class="proof-item proof-hl">
+          <div class="proof-n">30</div>
+          <div class="proof-l">Guías contrastadas</div>
+        </div>
         <div class="proof-item">
           <div class="proof-n">4</div>
           <div class="proof-l">Actualizaciones mensuales</div>
@@ -2285,10 +2289,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="proof-item">
           <div class="proof-n">100%</div>
           <div class="proof-l">En español</div>
-        </div>
-        <div class="proof-item">
-          <div class="proof-n">2 clics</div>
-          <div class="proof-l">De distancia</div>
         </div>
       </div>
     </div>
@@ -2645,7 +2645,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 .pA:not(.light) .vp-exhibit{
   box-shadow:0 20px 50px -20px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.05);
 }
-.pA:not(.light) .vp-exhibit[data-theme="light"]{ border-color:#2e2e2e }
+.pA:not(.light) .vp-exhibit[data-theme="light"]{ border-color:var(--border-hi) }
 
 
 /* ── índice lateral: la pantalla entra en vista sin desplazarse ── */
@@ -3330,11 +3330,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="soon reveal">
       <div class="fbar">
         <div class="fbar-a">
-          <b>+32 temas</b>
-          <span>Ya en cola</span>
+          <b>11 temas</b>
+          <span>30 guías contrastadas</span>
         </div>
         <div class="fbar-b">
-          <p>Empezamos por las urgencias donde una cifra mal recordada cambia el desenlace. La biblioteca crece <b>cada semana</b> — y los Founders votan lo que viene.</p>
+          <p>Cada semana sumamos <b>1 tema nuevo</b>, construido contrastando las guías internacionales que lo cubren. Empezamos por las urgencias donde una cifra mal recordada cambia el desenlace — y los Founders votan lo que viene.</p>
         </div>
         <div class="fbar-c">
           <b>Membresía Founders</b>
@@ -3350,7 +3350,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="wrap">
     <div class="sec-narrow reveal">
       <div class="eyebrow">Precios</div>
-      <h2>Un solo plan. <span class="lime">Todo incluido.</span></h2>
+      <h2>Un solo plan mensual. <span class="lime">Todo incluido.</span></h2>
       <p class="lead">Suscripción mensual con acceso completo desde el primer día. Cancelas cuando quieras. Verás el importe en tu moneda local en la página de pago.</p>
     </div>
 
@@ -3358,13 +3358,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="plan best">
         <div class="plan-banner">
-          <b>Precio regular</b>
+          <b>Plan mensual</b>
           <span>Acceso completo</span>
         </div>
         <div class="plan-body">
           <div class="plan-label"><span class="dot"></span>Membresía Clinical Hub</div>
           <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
-            <span class="plan-price" style="font-size:27px;letter-spacing:-.03em">Tarifa regular</span>
+            <span class="plan-price" style="font-size:27px;letter-spacing:-.03em">Pago mensual</span>
           </div>
           <div class="plan-period">suscripción mensual · en tu moneda local</div>
           <div class="plan-save">Cancela cuando quieras, sin penalidades</div>
@@ -3378,7 +3378,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li><span class="pf-y"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></span>Acceso desde cualquier dispositivo</li>
             <li><span class="pf-n"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span><span style="color:var(--t4)">Voto en la próxima guía</span><span class="founders-pill">Solo Founders</span></li>
           </ul>
-          <a href="https://pay.hotmart.com/V95891029B?off=7s2j9jmi&amp;checkoutMode=10&amp;bid=1779371707224" class="plan-btn lime" target="_blank" rel="noopener">Suscribirme →</a>
+          <a href="https://pay.hotmart.com/V95891029B?off=7s2j9jmi&amp;checkoutMode=10&amp;bid=1779371707224" class="plan-btn lime" target="_blank" rel="noopener">Suscribirme mes a mes →</a>
           <div class="plan-cur">Verás el precio en tu moneda local en la página de pago.</div>
         </div>
       </div>
@@ -3477,7 +3477,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a class="btn-lime" href="https://pay.hotmart.com/V95891029B?off=7s2j9jmi&amp;checkoutMode=10&amp;bid=1779371707224" target="_blank" rel="noopener">Suscribirme</a>
       <a class="btn-ghost" href="https://wa.link/zz8afv" target="_blank" rel="noopener">Hablar con el equipo</a>
     </div>
-    <p class="cta-note">Sin compromisos · Cancela cuando quieras<span class="cta-note-firma"> · Por Sustancia P S.A.S.</span></p>
+    <p class="cta-note">Suscripción mensual · Sin permanencia · Cancela cuando quieras<span class="cta-note-firma"> · Por Sustancia P S.A.S.</span></p>
   </div>
 </section>
 
@@ -5358,4 +5358,32 @@ document.getElementById('cx-mock').innerHTML=
 
 
 
+<!-- ═══ AJUSTE DE BORDES: botón secundario + caja de números ═══ -->
+<style>
+@media(min-width:1025px){
+  .hero-inner{ align-items:stretch !important; }
+  .hero-inner > div, #hero-mockup-anim{ margin-bottom:0 !important; }
+  .hero-inner > div:first-child{ display:flex; flex-direction:column; align-items:flex-start; }
+  .hero-inner > div:first-child > *{ max-width:100%; }
+  .hero-inner > div:first-child .hero-proof{ margin-top:auto !important; align-self:stretch; }
+  #hero-mockup-anim{ display:flex !important; flex-direction:column; margin-top:0 !important; }
+  #hero-mockup-anim .hero-mockup-label{ flex:0 0 auto; }
+  #hero-mockup-anim #cx-mock{ flex:1 1 auto; height:auto !important; min-height:480px; }
+  .hero-proof{ margin-bottom:0 !important; }
+}
+.btn-ghost,
+.hero-actions .btn-ghost{ border:1px solid #5c5c61 !important; color:var(--t1) !important; }
+.btn-ghost:hover,
+.hero-actions .btn-ghost:hover{ border-color:var(--lime) !important; color:var(--t1) !important; }
+.hero-proof{ border:1px solid var(--border) !important; background:#0a0a0a !important; }
+.proof-item{ border-right-color:var(--border) !important; border-right-width:1px !important; }
+.hero-proof{ grid-template-columns:repeat(4,1fr) !important; }
+.proof-hl .proof-n{ color:var(--lime-text) !important; }
+@media(max-width:900px){
+  .hero-proof{ grid-template-columns:repeat(2,1fr) !important; }
+  .proof-item:nth-child(2n){ border-right:none !important; }
+  .proof-item:nth-child(-n+2){ border-bottom:1px solid var(--border) !important; }
+  .proof-item:nth-child(n+3){ border-bottom:none !important; }
+}
+</style>
 </body></html>
